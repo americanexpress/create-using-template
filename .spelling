@@ -1,0 +1,33 @@
+# Format - lines beginning # are comments
+# global dictionary is at the start, file overrides afterwards
+# markdown-spellcheck spelling configuration file
+# one word per line, to define a file override use ' - filename'
+# where filename is relative to this configuration file
+
+ - CODE_OF_CONDUCT.md
+Github
+neuro
+misgendering
+deadnaming
+eg
+backrub
+behaviour
+cisphobia
+cissexist
+GIFs
+macOS
+e.g.
+
+ - README.md
+npm
+getTemplatePaths
+ejs
+baseData
+getTemplateOptions
+eslint
+config
+fileName
+
+ - SECURITY.md
+cybersecurity
+aexp.com

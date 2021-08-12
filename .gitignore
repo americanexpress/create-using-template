@@ -1,0 +1,14 @@
+# node & npm
+node_modules
+npm-debug.log
+
+# test
+test-results
+.jest-cache
+
+# intelliJ
+.idea/
+
+# yarn
+yarn-debug.log*
+yarn-error.log*
