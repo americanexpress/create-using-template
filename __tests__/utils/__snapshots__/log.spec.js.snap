@@ -21,7 +21,7 @@ Array [
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 3`] = `
 Array [
-  "[32m[1m[4mStep 1[39m[22m[24m -> Step 2 -> Step 3 -> Step 4 -> Step 5",
+  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
 ]
 `;
 
@@ -58,7 +58,7 @@ Array [
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 8`] = `
 Array [
-  "Step 1 -> [32m[1m[4mStep 2[39m[22m[24m -> Step 3 -> Step 4 -> Step 5",
+  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
 ]
 `;
 
@@ -95,7 +95,7 @@ Array [
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 13`] = `
 Array [
-  "Step 1 -> Step 2 -> [32m[1m[4mStep 3[39m[22m[24m -> Step 4 -> Step 5",
+  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
 ]
 `;
 
@@ -132,7 +132,7 @@ Array [
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 18`] = `
 Array [
-  "Step 1 -> Step 2 -> Step 3 -> [32m[1m[4mStep 4[39m[22m[24m -> Step 5",
+  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
 ]
 `;
 
@@ -169,7 +169,7 @@ Array [
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 23`] = `
 Array [
-  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> [32m[1m[4mStep 5[39m[22m[24m",
+  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
 ]
 `;
 
