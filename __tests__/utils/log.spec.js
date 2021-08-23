@@ -14,14 +14,27 @@
 
 const { goToStep } = require('../../src/utils/log');
 
+const fakeConsoleLog = jest.fn();
+// eslint-disable-next-line no-console
+const originalConsoleLog = console.log;
+
 jest.mock('../../package.json', () => ({
   version: 'packageVersionMock',
 }));
 
 describe('log functions', () => {
+  beforeAll(() => {
+    // eslint-disable-next-line no-console
+    console.log = fakeConsoleLog;
+  });
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.spyOn(console, 'log');
+    // jest.spyOn(console, 'log');
+  });
+
+  afterAll(() => {
+    // eslint-disable-next-line no-console
+    console.log = originalConsoleLog;
   });
   describe('stepBanner', () => {
     it('should output the correct string for all 5 steps', () => {
@@ -31,10 +44,10 @@ describe('log functions', () => {
       goToStep(4);
       goToStep(5);
       // eslint-disable-next-line no-console
-      expect(console.log).toHaveBeenCalledTimes(25);
+      expect(fakeConsoleLog).toHaveBeenCalledTimes(25);
       // snapshot all calls all at once
       // eslint-disable-next-line no-console
-      console.log.mock.calls.forEach((mockCall) => {
+      fakeConsoleLog.mock.calls.forEach((mockCall) => {
         expect(mockCall).toMatchSnapshot();
       });
     });
@@ -45,7 +58,7 @@ describe('log functions', () => {
       goToStep(100);
       goToStep('index');
       // eslint-disable-next-line no-console
-      expect(console.log).toHaveBeenCalledTimes(0);
+      expect(fakeConsoleLog).toHaveBeenCalledTimes(0);
     });
   });
 });
