@@ -15,7 +15,11 @@
 const prettier = require('prettier');
 
 const formatJSX = (string) => prettier.format(string, {
-  semi: true, parser: 'babel', jsxSingleQuote: true, singleQuote: true,
+  semi: true,
+  parser: 'babel',
+  jsxSingleQuote: true,
+  singleQuote: true,
+  printWidth: 1000, // prettier wraps code in ways that go on to fail linting,
 });
 const formatJSON = (string) => JSON.stringify(JSON.parse(string), null, 2);
 
