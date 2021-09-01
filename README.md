@@ -33,15 +33,9 @@ Want to get paid for your contributions to `one-app`?
 ## 🤹‍ Usage
 
 `one-app-module-template` can be replaced with any valid template package (see [below](#%EF%B8%8F-authoring-templates) for how to create a valid template)
-### With a global install
-```bash
-npm install -g create-using-template
-create-using-template one-app-module-template@5
-```
 
-### Using npm init
 ```bash
-npm init using-template -- one-app-module-template@5
+npm init using-template one-app-module-template@5
 ```
 
 ## 🎛️ Authoring Templates
