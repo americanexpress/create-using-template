@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/americanexpress/create-using-template/compare/v1.0.0...v1.0.1) (2021-09-01)
+
+
+### Bug Fixes
+
+* **fileWritiers:** encoding and formatting issues in file writers ([#7](https://github.com/americanexpress/create-using-template/issues/7)) ([e53f5e1](https://github.com/americanexpress/create-using-template/commit/e53f5e1b82bfae9f9826f22339cd8e0db81b8d1d))
+
 # 1.0.0 (2021-08-24)
 
 
