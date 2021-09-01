@@ -41,10 +41,10 @@ describe('fileRenderers', () => {
       expect(renderDynamicFileName).toHaveBeenNthCalledWith(1, 'mock.js', 'templateOptionsMock');
 
       expect(readFile).toHaveBeenCalledTimes(1);
-      expect(readFile).toHaveBeenNthCalledWith(1, 'file/path/mock.js');
+      expect(readFile).toHaveBeenNthCalledWith(1, 'file/path/mock.js', 'binary');
 
       expect(writeFile).toHaveBeenCalledTimes(1);
-      expect(writeFile).toHaveBeenNthCalledWith(1, 'output/path/mock/dynamicNameFor(mock.js)', 'fileContentFor(file/path/mock.js)');
+      expect(writeFile).toHaveBeenNthCalledWith(1, 'output/path/mock/dynamicNameFor(mock.js)', 'fileContentFor(file/path/mock.js)', 'binary');
     });
   });
   describe('renderAndWriteTemplatefile', () => {

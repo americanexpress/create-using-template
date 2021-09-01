@@ -23,7 +23,8 @@ const copyFile = (
   const dynamicFileName = renderDynamicFileName(path.basename(filePath), templateOptions);
   writeFile(
     path.join(outputRootPath, dynamicFileName),
-    readFile(filePath)
+    readFile(filePath, 'binary'),
+    'binary'
   );
 };
 

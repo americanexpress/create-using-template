@@ -46,7 +46,7 @@ describe('files Util functions', () => {
       expect(ensureDirectoryPathExists).toHaveBeenNthCalledWith(1, 'file/path');
 
       expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
-      expect(fs.writeFileSync).toHaveBeenNthCalledWith(1, 'file/path/mock', 'fileContentMock');
+      expect(fs.writeFileSync).toHaveBeenNthCalledWith(1, 'file/path/mock', 'fileContentMock', 'utf8');
     });
   });
   describe('renderDynamicFileName', () => {

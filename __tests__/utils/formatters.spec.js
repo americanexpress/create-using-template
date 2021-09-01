@@ -33,7 +33,7 @@ describe('formatters', () => {
         1,
         'inputStringMock',
         {
-          semi: true, parser: 'babel', jsxSingleQuote: true, singleQuote: true,
+          semi: true, parser: 'babel', jsxSingleQuote: true, singleQuote: true, printWidth: 1000,
         }
       );
     });
