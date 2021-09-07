@@ -18,10 +18,18 @@ jest.mock('../../package.json', () => ({
   version: 'packageVersionMock',
 }));
 
+jest.mock('kleur', () => ({
+  green: jest.fn(() => ({
+    bold: jest.fn(() => ({
+      underline: (string) => string,
+    })),
+  })),
+}));
+
 describe('log functions', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.spyOn(console, 'log');
+    jest.spyOn(console, 'log').mockImplementation(() => { /* shh console */ });
   });
   describe('stepBanner', () => {
     it('should output the correct string for all 5 steps', () => {

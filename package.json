@@ -18,7 +18,7 @@
     "test": "npm run test:unit",
     "test:lint": "eslint --ext js,jsx,snap,md .",
     "test:spellcheck": "mdspell \"**/*.md\" \"!**/node_modules/**/*.md\" \"!CHANGELOG.md\" -n -a -r --en-us",
-    "test:unit": "cross-env NODE_ENV=production jest --no-color",
+    "test:unit": "cross-env NODE_ENV=production jest",
     "test:git-history": "commitlint --from origin/main --to HEAD",
     "posttest": "npm run test:spellcheck && npm run test:lint && npm run test:git-history && npm run test:lockfile",
     "test:lockfile": "lockfile-lint --path package-lock.json --allowed-hosts registry.npmjs.org --validate-https"
