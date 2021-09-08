@@ -21,6 +21,7 @@ describe('bin', () => {
     jest.spyOn(process, 'exit').mockImplementationOnce(() => {});
 
     jest.isolateModules(() => {
+      // eslint-disable-next-line import/no-unresolved, global-require
       require('../../bin');
     });
     expect(generateFromTemplate).toHaveBeenCalledTimes(1);
