@@ -9,6 +9,7 @@ describe('bin', () => {
   it('should bootstrap the generation process by passing the cli parameters to generateFromTemplate', () => {
     process.argv = ['node', 'create-using-template', 'templateNameMock'];
     jest.isolateModules(() => {
+      // eslint-disable-next-line import/no-unresolved, global-require
       require('../../bin');
     });
     expect(generateFromTemplate).toHaveBeenCalledTimes(1);
