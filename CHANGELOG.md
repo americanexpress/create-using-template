@@ -1,3 +1,10 @@
+# [1.1.0](https://github.com/americanexpress/create-using-template/compare/v1.0.1...v1.1.0) (2021-09-08)
+
+
+### Features
+
+* **formatters/jsx:** use templates prettier config ([#8](https://github.com/americanexpress/create-using-template/issues/8)) ([d4247ac](https://github.com/americanexpress/create-using-template/commit/d4247ac7f232a64b3fc9fa47164415f7b6f4736c))
+
 ## [1.0.1](https://github.com/americanexpress/create-using-template/compare/v1.0.0...v1.0.1) (2021-09-01)
 
 
