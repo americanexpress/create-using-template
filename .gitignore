@@ -12,3 +12,6 @@ test-results
 # yarn
 yarn-debug.log*
 yarn-error.log*
+
+# tarball
+*.tgz
