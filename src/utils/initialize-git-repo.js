@@ -14,11 +14,22 @@
 
 const runCommand = require('./run-command');
 
-const initializeGitRepo = async (repoPath) => {
+const initializeGitRepo = async (repoPath, templateValues) => {
+  console.log('Initialize git repo');
   await runCommand('git', ['init'], repoPath);
+
+  console.log('Add all files');
   await runCommand('git', ['add', '.'], repoPath);
-  await runCommand('git', ['commit', '-mfeat(generation): initial commit', '--quiet'], repoPath);
-  await runCommand('git', ['branch', '-m', 'main'], repoPath);
+
+  // eslint-disable-next-line no-underscore-dangle
+  const commitMessage = templateValues._initialCommitMessage || 'feat(generation): initial commit';
+  console.log(`Create i8nitial commit with message: ${commitMessage}`);
+  await runCommand('git', ['commit', `-m${commitMessage}`, '--quiet'], repoPath);
+
+  // eslint-disable-next-line no-underscore-dangle
+  const branchName = templateValues._primaryBranchName || 'main';
+  console.log(`Rename branch to ${branchName}`);
+  await runCommand('git', ['branch', '-m', branchName], repoPath);
 };
 
 module.exports = initializeGitRepo;

@@ -108,6 +108,14 @@ let templateValues = {
   };
 ```
 
+###### Special Template Values
+
+Some template values are use by the generator, instead of by the EJS template system. These values are optional to provide, and are always prefixed with an underscore.
+
+* `_postGenerationMessage`: This string will be printed after all out output, you can use it to give final information to the user, such as 'run `npm run start` to get started'
+* `_primaryBranchName`: This string will be used as the branch name for the git initialization. If not provided the branch name will be `main`
+* `_initialCommitMessage`: This string will be used as the commit message for the initial git commit. If not provided the default message will be `feat(generation): initial commit`
+
 ##### `dynamicFileNames` object<string, string>, optional
 When the generator is ready to write a file to the users project, it will first check this object for a key matching the fileName it is to use. If the key is present, it will instead use the value against that key as the file name.
 

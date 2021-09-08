@@ -12,6 +12,8 @@
  * under the License.
  */
 
+const { getTemplateOptions } = require('ejs'); // see the comment above the ejs mock as to why 'ejs' is our 'template' for this tests
+
 const log = require('../src/utils/log');
 const installTemplate = require('../src/utils/install-template');
 const installModule = require('../src/utils/install-module');
@@ -129,6 +131,18 @@ describe('generateFromTemplate', () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
     expect(initializeGitRepo).toHaveBeenCalledTimes(1);
-    expect(initializeGitRepo).toHaveBeenNthCalledWith(1, './projectNameMock');
+    expect(initializeGitRepo).toHaveBeenNthCalledWith(1, './projectNameMock', { projectName: 'projectNameMock' });
+  });
+
+  it('should print the post generation message if it exists', async () => {
+    jest.spyOn(console, 'log');
+    getTemplateOptions.mockImplementationOnce(() => ({
+      templateValues: { projectName: 'projectNameMock', _postGenerationMessage: '_postGenerationMessageMock' },
+      dynamicFileNames: 'dynamicFileNamesMock',
+      ignoredFileNames: 'ignoredFileNamesMock',
+    }));
+    await generateFromTemplate({ templateName: 'ejs@1.0.0' });
+    expect(console.log).toHaveBeenCalledTimes(1);
+    expect(console.log).toHaveBeenNthCalledWith(1, '_postGenerationMessageMock');
   });
 });
