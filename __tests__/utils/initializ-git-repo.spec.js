@@ -30,8 +30,8 @@ describe('initializeGitRepo', () => {
 
   it('should initialize a git repo with a message and a branch from the special template values', async () => {
     await initializeGitRepo('repoPathMock', {
-      _defaultBranchName: 'primaryBranchNameMock',
-      _initialCommitMessage: 'initialCommitMessageMock',
+      defaultBranchName: 'defaultBranchNameMock',
+      initialCommitMessage: 'initialCommitMessageMock',
     });
 
     expect(runCommand.mock.calls).toMatchSnapshot();

@@ -14,20 +14,18 @@
 
 const runCommand = require('./run-command');
 
-const initializeGitRepo = async (repoPath, templateValues) => {
+const initializeGitRepo = async (repoPath, generatorConfig) => {
   console.log('Initialize git repo');
   await runCommand('git', ['init'], repoPath);
 
   console.log('Add all files');
   await runCommand('git', ['add', '.'], repoPath);
 
-  // eslint-disable-next-line no-underscore-dangle
-  const commitMessage = templateValues._initialCommitMessage || 'feat(generation): initial commit';
+  const commitMessage = generatorConfig.initialCommitMessage || 'feat(generation): initial commit';
   console.log(`Create initial commit with message: ${commitMessage}`);
   await runCommand('git', ['commit', `-m${commitMessage}`, '--quiet'], repoPath);
 
-  // eslint-disable-next-line no-underscore-dangle
-  const branchName = templateValues._defaultBranchName || 'main';
+  const branchName = generatorConfig.defaultBranchName || 'main';
   console.log(`Rename branch to ${branchName}`);
   await runCommand('git', ['branch', '-m', branchName], repoPath);
 };

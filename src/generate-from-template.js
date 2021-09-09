@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 /*
  * Copyright 2021 American Express Travel Related Services Company, Inc.
  *
@@ -38,6 +37,7 @@ const generateFromTemplate = async ({ templateName }) => {
   const baseData = await getBaseOptions();
   const {
     templateValues,
+    generatorConfig = {},
     dynamicFileNames = [],
     ignoredFileNames = [],
   } = await templatePackage.getTemplateOptions(baseData, prompts);
@@ -62,10 +62,10 @@ const generateFromTemplate = async ({ templateName }) => {
 
   // Initialize git
   log.goToStep(5);
-  await initializeGitRepo(`./${templateValues.projectName}`, templateValues);
+  await initializeGitRepo(`./${templateValues.projectName}`, generatorConfig);
 
-  if (templateValues._postGenerationMessage) {
-    console.log(templateValues._postGenerationMessage);
+  if (generatorConfig.postGenerationMessage) {
+    console.log(generatorConfig.postGenerationMessage);
   }
 };
 

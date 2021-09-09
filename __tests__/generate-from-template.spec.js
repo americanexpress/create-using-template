@@ -132,17 +132,18 @@ describe('generateFromTemplate', () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
     expect(initializeGitRepo).toHaveBeenCalledTimes(1);
-    expect(initializeGitRepo).toHaveBeenNthCalledWith(1, './projectNameMock', { projectName: 'projectNameMock' });
+    expect(initializeGitRepo).toHaveBeenNthCalledWith(1, './projectNameMock', { });
   });
 
   it('should print the post generation message if it exists', async () => {
     getTemplateOptions.mockImplementationOnce(() => ({
-      templateValues: { projectName: 'projectNameMock', _postGenerationMessage: '_postGenerationMessageMock' },
+      templateValues: { projectName: 'projectNameMock' },
+      generatorConfig: { postGenerationMessage: 'postGenerationMessageMock' },
       dynamicFileNames: 'dynamicFileNamesMock',
       ignoredFileNames: 'ignoredFileNamesMock',
     }));
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
     expect(console.log).toHaveBeenCalledTimes(1);
-    expect(console.log).toHaveBeenNthCalledWith(1, '_postGenerationMessageMock');
+    expect(console.log).toHaveBeenNthCalledWith(1, 'postGenerationMessageMock');
   });
 });
