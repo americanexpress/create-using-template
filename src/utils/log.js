@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /*
  * Copyright 2021 American Express Travel Related Services Company, Inc.
  *

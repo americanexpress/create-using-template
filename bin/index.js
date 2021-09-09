@@ -40,7 +40,6 @@ const run = async () => {
 };
 
 run().catch((err) => {
-  // eslint-disable-next-line no-console
   console.error('Failed to create module:', err.message);
   console.error(err);
   process.exit(1);

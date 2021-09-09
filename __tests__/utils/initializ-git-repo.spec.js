@@ -20,6 +20,7 @@ jest.mock('../../src/utils/run-command', () => jest.fn());
 describe('initializeGitRepo', () => {
   beforeEach(() => {
     jest.clearAllMocks();
+    jest.spyOn(console, 'log').mockImplementation(() => {});
   });
   it('should initialize a git repo with a passable commit message on the main branch', async () => {
     await initializeGitRepo('repoPathMock', {});
@@ -29,7 +30,7 @@ describe('initializeGitRepo', () => {
 
   it('should initialize a git repo with a message and a branch from the special template values', async () => {
     await initializeGitRepo('repoPathMock', {
-      _primaryBranchName: 'primaryBranchNameMock',
+      _defaultBranchName: 'primaryBranchNameMock',
       _initialCommitMessage: 'initialCommitMessageMock',
     });
 

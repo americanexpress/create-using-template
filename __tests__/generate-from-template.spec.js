@@ -50,9 +50,10 @@ jest.mock('ejs', () => ({
 describe('generateFromTemplate', () => {
   let templatePackage;
   beforeEach(() => {
-    // eslint-disable-next-line import/no-unresolved
+    // eslint-disable-next-line global-require
     templatePackage = require('ejs');
     jest.clearAllMocks();
+    jest.spyOn(console, 'log').mockImplementation(() => {});
   });
   it('should call the generatorBanner, and all 5 steps', async () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
@@ -135,7 +136,6 @@ describe('generateFromTemplate', () => {
   });
 
   it('should print the post generation message if it exists', async () => {
-    jest.spyOn(console, 'log');
     getTemplateOptions.mockImplementationOnce(() => ({
       templateValues: { projectName: 'projectNameMock', _postGenerationMessage: '_postGenerationMessageMock' },
       dynamicFileNames: 'dynamicFileNamesMock',

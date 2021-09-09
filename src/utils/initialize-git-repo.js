@@ -23,11 +23,11 @@ const initializeGitRepo = async (repoPath, templateValues) => {
 
   // eslint-disable-next-line no-underscore-dangle
   const commitMessage = templateValues._initialCommitMessage || 'feat(generation): initial commit';
-  console.log(`Create i8nitial commit with message: ${commitMessage}`);
+  console.log(`Create initial commit with message: ${commitMessage}`);
   await runCommand('git', ['commit', `-m${commitMessage}`, '--quiet'], repoPath);
 
   // eslint-disable-next-line no-underscore-dangle
-  const branchName = templateValues._primaryBranchName || 'main';
+  const branchName = templateValues._defaultBranchName || 'main';
   console.log(`Rename branch to ${branchName}`);
   await runCommand('git', ['branch', '-m', branchName], repoPath);
 };
