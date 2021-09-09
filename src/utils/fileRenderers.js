@@ -38,7 +38,7 @@ const renderAndWriteTemplateFile = (
   const dynamicFileName = renderDynamicFileName(targetFileName, templateOptions);
   writeFile(
     path.join(outputRootPath, dynamicFileName),
-    getFormatter(path.extname(targetFileName))(output)
+    getFormatter(path.extname(targetFileName))(output, inputFilePath)
   );
 };
 

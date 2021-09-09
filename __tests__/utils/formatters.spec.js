@@ -17,6 +17,7 @@ const { getFormatter } = require('../../src/utils/formatters');
 
 jest.mock('prettier', () => ({
   format: jest.fn(() => 'formattedPrettierStringMock'),
+  resolveConfig: { sync: jest.fn() },
 }));
 
 describe('formatters', () => {
@@ -33,7 +34,24 @@ describe('formatters', () => {
         1,
         'inputStringMock',
         {
-          semi: true, parser: 'babel', jsxSingleQuote: true, singleQuote: true, printWidth: 1000,
+          semi: true, parser: 'babel', singleQuote: true, printWidth: 1000,
+        }
+      );
+    });
+
+    it('uses prettier config from template', () => {
+      prettier.resolveConfig.sync.mockImplementationOnce(() => ({
+        semi: true, singleQuote: false, printWidth: 100,
+      }));
+
+      expect(getFormatter('.jsx')('inputStringMock', 'filePath.jsx')).toBe('formattedPrettierStringMock');
+      expect(prettier.resolveConfig.sync).toHaveBeenCalledWith('filePath.jsx');
+      expect(prettier.format).toHaveBeenCalledTimes(1);
+      expect(prettier.format).toHaveBeenNthCalledWith(
+        1,
+        'inputStringMock',
+        {
+          semi: true, singleQuote: false, printWidth: 100,
         }
       );
     });
