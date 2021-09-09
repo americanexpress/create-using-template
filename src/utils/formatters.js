@@ -14,13 +14,18 @@
 
 const prettier = require('prettier');
 
-const formatJSX = (string) => prettier.format(string, {
+const defaultPrettierConfig = {
   semi: true,
   parser: 'babel',
-  jsxSingleQuote: true,
   singleQuote: true,
-  printWidth: 1000, // prettier wraps code in ways that go on to fail linting,
-});
+  printWidth: 1000, // prettier wraps code in ways that can fail linting
+};
+
+const formatJSX = (string, filePath) => {
+  const prettierConfig = prettier.resolveConfig.sync(filePath) || defaultPrettierConfig;
+  return prettier.format(string, prettierConfig);
+};
+
 const formatJSON = (string) => JSON.stringify(JSON.parse(string), null, 2);
 
 const getFormatter = (fileExtension) => {

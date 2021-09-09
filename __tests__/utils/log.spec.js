@@ -19,6 +19,14 @@ jest.mock('../../package.json', () => ({
   version: 'packageVersionMock',
 }));
 
+jest.mock('kleur', () => ({
+  green: jest.fn(() => ({
+    bold: jest.fn(() => ({
+      underline: (string) => string,
+    })),
+  })),
+}));
+
 describe('log functions', () => {
   beforeEach(() => {
     jest.clearAllMocks();
