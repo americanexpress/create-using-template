@@ -91,5 +91,8 @@
       "@semantic-release/git",
       "@semantic-release/github"
     ]
+  },
+  "jest": {
+    "preset": "amex-jest-preset"
   }
 }

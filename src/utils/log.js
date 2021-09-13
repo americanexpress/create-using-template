@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 /*
  * Copyright 2021 American Express Travel Related Services Company, Inc.
  *
@@ -15,6 +14,8 @@
 
 const ansi = require('sisteransi');
 const kleur = require('kleur');
+
+const pack = require('../../package.json');
 
 const stepBanners = [
   {
@@ -45,7 +46,7 @@ const banner = `
 | | | / __| | '_ \\ / _\` |   | |/ _ \\ '_ \` _ \\| '_ \\| |/ _\` | __/ _ \\
 | |_| \\__ \\ | | | | (_| |   | |  __/ | | | | | |_) | | (_| | ||  __/
  \\___/|___/_|_| |_|\\__, |   |_|\\___|_| |_| |_| .__/|_|\\__,_|\\__\\___|
-                   |___/                     |_|                    
+                   |___/                     |_|              v${pack.version}
 `;
 
 const goToStep = (step) => {

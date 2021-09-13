@@ -18,8 +18,21 @@ const runCommand = require('../../src/utils/run-command');
 jest.mock('../../src/utils/run-command', () => jest.fn());
 
 describe('initializeGitRepo', () => {
-  it('should initialize a git repo with a passabe commit message on the main branch', async () => {
-    await initializeGitRepo('repoPathMock');
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.spyOn(console, 'log').mockImplementation(() => {});
+  });
+  it('should initialize a git repo with a passable commit message on the main branch', async () => {
+    await initializeGitRepo('repoPathMock', {});
+
+    expect(runCommand.mock.calls).toMatchSnapshot();
+  });
+
+  it('should initialize a git repo with a message and a branch from the special template values', async () => {
+    await initializeGitRepo('repoPathMock', {
+      defaultBranchName: 'defaultBranchNameMock',
+      initialCommitMessage: 'initialCommitMessageMock',
+    });
 
     expect(runCommand.mock.calls).toMatchSnapshot();
   });

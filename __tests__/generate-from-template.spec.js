@@ -12,6 +12,8 @@
  * under the License.
  */
 
+const { getTemplateOptions } = require('ejs'); // see the comment above the ejs mock as to why 'ejs' is our 'template' for this tests
+
 const log = require('../src/utils/log');
 const installTemplate = require('../src/utils/install-template');
 const installModule = require('../src/utils/install-module');
@@ -48,9 +50,10 @@ jest.mock('ejs', () => ({
 describe('generateFromTemplate', () => {
   let templatePackage;
   beforeEach(() => {
-    // eslint-disable-next-line import/no-unresolved
+    // eslint-disable-next-line global-require
     templatePackage = require('ejs');
     jest.clearAllMocks();
+    jest.spyOn(console, 'log').mockImplementation(() => {});
   });
   it('should call the generatorBanner, and all 5 steps', async () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
@@ -129,6 +132,18 @@ describe('generateFromTemplate', () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
     expect(initializeGitRepo).toHaveBeenCalledTimes(1);
-    expect(initializeGitRepo).toHaveBeenNthCalledWith(1, './projectNameMock');
+    expect(initializeGitRepo).toHaveBeenNthCalledWith(1, './projectNameMock', { });
+  });
+
+  it('should print the post generation message if it exists', async () => {
+    getTemplateOptions.mockImplementationOnce(() => ({
+      templateValues: { projectName: 'projectNameMock' },
+      generatorOptions: { postGenerationMessage: 'postGenerationMessageMock' },
+      dynamicFileNames: 'dynamicFileNamesMock',
+      ignoredFileNames: 'ignoredFileNamesMock',
+    }));
+    await generateFromTemplate({ templateName: 'ejs@1.0.0' });
+    expect(console.log).toHaveBeenCalledTimes(1);
+    expect(console.log).toHaveBeenNthCalledWith(1, 'postGenerationMessageMock');
   });
 });

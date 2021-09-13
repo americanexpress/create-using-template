@@ -1,6 +1,44 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`initializeGitRepo should initialize a git repo with a passabe commit message on the main branch 1`] = `
+exports[`initializeGitRepo should initialize a git repo with a message and a branch from the special template values 1`] = `
+Array [
+  Array [
+    "git",
+    Array [
+      "init",
+    ],
+    "repoPathMock",
+  ],
+  Array [
+    "git",
+    Array [
+      "add",
+      ".",
+    ],
+    "repoPathMock",
+  ],
+  Array [
+    "git",
+    Array [
+      "commit",
+      "-minitialCommitMessageMock",
+      "--quiet",
+    ],
+    "repoPathMock",
+  ],
+  Array [
+    "git",
+    Array [
+      "branch",
+      "-m",
+      "defaultBranchNameMock",
+    ],
+    "repoPathMock",
+  ],
+]
+`;
+
+exports[`initializeGitRepo should initialize a git repo with a passable commit message on the main branch 1`] = `
 Array [
   Array [
     "git",

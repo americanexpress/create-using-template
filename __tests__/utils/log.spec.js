@@ -12,6 +12,7 @@
  * under the License.
  */
 
+const kleur = require('kleur');
 const { goToStep } = require('../../src/utils/log');
 
 jest.mock('../../package.json', () => ({
@@ -29,7 +30,8 @@ jest.mock('kleur', () => ({
 describe('log functions', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    jest.spyOn(console, 'log').mockImplementation(() => { /* shh console */ });
+    jest.spyOn(console, 'log').mockImplementation(() => {});
+    kleur.enabled = false; // color support for unit tests is flaky, disable color for snapshots
   });
   describe('stepBanner', () => {
     it('should output the correct string for all 5 steps', () => {
@@ -38,10 +40,8 @@ describe('log functions', () => {
       goToStep(3);
       goToStep(4);
       goToStep(5);
-      // eslint-disable-next-line no-console
       expect(console.log).toHaveBeenCalledTimes(25);
       // snapshot all calls all at once
-      // eslint-disable-next-line no-console
       console.log.mock.calls.forEach((mockCall) => {
         expect(mockCall).toMatchSnapshot();
       });
@@ -52,7 +52,6 @@ describe('log functions', () => {
       goToStep(6);
       goToStep(100);
       goToStep('index');
-      // eslint-disable-next-line no-console
       expect(console.log).toHaveBeenCalledTimes(0);
     });
   });

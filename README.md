@@ -68,7 +68,7 @@ Directory structures will be copied exactly, and files will be placed in the sam
 It is possible to define dynamic file names, and ignore files, based upon user input (see `getTemplateOptions` below)
 
 ### `getTemplateOptions`
-`async (baseData, prompts) => ({templateValues[, dynamicFileNames, ignoredFileNames]})`
+`async (baseData, prompts) => ({templateValues[, generatorOptions, dynamicFileNames, ignoredFileNames]})`
 
 getTemplateOptions will be called to allow your template to configure its dynamic values.
 
@@ -107,6 +107,14 @@ let templateValues = {
     ]),
   };
 ```
+
+##### `generatorOptions` object, optional
+
+These values allow you to configure some of the things the generator does.
+
+* `postGenerationMessage`: If specified, this string will be printed after all other output, you can use it to give final information to the user, such as 'run `npm run start` to get started'
+* `defaultBranchName`: This string will be used as the branch name for the git initialization. Defaults to main `main`
+* `initialCommitMessage`: This string will be used as the commit message for the initial git commit. Defaults to `feat(generation): initial commit`
 
 ##### `dynamicFileNames` object<string, string>, optional
 When the generator is ready to write a file to the users project, it will first check this object for a key matching the fileName it is to use. If the key is present, it will instead use the value against that key as the file name.

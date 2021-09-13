@@ -1,3 +1,6 @@
 {
-  "extends": "amex"
+  "extends": "amex",
+  "rules":{
+    "no-console": 0 // This CLI tool is permitted to log as it sees fit
+  }
 }
