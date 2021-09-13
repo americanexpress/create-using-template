@@ -37,7 +37,7 @@ const generateFromTemplate = async ({ templateName }) => {
   const baseData = await getBaseOptions();
   const {
     templateValues,
-    generatorConfig = {},
+    generatorOptions = {},
     dynamicFileNames = [],
     ignoredFileNames = [],
   } = await templatePackage.getTemplateOptions(baseData, prompts);
@@ -62,10 +62,10 @@ const generateFromTemplate = async ({ templateName }) => {
 
   // Initialize git
   log.goToStep(5);
-  await initializeGitRepo(`./${templateValues.projectName}`, generatorConfig);
+  await initializeGitRepo(`./${templateValues.projectName}`, generatorOptions);
 
-  if (generatorConfig.postGenerationMessage) {
-    console.log(generatorConfig.postGenerationMessage);
+  if (generatorOptions.postGenerationMessage) {
+    console.log(generatorOptions.postGenerationMessage);
   }
 };
 

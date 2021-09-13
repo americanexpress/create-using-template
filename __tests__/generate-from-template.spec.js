@@ -138,7 +138,7 @@ describe('generateFromTemplate', () => {
   it('should print the post generation message if it exists', async () => {
     getTemplateOptions.mockImplementationOnce(() => ({
       templateValues: { projectName: 'projectNameMock' },
-      generatorConfig: { postGenerationMessage: 'postGenerationMessageMock' },
+      generatorOptions: { postGenerationMessage: 'postGenerationMessageMock' },
       dynamicFileNames: 'dynamicFileNamesMock',
       ignoredFileNames: 'ignoredFileNamesMock',
     }));

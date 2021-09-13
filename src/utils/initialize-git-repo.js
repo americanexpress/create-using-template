@@ -14,18 +14,18 @@
 
 const runCommand = require('./run-command');
 
-const initializeGitRepo = async (repoPath, generatorConfig) => {
+const initializeGitRepo = async (repoPath, generatorOptions) => {
   console.log('Initialize git repo');
   await runCommand('git', ['init'], repoPath);
 
   console.log('Add all files');
   await runCommand('git', ['add', '.'], repoPath);
 
-  const commitMessage = generatorConfig.initialCommitMessage || 'feat(generation): initial commit';
+  const commitMessage = generatorOptions.initialCommitMessage || 'feat(generation): initial commit';
   console.log(`Create initial commit with message: ${commitMessage}`);
   await runCommand('git', ['commit', `-m${commitMessage}`, '--quiet'], repoPath);
 
-  const branchName = generatorConfig.defaultBranchName || 'main';
+  const branchName = generatorOptions.defaultBranchName || 'main';
   console.log(`Rename branch to ${branchName}`);
   await runCommand('git', ['branch', '-m', branchName], repoPath);
 };

@@ -68,7 +68,7 @@ Directory structures will be copied exactly, and files will be placed in the sam
 It is possible to define dynamic file names, and ignore files, based upon user input (see `getTemplateOptions` below)
 
 ### `getTemplateOptions`
-`async (baseData, prompts) => ({templateValues[, generatorConfig, dynamicFileNames, ignoredFileNames]})`
+`async (baseData, prompts) => ({templateValues[, generatorOptions, dynamicFileNames, ignoredFileNames]})`
 
 getTemplateOptions will be called to allow your template to configure its dynamic values.
 
@@ -108,7 +108,7 @@ let templateValues = {
   };
 ```
 
-##### `generatorConfig` object, optional
+##### `generatorOptions` object, optional
 
 These values allow you to configure some of the things the generator does.
 
