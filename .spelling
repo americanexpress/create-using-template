@@ -27,6 +27,7 @@ getTemplateOptions
 eslint
 config
 fileName
+kleur
 
  - SECURITY.md
 cybersecurity

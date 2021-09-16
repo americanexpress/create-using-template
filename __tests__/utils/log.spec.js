@@ -40,7 +40,19 @@ describe('log functions', () => {
       goToStep(3);
       goToStep(4);
       goToStep(5);
-      expect(console.log).toHaveBeenCalledTimes(25);
+      expect(console.log).toHaveBeenCalledTimes(30);
+      // snapshot all calls all at once
+      console.log.mock.calls.forEach((mockCall) => {
+        expect(mockCall).toMatchSnapshot();
+      });
+    });
+    it('should output the correct string for all 5 steps with a banner', () => {
+      goToStep(1, 'BannerMock');
+      goToStep(2, 'BannerMock');
+      goToStep(3, 'BannerMock');
+      goToStep(4, 'BannerMock');
+      goToStep(5, 'BannerMock');
+      expect(console.log).toHaveBeenCalledTimes(35);
       // snapshot all calls all at once
       console.log.mock.calls.forEach((mockCall) => {
         expect(mockCall).toMatchSnapshot();

@@ -60,10 +60,35 @@ describe('generateFromTemplate', () => {
 
     expect(log.goToStep).toHaveBeenCalledTimes(5);
     expect(log.goToStep).toHaveBeenNthCalledWith(1, 1);
-    expect(log.goToStep).toHaveBeenNthCalledWith(2, 2);
-    expect(log.goToStep).toHaveBeenNthCalledWith(3, 3);
-    expect(log.goToStep).toHaveBeenNthCalledWith(4, 4);
-    expect(log.goToStep).toHaveBeenNthCalledWith(5, 5);
+    expect(log.goToStep).toHaveBeenNthCalledWith(2, 2, undefined);
+    expect(log.goToStep).toHaveBeenNthCalledWith(3, 3, undefined);
+    expect(log.goToStep).toHaveBeenNthCalledWith(4, 4, undefined);
+    expect(log.goToStep).toHaveBeenNthCalledWith(5, 5, undefined);
+  });
+
+  it('should call the generatorBanner, and all 5 steps if the template provides a banner', async () => {
+    templatePackage.getTemplateBanner = jest.fn(() => 'TemplateBannerMock');
+    await generateFromTemplate({ templateName: 'ejs@1.0.0' });
+
+    expect(log.goToStep).toHaveBeenCalledTimes(5);
+    expect(log.goToStep).toHaveBeenNthCalledWith(1, 1);
+    expect(log.goToStep).toHaveBeenNthCalledWith(2, 2, 'TemplateBannerMock');
+    expect(log.goToStep).toHaveBeenNthCalledWith(3, 3, 'TemplateBannerMock');
+    expect(log.goToStep).toHaveBeenNthCalledWith(4, 4, 'TemplateBannerMock');
+    expect(log.goToStep).toHaveBeenNthCalledWith(5, 5, 'TemplateBannerMock');
+  });
+
+  it('should call the generatorBanner, and all 5 steps if the template provides a banner that is mallformed', async () => {
+    // the banner is a function instead of a string
+    templatePackage.getTemplateBanner = jest.fn(() => () => {});
+    await generateFromTemplate({ templateName: 'ejs@1.0.0' });
+
+    expect(log.goToStep).toHaveBeenCalledTimes(5);
+    expect(log.goToStep).toHaveBeenNthCalledWith(1, 1);
+    expect(log.goToStep).toHaveBeenNthCalledWith(2, 2, undefined);
+    expect(log.goToStep).toHaveBeenNthCalledWith(3, 3, undefined);
+    expect(log.goToStep).toHaveBeenNthCalledWith(4, 4, undefined);
+    expect(log.goToStep).toHaveBeenNthCalledWith(5, 5, undefined);
   });
 
   // Step 1
