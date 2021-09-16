@@ -2,7 +2,9 @@
   <img src="./create-using-template.png" alt="Create Using template - One Amex" width="50%" />
 </h1>
 
-[![npm version](https://badge.fury.io/js/@americanexpress/create-using-template.svg)](https://badge.fury.io/js/@americanexpress/create-using-template)
+[![npm version](https://badge.fury.io/js/create-using-template.svg)](https://badge.fury.io/js/create-using-template)
+[![CodeQL](https://github.com/americanexpress/create-using-template/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/americanexpress/create-using-template/actions/workflows/codeql-analysis.yml)
+[![Tests](https://github.com/americanexpress/create-using-template/actions/workflows/tests.yml/badge.svg)](https://github.com/americanexpress/create-using-template/actions/workflows/tests.yml)
 
 > A simple project generator.
 
