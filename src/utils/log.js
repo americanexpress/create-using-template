@@ -40,7 +40,7 @@ const stepBanners = [
   },
 ];
 
-const banner = `
+const fullBanner = `
  _   _     _               _____                    _       _       
 | | | |___(_)_ __   __ _  |_   _|__ _ __ ___  _ __ | | __ _| |_ ___ 
 | | | / __| | '_ \\ / _\` |   | |/ _ \\ '_ \` _ \\| '_ \\| |/ _\` | __/ _ \\
@@ -48,12 +48,16 @@ const banner = `
  \\___/|___/_|_| |_|\\__, |   |_|\\___|_| |_| |_| .__/|_|\\__,_|\\__\\___|
                    |___/                     |_|              v${pack.version}`;
 
+const smallBanner = `Generator Version: v${pack.version}`;
+
 const goToStep = (step, templateBanner = undefined) => {
   if (stepBanners[step - 1] !== undefined) {
     console.log(ansi.erase.screen);
-    console.log(banner);
     if (templateBanner) {
       console.log(templateBanner);
+      console.log(smallBanner);
+    } else {
+      console.log(fullBanner);
     }
     console.log('');
     const coloredSteps = stepBanners.map(({ name }, index) => {

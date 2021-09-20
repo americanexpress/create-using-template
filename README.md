@@ -146,7 +146,7 @@ Note that the string does contain the .ejs suffix, since the ignore applies when
 
 The string returned from this function will be output as part of the banner the template outputs. It can be a multi line string, and generally should not exceed 80 characters wide.
 
-The kleur package is provided so that the template can output a colorful banner.
+The [kleur package](https://www.npmjs.com/package/kleur) package is provided so that the template can output a colorful banner.
 
 If this function is not exported, no string will be rendered
 
