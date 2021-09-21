@@ -48,6 +48,7 @@ A template is any npm package whose default export follows the below API.
 module.exports = {
   getTemplatePaths,
   getTemplateOptions,
+  getTempalateBanner,
 };
 ```
 
@@ -112,7 +113,7 @@ let templateValues = {
 
 ##### `generatorOptions` object, optional
 
-These values allow you to configure some of the things the generator does.
+These values allow you to configure the generator.
 
 * `postGenerationMessage`: If specified, this string will be printed after all other output, you can use it to give final information to the user, such as 'run `npm run start` to get started'
 * `defaultBranchName`: This string will be used as the branch name for the git initialization. Defaults to main `main`
@@ -141,6 +142,16 @@ if (templateValues.eslint !== 'y') {
 }
 ```
 Note that the string does contain the .ejs suffix, since the ignore applies when reading the file, the string should exactly match the name of the file in your template.
+
+### `getTemplateBanner` optional
+`(kleur) => (<string>)`
+
+The string returned from this function will be output as part of the banner the template outputs. It can be a multi line string, and generally should not exceed 80 characters wide.
+
+The [kleur package](https://www.npmjs.com/package/kleur) package is provided so that the template can output a colorful banner.
+
+If this function is not exported, no string will be rendered
+
 
 ## 🏆 Contributing
 

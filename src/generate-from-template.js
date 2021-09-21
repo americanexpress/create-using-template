@@ -13,6 +13,7 @@
  */
 
 const prompts = require('prompts');
+const kleur = require('kleur');
 const log = require('./utils/log');
 const installTemplate = require('./utils/install-template');
 const installModule = require('./utils/install-module');
@@ -32,8 +33,16 @@ const generateFromTemplate = async ({ templateName }) => {
   // eslint-disable-next-line import/no-extraneous-dependencies,global-require,import/no-dynamic-require
   const templatePackage = require(templatePackageName);
 
+  let templateBanner;
+  if (typeof templatePackage.getTemplateBanner === 'function') {
+    const templateBannerResponse = templatePackage.getTemplateBanner(kleur);
+    if (typeof templateBannerResponse === 'string') {
+      templateBanner = templateBannerResponse;
+    }
+  }
+
   // Gather parameters
-  log.goToStep(2);
+  log.goToStep(2, templateBanner);
   const baseData = await getBaseOptions();
   const {
     templateValues,
@@ -44,7 +53,7 @@ const generateFromTemplate = async ({ templateName }) => {
   const templateDirPaths = templatePackage.getTemplatePaths();
 
   // Generate Module
-  log.goToStep(3);
+  log.goToStep(3, templateBanner);
 
   templateDirPaths.forEach((templateRootPath) => walkTemplate(
     templateRootPath,
@@ -57,11 +66,11 @@ const generateFromTemplate = async ({ templateName }) => {
   ));
 
   // Install and build the module
-  log.goToStep(4);
+  log.goToStep(4, templateBanner);
   await installModule(`./${templateValues.projectName}`);
 
   // Initialize git
-  log.goToStep(5);
+  log.goToStep(5, templateBanner);
   await initializeGitRepo(`./${templateValues.projectName}`, generatorOptions);
 
   if (generatorOptions.postGenerationMessage) {

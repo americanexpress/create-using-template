@@ -40,19 +40,26 @@ const stepBanners = [
   },
 ];
 
-const banner = `
+const fullBanner = `
  _   _     _               _____                    _       _       
 | | | |___(_)_ __   __ _  |_   _|__ _ __ ___  _ __ | | __ _| |_ ___ 
 | | | / __| | '_ \\ / _\` |   | |/ _ \\ '_ \` _ \\| '_ \\| |/ _\` | __/ _ \\
 | |_| \\__ \\ | | | | (_| |   | |  __/ | | | | | |_) | | (_| | ||  __/
  \\___/|___/_|_| |_|\\__, |   |_|\\___|_| |_| |_| .__/|_|\\__,_|\\__\\___|
-                   |___/                     |_|              v${pack.version}
-`;
+                   |___/                     |_|              v${pack.version}`;
 
-const goToStep = (step) => {
+const smallBanner = `Generator Version: v${pack.version}`;
+
+const goToStep = (step, templateBanner = undefined) => {
   if (stepBanners[step - 1] !== undefined) {
     console.log(ansi.erase.screen);
-    console.log(banner);
+    if (templateBanner) {
+      console.log(templateBanner);
+      console.log(smallBanner);
+    } else {
+      console.log(fullBanner);
+    }
+    console.log('');
     const coloredSteps = stepBanners.map(({ name }, index) => {
       let text = name;
       if (index + 1 === step) {
@@ -62,7 +69,7 @@ const goToStep = (step) => {
     });
     console.log(coloredSteps.join(' -> '));
     console.log(stepBanners[step - 1].description);
-    console.log('________________________________________________________________________________');
+    console.log('_'.repeat(80)); // the 'standard' terminal is 70 wide
   }
 };
 
