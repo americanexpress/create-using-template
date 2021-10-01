@@ -29,9 +29,10 @@ const generateFromTemplate = async ({ templateName }) => {
 
   const templatePackageName = getPackageName(templateName);
 
-  // eslint-disable-next-line max-len
-  // eslint-disable-next-line import/no-extraneous-dependencies,global-require,import/no-dynamic-require
+  /* eslint-disable global-require,import/no-dynamic-require
+  -- we need to dynamically require this package as its name is only known ar runtime */
   const templatePackage = require(templatePackageName);
+  /* eslint-enable global-require,import/no-dynamic-require -- re-enable */
 
   let templateBanner;
   if (typeof templatePackage.getTemplateBanner === 'function') {

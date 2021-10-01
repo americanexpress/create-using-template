@@ -9,7 +9,7 @@ describe('bin', () => {
   it('should bootstrap the generation process by passing the cli parameters to generateFromTemplate', () => {
     process.argv = ['node', 'create-using-template', 'templateNameMock'];
     jest.isolateModules(() => {
-      // eslint-disable-next-line import/no-unresolved, global-require
+      // eslint-disable-next-line global-require -- we are testing `import time` code
       require('../../bin');
     });
     expect(generateFromTemplate).toHaveBeenCalledTimes(1);
@@ -22,7 +22,7 @@ describe('bin', () => {
     jest.spyOn(process, 'exit').mockImplementationOnce(() => {});
 
     jest.isolateModules(() => {
-      // eslint-disable-next-line import/no-unresolved, global-require
+      // eslint-disable-next-line global-require -- we are testing `import time` code
       require('../../bin');
     });
     expect(generateFromTemplate).toHaveBeenCalledTimes(1);
