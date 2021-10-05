@@ -22,7 +22,8 @@ const runNpmInstall = async (workingDirectory, additionalArgs = []) => {
     '--loglevel',
     'error',
     '--no-fund',
-  ].concat(additionalArgs);
+    ...additionalArgs,
+  ];
 
   await runCommand(command, args, workingDirectory);
 };

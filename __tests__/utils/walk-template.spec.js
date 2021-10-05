@@ -1,4 +1,3 @@
-/* eslint-disable newline-per-chained-call */
 /*
  * Copyright 2021 American Express Travel Related Services Company, Inc.
  *
@@ -107,23 +106,14 @@ describe('walkTemplate', () => {
     ).mockImplementationOnce(
       () => ['index.css.ejs', 'index.js.ejs', 'indexIgnore.js']
     );
-    isDirectory.mockImplementationOnce(
-      () => true // folder 1
-    ).mockImplementationOnce(
-      () => false // index.html
-    ).mockImplementationOnce(
-      () => true // folder 2
-    ).mockImplementationOnce(
-      () => false // index.css.ejs
-    ).mockImplementationOnce(
-      () => false // index.js.ejs
-    ).mockImplementationOnce(
-      () => false // indexIgnore.js
-    ).mockImplementationOnce(
-      () => false // root.html
-    ).mockImplementationOnce(
-      () => false // rootIgnore.html
-    );
+    isDirectory.mockImplementationOnce(() => true) // folder 1
+      .mockImplementationOnce(() => false) // index.html
+      .mockImplementationOnce(() => true) // folder 2
+      .mockImplementationOnce(() => false) // index.css.ejs
+      .mockImplementationOnce(() => false) // index.js.ejs
+      .mockImplementationOnce(() => false) // indexIgnore.js
+      .mockImplementationOnce(() => false) // root.html
+      .mockImplementationOnce(() => false); // rootIgnore.html
 
     templateOptionsMock.ignoredFileNames = ['indexIgnore.js', 'rootIgnore.html'];
 

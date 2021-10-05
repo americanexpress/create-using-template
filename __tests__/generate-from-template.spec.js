@@ -50,7 +50,7 @@ jest.mock('ejs', () => ({
 describe('generateFromTemplate', () => {
   let templatePackage;
   beforeEach(() => {
-    // eslint-disable-next-line global-require
+    // eslint-disable-next-line global-require -- we need access to a fresh import for every test
     templatePackage = require('ejs');
     jest.clearAllMocks();
     jest.spyOn(console, 'log').mockImplementation(() => {});
