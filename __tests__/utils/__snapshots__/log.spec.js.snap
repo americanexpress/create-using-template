@@ -14,147 +14,125 @@ Array [
 | | | / __| | '_ \\\\ / _\` |   | |/ _ \\\\ '_ \` _ \\\\| '_ \\\\| |/ _\` | __/ _ \\\\
 | |_| \\\\__ \\\\ | | | | (_| |   | |  __/ | | | | | |_) | | (_| | ||  __/
  \\\\___/|___/_|_| |_|\\\\__, |   |_|\\\\___|_| |_| |_| .__/|_|\\\\__,_|\\\\__\\\\___|
-                   |___/                     |_|              vpackageVersionMock
-",
+                   |___/                     |_|              vpackageVersionMock",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 3`] = `
 Array [
-  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
+  "",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 4`] = `
 Array [
-  "Load the template",
+  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 5`] = `
 Array [
-  "________________________________________________________________________________",
+  "Load the template",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 6`] = `
 Array [
-  "[2J",
+  "________________________________________________________________________________",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 7`] = `
 Array [
-  "
- _   _     _               _____                    _       _       
-| | | |___(_)_ __   __ _  |_   _|__ _ __ ___  _ __ | | __ _| |_ ___ 
-| | | / __| | '_ \\\\ / _\` |   | |/ _ \\\\ '_ \` _ \\\\| '_ \\\\| |/ _\` | __/ _ \\\\
-| |_| \\\\__ \\\\ | | | | (_| |   | |  __/ | | | | | |_) | | (_| | ||  __/
- \\\\___/|___/_|_| |_|\\\\__, |   |_|\\\\___|_| |_| |_| .__/|_|\\\\__,_|\\\\__\\\\___|
-                   |___/                     |_|              vpackageVersionMock
-",
+  "[2J",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 8`] = `
 Array [
-  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
+  "
+ _   _     _               _____                    _       _       
+| | | |___(_)_ __   __ _  |_   _|__ _ __ ___  _ __ | | __ _| |_ ___ 
+| | | / __| | '_ \\\\ / _\` |   | |/ _ \\\\ '_ \` _ \\\\| '_ \\\\| |/ _\` | __/ _ \\\\
+| |_| \\\\__ \\\\ | | | | (_| |   | |  __/ | | | | | |_) | | (_| | ||  __/
+ \\\\___/|___/_|_| |_|\\\\__, |   |_|\\\\___|_| |_| |_| .__/|_|\\\\__,_|\\\\__\\\\___|
+                   |___/                     |_|              vpackageVersionMock",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 9`] = `
 Array [
-  "Gather parameters",
+  "",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 10`] = `
 Array [
-  "________________________________________________________________________________",
+  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 11`] = `
 Array [
-  "[2J",
+  "Gather parameters",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 12`] = `
 Array [
-  "
- _   _     _               _____                    _       _       
-| | | |___(_)_ __   __ _  |_   _|__ _ __ ___  _ __ | | __ _| |_ ___ 
-| | | / __| | '_ \\\\ / _\` |   | |/ _ \\\\ '_ \` _ \\\\| '_ \\\\| |/ _\` | __/ _ \\\\
-| |_| \\\\__ \\\\ | | | | (_| |   | |  __/ | | | | | |_) | | (_| | ||  __/
- \\\\___/|___/_|_| |_|\\\\__, |   |_|\\\\___|_| |_| |_| .__/|_|\\\\__,_|\\\\__\\\\___|
-                   |___/                     |_|              vpackageVersionMock
-",
+  "________________________________________________________________________________",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 13`] = `
 Array [
-  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
+  "[2J",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 14`] = `
 Array [
-  "Generate Module",
+  "
+ _   _     _               _____                    _       _       
+| | | |___(_)_ __   __ _  |_   _|__ _ __ ___  _ __ | | __ _| |_ ___ 
+| | | / __| | '_ \\\\ / _\` |   | |/ _ \\\\ '_ \` _ \\\\| '_ \\\\| |/ _\` | __/ _ \\\\
+| |_| \\\\__ \\\\ | | | | (_| |   | |  __/ | | | | | |_) | | (_| | ||  __/
+ \\\\___/|___/_|_| |_|\\\\__, |   |_|\\\\___|_| |_| |_| .__/|_|\\\\__,_|\\\\__\\\\___|
+                   |___/                     |_|              vpackageVersionMock",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 15`] = `
 Array [
-  "________________________________________________________________________________",
+  "",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 16`] = `
 Array [
-  "[2J",
+  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 17`] = `
 Array [
-  "
- _   _     _               _____                    _       _       
-| | | |___(_)_ __   __ _  |_   _|__ _ __ ___  _ __ | | __ _| |_ ___ 
-| | | / __| | '_ \\\\ / _\` |   | |/ _ \\\\ '_ \` _ \\\\| '_ \\\\| |/ _\` | __/ _ \\\\
-| |_| \\\\__ \\\\ | | | | (_| |   | |  __/ | | | | | |_) | | (_| | ||  __/
- \\\\___/|___/_|_| |_|\\\\__, |   |_|\\\\___|_| |_| |_| .__/|_|\\\\__,_|\\\\__\\\\___|
-                   |___/                     |_|              vpackageVersionMock
-",
+  "Generate Module",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 18`] = `
 Array [
-  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
+  "________________________________________________________________________________",
 ]
 `;
 
 exports[`log functions stepBanner should output the correct string for all 5 steps 19`] = `
 Array [
-  "Install, build and test the module, this may take a minute",
-]
-`;
-
-exports[`log functions stepBanner should output the correct string for all 5 steps 20`] = `
-Array [
-  "________________________________________________________________________________",
-]
-`;
-
-exports[`log functions stepBanner should output the correct string for all 5 steps 21`] = `
-Array [
   "[2J",
 ]
 `;
 
-exports[`log functions stepBanner should output the correct string for all 5 steps 22`] = `
+exports[`log functions stepBanner should output the correct string for all 5 steps 20`] = `
 Array [
   "
  _   _     _               _____                    _       _       
@@ -162,24 +140,281 @@ Array [
 | | | / __| | '_ \\\\ / _\` |   | |/ _ \\\\ '_ \` _ \\\\| '_ \\\\| |/ _\` | __/ _ \\\\
 | |_| \\\\__ \\\\ | | | | (_| |   | |  __/ | | | | | |_) | | (_| | ||  __/
  \\\\___/|___/_|_| |_|\\\\__, |   |_|\\\\___|_| |_| |_| .__/|_|\\\\__,_|\\\\__\\\\___|
-                   |___/                     |_|              vpackageVersionMock
-",
+                   |___/                     |_|              vpackageVersionMock",
 ]
 `;
 
-exports[`log functions stepBanner should output the correct string for all 5 steps 23`] = `
+exports[`log functions stepBanner should output the correct string for all 5 steps 21`] = `
+Array [
+  "",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps 22`] = `
 Array [
   "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
 ]
 `;
 
+exports[`log functions stepBanner should output the correct string for all 5 steps 23`] = `
+Array [
+  "Install, build and test the module, this may take a minute",
+]
+`;
+
 exports[`log functions stepBanner should output the correct string for all 5 steps 24`] = `
+Array [
+  "________________________________________________________________________________",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps 25`] = `
+Array [
+  "[2J",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps 26`] = `
+Array [
+  "
+ _   _     _               _____                    _       _       
+| | | |___(_)_ __   __ _  |_   _|__ _ __ ___  _ __ | | __ _| |_ ___ 
+| | | / __| | '_ \\\\ / _\` |   | |/ _ \\\\ '_ \` _ \\\\| '_ \\\\| |/ _\` | __/ _ \\\\
+| |_| \\\\__ \\\\ | | | | (_| |   | |  __/ | | | | | |_) | | (_| | ||  __/
+ \\\\___/|___/_|_| |_|\\\\__, |   |_|\\\\___|_| |_| |_| .__/|_|\\\\__,_|\\\\__\\\\___|
+                   |___/                     |_|              vpackageVersionMock",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps 27`] = `
+Array [
+  "",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps 28`] = `
+Array [
+  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps 29`] = `
 Array [
   "Initialize git",
 ]
 `;
 
-exports[`log functions stepBanner should output the correct string for all 5 steps 25`] = `
+exports[`log functions stepBanner should output the correct string for all 5 steps 30`] = `
+Array [
+  "________________________________________________________________________________",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 1`] = `
+Array [
+  "[2J",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 2`] = `
+Array [
+  "BannerMock",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 3`] = `
+Array [
+  "Generator Version: vpackageVersionMock",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 4`] = `
+Array [
+  "",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 5`] = `
+Array [
+  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 6`] = `
+Array [
+  "Load the template",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 7`] = `
+Array [
+  "________________________________________________________________________________",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 8`] = `
+Array [
+  "[2J",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 9`] = `
+Array [
+  "BannerMock",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 10`] = `
+Array [
+  "Generator Version: vpackageVersionMock",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 11`] = `
+Array [
+  "",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 12`] = `
+Array [
+  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 13`] = `
+Array [
+  "Gather parameters",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 14`] = `
+Array [
+  "________________________________________________________________________________",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 15`] = `
+Array [
+  "[2J",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 16`] = `
+Array [
+  "BannerMock",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 17`] = `
+Array [
+  "Generator Version: vpackageVersionMock",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 18`] = `
+Array [
+  "",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 19`] = `
+Array [
+  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 20`] = `
+Array [
+  "Generate Module",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 21`] = `
+Array [
+  "________________________________________________________________________________",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 22`] = `
+Array [
+  "[2J",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 23`] = `
+Array [
+  "BannerMock",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 24`] = `
+Array [
+  "Generator Version: vpackageVersionMock",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 25`] = `
+Array [
+  "",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 26`] = `
+Array [
+  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 27`] = `
+Array [
+  "Install, build and test the module, this may take a minute",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 28`] = `
+Array [
+  "________________________________________________________________________________",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 29`] = `
+Array [
+  "[2J",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 30`] = `
+Array [
+  "BannerMock",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 31`] = `
+Array [
+  "Generator Version: vpackageVersionMock",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 32`] = `
+Array [
+  "",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 33`] = `
+Array [
+  "Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 34`] = `
+Array [
+  "Initialize git",
+]
+`;
+
+exports[`log functions stepBanner should output the correct string for all 5 steps with a banner 35`] = `
 Array [
   "________________________________________________________________________________",
 ]

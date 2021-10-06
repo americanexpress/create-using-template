@@ -1,6 +1,6 @@
 {
   "name": "create-using-template",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "A simple project generator",
   "contributors": [
     "Jimmy King  <Jimmy.King@aexp.com> (https://github.com/10xLaCroixDrinker)",
@@ -41,10 +41,12 @@
   "dependencies": {
     "commander": "^7.2.0",
     "cross-spawn": "^7.0.3",
+    "data-store": "^4.0.3",
     "ejs": "^3.1.6",
     "kleur": "^4.1.4",
     "prettier": "^2.3.2",
     "prompts": "^2.4.1",
+    "semver": "^7.3.5",
     "sisteransi": "^1.0.5"
   },
   "devDependencies": {
@@ -55,12 +57,15 @@
     "@semantic-release/git": "9.0.0",
     "amex-jest-preset": "^6.1.0",
     "cross-env": "^7.0.3",
-    "eslint": "^6.8.0",
-    "eslint-config-amex": "^11.0.1",
+    "eslint": "^7.32.0",
+    "eslint-config-amex": "^15.0.0",
+    "eslint-plugin-jest": "^24.5.0",
+    "eslint-plugin-jest-dom": "^3.9.2",
     "husky": "^4.3.0",
     "jest": "^27.0.6",
     "lockfile-lint": "^4.1.0",
-    "markdown-spellcheck": "^1.3.1"
+    "markdown-spellcheck": "^1.3.1",
+    "typescript": "^4.1.6"
   },
   "husky": {
     "hooks": {

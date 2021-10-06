@@ -48,6 +48,7 @@ A template is any npm package whose default export follows the below API.
 module.exports = {
   getTemplatePaths,
   getTemplateOptions,
+  getTempalateBanner,
 };
 ```
 
@@ -70,7 +71,7 @@ Directory structures will be copied exactly, and files will be placed in the sam
 It is possible to define dynamic file names, and ignore files, based upon user input (see `getTemplateOptions` below)
 
 ### `getTemplateOptions`
-`async (baseData, prompts) => ({templateValues[, generatorOptions, dynamicFileNames, ignoredFileNames]})`
+`async (baseData, prompts, storedValues) => ({templateValues[, generatorOptions, dynamicFileNames, ignoredFileNames]})`
 
 getTemplateOptions will be called to allow your template to configure its dynamic values.
 
@@ -86,6 +87,15 @@ At this time the only piece of base data is `projectName`
 prompts is a reference to the `prompts` library. Your template should call this to prompt the user for any dynamic values you need.
 
 You should merge baseData with the result of the prompts your template needs, and return this under the `templateValues` key
+
+##### `storedValues`
+`storedValues` is an object containing responses that were stored with a previous generation of your template.
+Your template can use these values to prepopulate prompts for your users, or even skip the prompts all together.
+
+create-using-template will automatically store responses in the `~/.create-using-template/` directory. The stored responses will be saved for each major version of your template. So if your template has v1.0.0 and v2.0.0, responses will be stored separately for each. This only applies for major versions. Any minor or patch versions will still share the stored responses.
+
+
+Stored responses are not enabled by default. You must set the `storeResponses` field in `generatorOptions` to `true` in order to store responses.
 
 
 #### return
@@ -112,11 +122,12 @@ let templateValues = {
 
 ##### `generatorOptions` object, optional
 
-These values allow you to configure some of the things the generator does.
+These values allow you to configure the generator.
 
 * `postGenerationMessage`: If specified, this string will be printed after all other output, you can use it to give final information to the user, such as 'run `npm run start` to get started'
 * `defaultBranchName`: This string will be used as the branch name for the git initialization. Defaults to main `main`
 * `initialCommitMessage`: This string will be used as the commit message for the initial git commit. Defaults to `feat(generation): initial commit`
+* `storeResponses`: If this is set to `true`, create-using-template will store any responses for your template for future template generations.
 
 ##### `dynamicFileNames` object<string, string>, optional
 When the generator is ready to write a file to the users project, it will first check this object for a key matching the fileName it is to use. If the key is present, it will instead use the value against that key as the file name.
@@ -141,6 +152,16 @@ if (templateValues.eslint !== 'y') {
 }
 ```
 Note that the string does contain the .ejs suffix, since the ignore applies when reading the file, the string should exactly match the name of the file in your template.
+
+### `getTemplateBanner` optional
+`(kleur) => (<string>)`
+
+The string returned from this function will be output as part of the banner the template outputs. It can be a multi line string, and generally should not exceed 80 characters wide.
+
+The [kleur package](https://www.npmjs.com/package/kleur) package is provided so that the template can output a colorful banner.
+
+If this function is not exported, no string will be rendered
+
 
 ## 🏆 Contributing
 

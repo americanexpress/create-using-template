@@ -13,6 +13,7 @@
  */
 
 const prompts = require('prompts');
+const kleur = require('kleur');
 const log = require('./utils/log');
 const installTemplate = require('./utils/install-template');
 const installModule = require('./utils/install-module');
@@ -20,6 +21,8 @@ const getBaseOptions = require('./utils/get-base-options');
 const walkTemplate = require('./utils/walk-template');
 const initializeGitRepo = require('./utils/initialize-git-repo');
 const getPackageName = require('./utils/get-package-name');
+const getPackageVersion = require('./utils/get-package-version');
+const { getStoredValues, setStoreValues } = require('./utils/storage');
 
 const generateFromTemplate = async ({ templateName }) => {
   // Load the template
@@ -28,23 +31,36 @@ const generateFromTemplate = async ({ templateName }) => {
 
   const templatePackageName = getPackageName(templateName);
 
-  // eslint-disable-next-line max-len
-  // eslint-disable-next-line import/no-extraneous-dependencies,global-require,import/no-dynamic-require
+  /* eslint-disable global-require,import/no-dynamic-require
+  -- we need to dynamically require this package as its name is only known ar runtime */
   const templatePackage = require(templatePackageName);
+  /* eslint-enable global-require,import/no-dynamic-require -- re-enable */
+  let templateBanner;
+  if (typeof templatePackage.getTemplateBanner === 'function') {
+    const templateBannerResponse = templatePackage.getTemplateBanner(kleur);
+    if (typeof templateBannerResponse === 'string') {
+      templateBanner = templateBannerResponse;
+    }
+  }
 
   // Gather parameters
-  log.goToStep(2);
+  log.goToStep(2, templateBanner);
+  const templateVersion = getPackageVersion(templateName);
+  const storedValues = getStoredValues(templatePackageName, templateVersion);
   const baseData = await getBaseOptions();
   const {
     templateValues,
     generatorOptions = {},
     dynamicFileNames = [],
     ignoredFileNames = [],
-  } = await templatePackage.getTemplateOptions(baseData, prompts);
+  } = await templatePackage.getTemplateOptions(baseData, prompts, storedValues);
+  if (generatorOptions.storeResponses) {
+    setStoreValues(templatePackageName, templateVersion, templateValues);
+  }
   const templateDirPaths = templatePackage.getTemplatePaths();
 
   // Generate Module
-  log.goToStep(3);
+  log.goToStep(3, templateBanner);
 
   templateDirPaths.forEach((templateRootPath) => walkTemplate(
     templateRootPath,
@@ -57,11 +73,11 @@ const generateFromTemplate = async ({ templateName }) => {
   ));
 
   // Install and build the module
-  log.goToStep(4);
+  log.goToStep(4, templateBanner);
   await installModule(`./${templateValues.projectName}`);
 
   // Initialize git
-  log.goToStep(5);
+  log.goToStep(5, templateBanner);
   await initializeGitRepo(`./${templateValues.projectName}`, generatorOptions);
 
   if (generatorOptions.postGenerationMessage) {

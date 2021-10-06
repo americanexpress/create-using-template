@@ -95,16 +95,8 @@ describe('runCommand', () => {
       expect(isRejected).toBe(false);
     });
     it('should reject the promise if passed not 0', async () => {
-      try {
-        subProcessMock.on.mock.calls[0][1](1);
-        await promise;
-      } catch (err) {
-        isRejected = true;
-        expect(err.message).toBe('Failed to execute: commandMock arg1 arg2');
-      } finally {
-        expect(isResolved).toBe(false);
-        expect(isRejected).toBe(true);
-      }
+      subProcessMock.on.mock.calls[0][1](1);
+      await expect(promise).rejects.toThrow('Failed to execute: commandMock arg1 arg2');
     });
   });
 });

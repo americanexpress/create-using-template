@@ -1,3 +1,10 @@
+# [1.3.0](https://github.com/americanexpress/create-using-template/compare/v1.2.0...v1.3.0) (2021-09-28)
+
+
+### Features
+
+* **banner:** support the template registering a banner ([950bc14](https://github.com/americanexpress/create-using-template/commit/950bc14256050dd9805d2bcfae87b0ef1aea2d23))
+
 # [1.2.0](https://github.com/americanexpress/create-using-template/compare/v1.1.0...v1.2.0) (2021-09-13)
 
 
