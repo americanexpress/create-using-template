@@ -1,3 +1,10 @@
+## [1.3.1](https://github.com/americanexpress/create-using-template/compare/v1.3.0...v1.3.1) (2021-10-06)
+
+
+### Bug Fixes
+
+* **package-lock:** revert to version 1 ([#18](https://github.com/americanexpress/create-using-template/issues/18)) ([490810d](https://github.com/americanexpress/create-using-template/commit/490810d303243e2bbd7461d575d1e093ab6362fe))
+
 # [1.3.0](https://github.com/americanexpress/create-using-template/compare/v1.2.0...v1.3.0) (2021-09-28)
 
 
