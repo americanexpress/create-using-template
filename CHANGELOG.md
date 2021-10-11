@@ -1,3 +1,10 @@
+# [1.4.0](https://github.com/americanexpress/create-using-template/compare/v1.3.1...v1.4.0) (2021-10-11)
+
+
+### Features
+
+* **storage:** add ability to store user responses ([79d5bc0](https://github.com/americanexpress/create-using-template/commit/79d5bc078a0359f54a8f7b5e3ccc695b2093aecd))
+
 ## [1.3.1](https://github.com/americanexpress/create-using-template/compare/v1.3.0...v1.3.1) (2021-10-06)
 
 
