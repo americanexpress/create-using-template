@@ -13,7 +13,7 @@
  */
 
 const { getTemplateOptions } = require('ejs'); // see the comment above the ejs mock as to why 'ejs' is our 'template' for this tests
-
+const { Store } = require('data-store');
 const log = require('../src/utils/log');
 const installTemplate = require('../src/utils/install-template');
 const installModule = require('../src/utils/install-module');
@@ -49,11 +49,15 @@ jest.mock('ejs', () => ({
 
 describe('generateFromTemplate', () => {
   let templatePackage;
+  const getMock = jest.fn();
+  const setMock = jest.fn();
   beforeEach(() => {
     // eslint-disable-next-line global-require -- we need access to a fresh import for every test
     templatePackage = require('ejs');
     jest.clearAllMocks();
     jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(Store.prototype, 'get').mockImplementation(getMock);
+    jest.spyOn(Store.prototype, 'set').mockImplementation(setMock);
   });
   it('should call the generatorBanner, and all 5 steps', async () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
@@ -107,7 +111,7 @@ describe('generateFromTemplate', () => {
     expect(getBaseOptions).toHaveBeenNthCalledWith(1);
 
     expect(templatePackage.getTemplateOptions).toHaveBeenCalledTimes(1);
-    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock');
+    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock', undefined);
 
     expect(templatePackage.getTemplatePaths).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplatePaths).toHaveBeenNthCalledWith(1);
@@ -121,7 +125,7 @@ describe('generateFromTemplate', () => {
     expect(getBaseOptions).toHaveBeenNthCalledWith(1);
 
     expect(templatePackage.getTemplateOptions).toHaveBeenCalledTimes(1);
-    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock');
+    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock', undefined);
 
     expect(templatePackage.getTemplatePaths).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplatePaths).toHaveBeenNthCalledWith(1);
@@ -170,5 +174,26 @@ describe('generateFromTemplate', () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
     expect(console.log).toHaveBeenCalledTimes(1);
     expect(console.log).toHaveBeenNthCalledWith(1, 'postGenerationMessageMock');
+  });
+
+  it('should store responses if generatorOptions.storeResponses is true', async () => {
+    getTemplateOptions.mockImplementationOnce(() => ({
+      templateValues: { projectName: 'projectNameMock' },
+      generatorOptions: { storeResponses: true },
+      dynamicFileNames: 'dynamicFileNamesMock',
+      ignoredFileNames: 'ignoredFileNamesMock',
+    }));
+    await generateFromTemplate({ templateName: 'ejs@1.0.0' });
+    expect(setMock).toHaveBeenCalled();
+  });
+  it('should NOT store responses if generatorOptions.storeResponses is false', async () => {
+    getTemplateOptions.mockImplementationOnce(() => ({
+      templateValues: { projectName: 'projectNameMock' },
+      generatorOptions: { storeResponses: false },
+      dynamicFileNames: 'dynamicFileNamesMock',
+      ignoredFileNames: 'ignoredFileNamesMock',
+    }));
+    await generateFromTemplate({ templateName: 'ejs@1.0.0' });
+    expect(setMock).not.toHaveBeenCalled();
   });
 });

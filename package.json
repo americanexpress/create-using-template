@@ -41,10 +41,12 @@
   "dependencies": {
     "commander": "^7.2.0",
     "cross-spawn": "^7.0.3",
+    "data-store": "^4.0.3",
     "ejs": "^3.1.6",
     "kleur": "^4.1.4",
     "prettier": "^2.3.2",
     "prompts": "^2.4.1",
+    "semver": "^7.3.5",
     "sisteransi": "^1.0.5"
   },
   "devDependencies": {
