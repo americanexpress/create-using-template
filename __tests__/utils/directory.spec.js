@@ -13,7 +13,11 @@
  */
 
 const fs = require('fs');
-const { ensureDirectoryPathExists, isDirectory } = require('../../src/utils/directory');
+const {
+  ensureDirectoryPathExists,
+  isDirectory,
+  shouldIgnorePath,
+} = require('../../src/utils/directory');
 
 jest.mock('fs', () => ({
   existsSync: jest.fn(() => true),
@@ -48,6 +52,17 @@ describe('directory utils', () => {
       expect(isDirectory('pathMock')).toBe('isDirectoryMock');
       expect(fs.lstatSync).toHaveBeenCalledTimes(1);
       expect(fs.lstatSync).toHaveBeenNthCalledWith(1, 'pathMock');
+    });
+  });
+  describe('shouldIgnorePath', () => {
+    it('should return true if the path contains an ignored folder', () => {
+      expect(shouldIgnorePath('test/path/one/two/three', ['one'])).toBeTruthy();
+    });
+    it('should return false if the path does not contain an ignored folder', () => {
+      expect(shouldIgnorePath('test/path/one/two/three', ['four'])).toBeFalsy();
+    });
+    it('should return false if the path contains a partial match', () => {
+      expect(shouldIgnorePath('test/path/one/two/three', ['t'])).toBeFalsy();
     });
   });
 });

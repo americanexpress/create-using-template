@@ -43,6 +43,7 @@ jest.mock('ejs', () => ({
     templateValues: { projectName: 'projectNameMock' },
     dynamicFileNames: 'dynamicFileNamesMock',
     ignoredFileNames: 'ignoredFileNamesMock',
+    ignoredDirectories: [],
   })),
   getTemplatePaths: jest.fn(() => ['path1Mock', 'path2Mock']),
 }));
@@ -140,11 +141,13 @@ describe('generateFromTemplate', () => {
       templateValues: { projectName: 'projectNameMock' },
       dynamicFileNames: 'dynamicFileNamesMock',
       ignoredFileNames: 'ignoredFileNamesMock',
+      ignoredDirectories: [],
     });
     expect(walkTemplate).toHaveBeenNthCalledWith(2, 'path2Mock', './projectNameMock', {
       templateValues: { projectName: 'projectNameMock' },
       dynamicFileNames: 'dynamicFileNamesMock',
       ignoredFileNames: 'ignoredFileNamesMock',
+      ignoredDirectories: [],
     });
   });
 

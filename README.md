@@ -141,7 +141,7 @@ const dynamicFileNames = {
 Note that the key doesn't contain the .ejs suffix, as this will always be removed by the generator
 
 ##### `ignoredFileNames` array<string>, optional
-When the generator is ready to read a file from your template, it will first check this array for a string matching the fileName it is to use. If the key is string, it will entirely skip this file.
+When the generator is ready to read a file from your template, it will first check this array for a string matching the fileName it is to use. If the key is a string, it will entirely skip this file.
 
 For example, if you have a file in your template called `.eslintrc.json.ejs` that you only want to write if the user has asked for eslint you would return
 ```jsx
@@ -152,6 +152,15 @@ if (templateValues.eslint !== 'y') {
 }
 ```
 Note that the string does contain the .ejs suffix, since the ignore applies when reading the file, the string should exactly match the name of the file in your template.
+
+##### `ignoredDirectories`
+When the generator goes through your template, it will ignore any directories provided in this array. You should just list the name of the directory, not the preceding path.
+
+Example:
+```javascript
+ignoredDirectories: ['Test', 'Welcome']
+```
+The above will ignore everything within the `Test` and `Welcome` directories located within the paths provided by your `getTemplatePaths` function.
 
 ### `getTemplateBanner` optional
 `(kleur) => (<string>)`

@@ -25,6 +25,7 @@ jest.mock('../../src/utils/fileRenderers', () => ({
   copyFile: jest.fn(),
 }));
 jest.mock('../../src/utils/directory', () => ({
+  ...jest.requireActual('../../src/utils/directory'),
   isDirectory: jest.fn(() => false),
 }));
 
@@ -39,6 +40,7 @@ describe('walkTemplate', () => {
       templateValue: {},
       ignoredFileNames: [],
       dynamicFileNames: [],
+      ignoredDirectories: [],
     };
   });
   it('should call nothing if a file in that directory is ignored', () => {
@@ -48,6 +50,23 @@ describe('walkTemplate', () => {
 
     expect(fs.readdirSync).toHaveBeenCalledTimes(1);
     expect(fs.readdirSync).toHaveBeenNthCalledWith(1, 'template/root/path/mock');
+
+    expect(renderAndWriteTemplateFile).toHaveBeenCalledTimes(0);
+    expect(copyFile).toHaveBeenCalledTimes(0);
+  });
+  it('should call nothing if a folder in that directory is ignored', () => {
+    isDirectory.mockImplementationOnce(() => true);
+    fs.readdirSync.mockImplementationOnce(() => ['root/path/mock']);
+    filesMock = ['ignored.html'];
+    templateOptionsMock.ignoredDirectories = ['path'];
+    walkTemplate(
+      'create-using-template/node_modules/template/root/path/mock',
+      'output/root/path/mock',
+      templateOptionsMock
+    );
+
+    expect(fs.readdirSync).toHaveBeenCalledTimes(1);
+    expect(fs.readdirSync).toHaveBeenNthCalledWith(1, 'create-using-template/node_modules/template/root/path/mock');
 
     expect(renderAndWriteTemplateFile).toHaveBeenCalledTimes(0);
     expect(copyFile).toHaveBeenCalledTimes(0);

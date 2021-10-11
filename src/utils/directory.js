@@ -13,6 +13,7 @@
  */
 
 const fs = require('fs');
+const path = require('path');
 
 const ensureDirectoryPathExists = (pathToFolder) => {
   if (fs.existsSync(pathToFolder) === false) {
@@ -21,9 +22,14 @@ const ensureDirectoryPathExists = (pathToFolder) => {
   }
 };
 
-const isDirectory = (path) => fs.lstatSync(path).isDirectory();
+const shouldIgnorePath = (folderPath, ignoredDirectories) => ignoredDirectories.some(
+  (directoryToIgnore) => folderPath.split(path.sep).some((dir) => dir === directoryToIgnore)
+);
+
+const isDirectory = (directoryPath) => fs.lstatSync(directoryPath).isDirectory();
 
 module.exports = {
   ensureDirectoryPathExists,
   isDirectory,
+  shouldIgnorePath,
 };
