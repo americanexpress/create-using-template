@@ -53,6 +53,7 @@ const generateFromTemplate = async ({ templateName }) => {
     generatorOptions = {},
     dynamicFileNames = [],
     ignoredFileNames = [],
+    ignoredDirectories = [],
   } = await templatePackage.getTemplateOptions(baseData, prompts, storedValues);
   if (generatorOptions.storeResponses) {
     setStoreValues(templatePackageName, templateVersion, templateValues);
@@ -67,6 +68,7 @@ const generateFromTemplate = async ({ templateName }) => {
     `./${templateValues.projectName}`,
     {
       ignoredFileNames,
+      ignoredDirectories,
       dynamicFileNames,
       templateValues,
     }
