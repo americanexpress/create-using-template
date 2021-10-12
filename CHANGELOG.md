@@ -1,3 +1,10 @@
+# [1.5.0](https://github.com/americanexpress/create-using-template/compare/v1.4.0...v1.5.0) (2021-10-12)
+
+
+### Features
+
+* **ignore:** ignore directories functionality ([7a6e9f8](https://github.com/americanexpress/create-using-template/commit/7a6e9f888128cd32ee4a20b7263c62ab9bb43d55))
+
 # [1.4.0](https://github.com/americanexpress/create-using-template/compare/v1.3.1...v1.4.0) (2021-10-11)
 
 
