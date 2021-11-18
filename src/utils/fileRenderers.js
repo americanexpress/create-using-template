@@ -12,20 +12,20 @@
  * under the License.
  */
 
+const fs = require('fs');
 const ejs = require('ejs');
 const path = require('path');
 const { readFile, writeFile, renderDynamicFileName } = require('./files');
 const { getFormatter } = require('./formatters');
+const { ensureDirectoryPathExists } = require('./directory');
 
 const copyFile = (
   filePath, outputRootPath, templateOptions
 ) => {
   const dynamicFileName = renderDynamicFileName(path.basename(filePath), templateOptions);
-  writeFile(
-    path.join(outputRootPath, dynamicFileName),
-    readFile(filePath, 'binary'),
-    'binary'
-  );
+  const destinationPath = path.join(outputRootPath, dynamicFileName);
+  ensureDirectoryPathExists(path.dirname(destinationPath));
+  fs.copyFileSync(filePath, destinationPath);
 };
 
 const renderAndWriteTemplateFile = (

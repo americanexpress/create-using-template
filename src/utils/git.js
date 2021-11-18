@@ -14,10 +14,12 @@
 
 const runCommand = require('./run-command');
 
-const initializeGitRepo = async (repoPath, generatorOptions) => {
+const initializeGitRepo = async (repoPath) => {
   console.log('Initialize git repo');
   await runCommand('git', ['init'], repoPath);
+};
 
+const createInitialCommit = async (repoPath, generatorOptions) => {
   console.log('Add all files');
   await runCommand('git', ['add', '.'], repoPath);
 
@@ -30,4 +32,7 @@ const initializeGitRepo = async (repoPath, generatorOptions) => {
   await runCommand('git', ['branch', '-m', branchName], repoPath);
 };
 
-module.exports = initializeGitRepo;
+module.exports = {
+  initializeGitRepo,
+  createInitialCommit,
+};

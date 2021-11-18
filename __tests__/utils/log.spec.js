@@ -61,7 +61,7 @@ describe('log functions', () => {
     it('should do nothing if called with an index out of range', () => {
       goToStep(0);
       goToStep(-1);
-      goToStep(6);
+      goToStep(7);
       goToStep(100);
       goToStep('index');
       expect(console.log).toHaveBeenCalledTimes(0);
