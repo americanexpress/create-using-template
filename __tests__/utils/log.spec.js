@@ -27,6 +27,8 @@ jest.mock('kleur', () => ({
   })),
 }));
 
+const TOTAL_EXPECTED_STEPS = 6;
+
 describe('log functions', () => {
   beforeEach(() => {
     jest.clearAllMocks();
@@ -34,34 +36,32 @@ describe('log functions', () => {
     kleur.enabled = false; // color support for unit tests is flaky, disable color for snapshots
   });
   describe('stepBanner', () => {
-    it('should output the correct string for all 5 steps', () => {
-      goToStep(1);
-      goToStep(2);
-      goToStep(3);
-      goToStep(4);
-      goToStep(5);
-      expect(console.log).toHaveBeenCalledTimes(30);
+    it(`should output the correct string for all ${TOTAL_EXPECTED_STEPS} steps`, () => {
+      for (let i = 1; i <= TOTAL_EXPECTED_STEPS; i += 1) {
+        goToStep(i);
+      }
+      expect(console.log).toHaveBeenCalledTimes(TOTAL_EXPECTED_STEPS * 6);
       // snapshot all calls all at once
       console.log.mock.calls.forEach((mockCall) => {
         expect(mockCall).toMatchSnapshot();
       });
     });
-    it('should output the correct string for all 5 steps with a banner', () => {
-      goToStep(1, 'BannerMock');
-      goToStep(2, 'BannerMock');
-      goToStep(3, 'BannerMock');
-      goToStep(4, 'BannerMock');
-      goToStep(5, 'BannerMock');
-      expect(console.log).toHaveBeenCalledTimes(35);
+
+    it(`outputs the correct string for all ${TOTAL_EXPECTED_STEPS} steps with a banner`, () => {
+      for (let i = 1; i <= TOTAL_EXPECTED_STEPS; i += 1) {
+        goToStep(i, 'BannerMock');
+      }
+      expect(console.log).toHaveBeenCalledTimes(TOTAL_EXPECTED_STEPS * 7);
       // snapshot all calls all at once
       console.log.mock.calls.forEach((mockCall) => {
         expect(mockCall).toMatchSnapshot();
       });
     });
+
     it('should do nothing if called with an index out of range', () => {
       goToStep(0);
       goToStep(-1);
-      goToStep(7);
+      goToStep(TOTAL_EXPECTED_STEPS + 1);
       goToStep(100);
       goToStep('index');
       expect(console.log).toHaveBeenCalledTimes(0);
