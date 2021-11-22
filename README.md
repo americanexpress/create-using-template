@@ -127,6 +127,7 @@ These values allow you to configure the generator.
 * `postGenerationMessage`: If specified, this string will be printed after all other output, you can use it to give final information to the user, such as 'run `npm run start` to get started'
 * `defaultBranchName`: This string will be used as the branch name for the git initialization. Defaults to main `main`
 * `initialCommitMessage`: This string will be used as the commit message for the initial git commit. Defaults to `feat(generation): initial commit`
+* `initialCommitOptions`: Array of additional git options to be passed to the initial commit.
 * `storeResponses`: If this is set to `true`, create-using-template will store any responses for your template for future template generations.
 
 ##### `dynamicFileNames` object<string, string>, optional

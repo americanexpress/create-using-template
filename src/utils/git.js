@@ -19,15 +19,19 @@ const initializeGitRepo = async (repoPath) => {
   await runCommand('git', ['init'], repoPath);
 };
 
-const createInitialCommit = async (repoPath, generatorOptions) => {
+const createInitialCommit = async (repoPath, {
+  initialCommitMessage,
+  initialCommitOptions = [],
+  defaultBranchName,
+}) => {
   console.log('Add all files');
   await runCommand('git', ['add', '.'], repoPath);
 
-  const commitMessage = generatorOptions.initialCommitMessage || 'feat(generation): initial commit';
+  const commitMessage = initialCommitMessage || 'feat(generation): initial commit';
   console.log(`Create initial commit with message: ${commitMessage}`);
-  await runCommand('git', ['commit', `-m${commitMessage}`, '--quiet'], repoPath);
+  await runCommand('git', ['commit', `-m${commitMessage}`, '--quiet', ...initialCommitOptions], repoPath);
 
-  const branchName = generatorOptions.defaultBranchName || 'main';
+  const branchName = defaultBranchName || 'main';
   console.log(`Rename branch to ${branchName}`);
   await runCommand('git', ['branch', '-m', branchName], repoPath);
 };

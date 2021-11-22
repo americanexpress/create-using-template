@@ -47,4 +47,13 @@ describe('createInitialCommit', () => {
 
     expect(runCommand.mock.calls).toMatchSnapshot();
   });
+
+  it('includes initialCommitOptions', async () => {
+    await createInitialCommit('repoPathMock', {
+      defaultBranchName: 'defaultBranchNameMock',
+      initialCommitOptions: ['--test-option'],
+    });
+
+    expect(runCommand.mock.calls).toMatchSnapshot();
+  });
 });
