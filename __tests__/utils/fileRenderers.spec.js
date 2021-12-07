@@ -42,7 +42,7 @@ describe('fileRenderers', () => {
     jest.clearAllMocks();
   });
   describe('copyFile', () => {
-    it('should render the dynamic name, then copies the requested file', () => {
+    it('should render the dynamic name, then copy the requested file', () => {
       copyFile('file/path/mock.js', 'output/path/mock', 'templateOptionsMock');
 
       expect(renderDynamicFileName).toHaveBeenCalledTimes(1);
