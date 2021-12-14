@@ -19,7 +19,7 @@ const installTemplate = require('./utils/install-template');
 const installModule = require('./utils/install-module');
 const getBaseOptions = require('./utils/get-base-options');
 const walkTemplate = require('./utils/walk-template');
-const initializeGitRepo = require('./utils/initialize-git-repo');
+const { initializeGitRepo, createInitialCommit } = require('./utils/git');
 const getPackageName = require('./utils/get-package-name');
 const getPackageVersion = require('./utils/get-package-version');
 const { getStoredValues, setStoreValues } = require('./utils/storage');
@@ -74,13 +74,18 @@ const generateFromTemplate = async ({ templateName }) => {
     }
   ));
 
-  // Install and build the module
+  // Initialize git before installing deps. This allows git hooks to be setup
+  // as part of install
   log.goToStep(4, templateBanner);
+  await initializeGitRepo(`./${templateValues.projectName}`);
+
+  // Install and build the module
+  log.goToStep(5, templateBanner);
   await installModule(`./${templateValues.projectName}`);
 
-  // Initialize git
-  log.goToStep(5, templateBanner);
-  await initializeGitRepo(`./${templateValues.projectName}`, generatorOptions);
+  // Create the first commit
+  log.goToStep(6, templateBanner);
+  await createInitialCommit(`./${templateValues.projectName}`, generatorOptions);
 
   if (generatorOptions.postGenerationMessage) {
     console.log(generatorOptions.postGenerationMessage);

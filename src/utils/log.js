@@ -32,17 +32,21 @@ const stepBanners = [
   },
   {
     name: 'Step 4',
-    description: 'Install, build and test the module, this may take a minute',
+    description: 'Initialize git',
   },
   {
     name: 'Step 5',
-    description: 'Initialize git',
+    description: 'Install, build and test the module, this may take a minute',
+  },
+  {
+    name: 'Step 6',
+    description: 'Initial Commit',
   },
 ];
 
 const fullBanner = `
- _   _     _               _____                    _       _       
-| | | |___(_)_ __   __ _  |_   _|__ _ __ ___  _ __ | | __ _| |_ ___ 
+ _   _     _               _____                    _       _
+| | | |___(_)_ __   __ _  |_   _|__ _ __ ___  _ __ | | __ _| |_ ___
 | | | / __| | '_ \\ / _\` |   | |/ _ \\ '_ \` _ \\| '_ \\| |/ _\` | __/ _ \\
 | |_| \\__ \\ | | | | (_| |   | |  __/ | | | | | |_) | | (_| | ||  __/
  \\___/|___/_|_| |_|\\__, |   |_|\\___|_| |_| |_| .__/|_|\\__,_|\\__\\___|

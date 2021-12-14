@@ -13,6 +13,7 @@
  */
 
 const ejs = require('ejs');
+const { copyFileSync } = require('fs');
 const { readFile, writeFile, renderDynamicFileName } = require('../../src/utils/files');
 const { copyFile, renderAndWriteTemplateFile } = require('../../src/utils/fileRenderers');
 const { getFormatter } = require('../../src/utils/formatters');
@@ -28,23 +29,27 @@ jest.mock('../../src/utils/formatters', () => ({
 jest.mock('ejs', () => ({
   render: jest.fn((filePath, values) => `ejsRenderFor(${filePath})with(${values})`),
 }));
+jest.mock('fs', () => ({
+  copyFileSync: jest.fn(),
+}));
+
+jest.mock('../../src/utils/directory.js', () => ({
+  ensureDirectoryPathExists: jest.fn(),
+}));
 
 describe('fileRenderers', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
   describe('copyFile', () => {
-    it('should render the dynamic name, then read and write the requested file', () => {
+    it('should render the dynamic name, then copy the requested file', () => {
       copyFile('file/path/mock.js', 'output/path/mock', 'templateOptionsMock');
 
       expect(renderDynamicFileName).toHaveBeenCalledTimes(1);
       expect(renderDynamicFileName).toHaveBeenNthCalledWith(1, 'mock.js', 'templateOptionsMock');
 
-      expect(readFile).toHaveBeenCalledTimes(1);
-      expect(readFile).toHaveBeenNthCalledWith(1, 'file/path/mock.js', 'binary');
-
-      expect(writeFile).toHaveBeenCalledTimes(1);
-      expect(writeFile).toHaveBeenNthCalledWith(1, 'output/path/mock/dynamicNameFor(mock.js)', 'fileContentFor(file/path/mock.js)', 'binary');
+      expect(copyFileSync).toHaveBeenCalledTimes(1);
+      expect(copyFileSync).toHaveBeenNthCalledWith(1, 'file/path/mock.js', 'output/path/mock/dynamicNameFor(mock.js)');
     });
   });
   describe('renderAndWriteTemplatefile', () => {

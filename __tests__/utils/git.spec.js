@@ -12,7 +12,7 @@
  * under the License.
  */
 
-const initializeGitRepo = require('../../src/utils/initialize-git-repo');
+const { initializeGitRepo, createInitialCommit } = require('../../src/utils/git');
 const runCommand = require('../../src/utils/run-command');
 
 jest.mock('../../src/utils/run-command', () => jest.fn());
@@ -22,16 +22,36 @@ describe('initializeGitRepo', () => {
     jest.clearAllMocks();
     jest.spyOn(console, 'log').mockImplementation(() => {});
   });
-  it('should initialize a git repo with a passable commit message on the main branch', async () => {
-    await initializeGitRepo('repoPathMock', {});
+  it('should initialize a git repo', async () => {
+    await initializeGitRepo('repoPathMock');
+
+    expect(runCommand.mock.calls[0]).toEqual(['git', ['init'], 'repoPathMock']);
+  });
+});
+
+describe('createInitialCommit', () => {
+  beforeEach(() => {
+    jest.clearAllMocks();
+    jest.spyOn(console, 'log').mockImplementation(() => {});
+  });
+  it('commits a message on the main branch', async () => {
+    await createInitialCommit('repoPathMock', {});
+    expect(runCommand.mock.calls).toMatchSnapshot();
+  });
+
+  it('commits a message and a branch from the special template values', async () => {
+    await createInitialCommit('repoPathMock', {
+      defaultBranchName: 'defaultBranchNameMock',
+      initialCommitMessage: 'initialCommitMessageMock',
+    });
 
     expect(runCommand.mock.calls).toMatchSnapshot();
   });
 
-  it('should initialize a git repo with a message and a branch from the special template values', async () => {
-    await initializeGitRepo('repoPathMock', {
+  it('includes initialCommitOptions', async () => {
+    await createInitialCommit('repoPathMock', {
       defaultBranchName: 'defaultBranchNameMock',
-      initialCommitMessage: 'initialCommitMessageMock',
+      initialCommitOptions: ['--test-option'],
     });
 
     expect(runCommand.mock.calls).toMatchSnapshot();

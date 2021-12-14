@@ -27,42 +27,58 @@ jest.mock('kleur', () => ({
   })),
 }));
 
+const TOTAL_EXPECTED_STEPS = 6;
+
 describe('log functions', () => {
   beforeEach(() => {
     jest.clearAllMocks();
     jest.spyOn(console, 'log').mockImplementation(() => {});
     kleur.enabled = false; // color support for unit tests is flaky, disable color for snapshots
   });
+
   describe('stepBanner', () => {
-    it('should output the correct string for all 5 steps', () => {
+    for (let i = 1; i <= TOTAL_EXPECTED_STEPS; i += 1) {
+      it(`outputs correct string for step ${i}`, () => {
+        goToStep(i);
+        expect(console.log.mock.calls.join('\n')).toMatchSnapshot();
+      });
+    }
+
+    it('outputs the correct string when not given a templateBanner', () => {
       goToStep(1);
-      goToStep(2);
-      goToStep(3);
-      goToStep(4);
-      goToStep(5);
-      expect(console.log).toHaveBeenCalledTimes(30);
-      // snapshot all calls all at once
-      console.log.mock.calls.forEach((mockCall) => {
-        expect(mockCall).toMatchSnapshot();
-      });
+      expect(console.log.mock.calls.join('\n')).toMatchInlineSnapshot(`
+        "[2J
+
+         _   _     _               _____                    _       _
+        | | | |___(_)_ __   __ _  |_   _|__ _ __ ___  _ __ | | __ _| |_ ___
+        | | | / __| | '_ \\\\ / _\` |   | |/ _ \\\\ '_ \` _ \\\\| '_ \\\\| |/ _\` | __/ _ \\\\
+        | |_| \\\\__ \\\\ | | | | (_| |   | |  __/ | | | | | |_) | | (_| | ||  __/
+         \\\\___/|___/_|_| |_|\\\\__, |   |_|\\\\___|_| |_| |_| .__/|_|\\\\__,_|\\\\__\\\\___|
+                           |___/                     |_|              vpackageVersionMock
+
+        Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5 -> Step 6
+        Load the template
+        ________________________________________________________________________________"
+      `);
     });
-    it('should output the correct string for all 5 steps with a banner', () => {
+
+    it('outputs the correct string when given a templateBanner', () => {
       goToStep(1, 'BannerMock');
-      goToStep(2, 'BannerMock');
-      goToStep(3, 'BannerMock');
-      goToStep(4, 'BannerMock');
-      goToStep(5, 'BannerMock');
-      expect(console.log).toHaveBeenCalledTimes(35);
-      // snapshot all calls all at once
-      console.log.mock.calls.forEach((mockCall) => {
-        expect(mockCall).toMatchSnapshot();
-      });
+      expect(console.log.mock.calls.join('\n')).toMatchInlineSnapshot(`
+        "[2J
+        BannerMock
+        Generator Version: vpackageVersionMock
+
+        Step 1 -> Step 2 -> Step 3 -> Step 4 -> Step 5 -> Step 6
+        Load the template
+        ________________________________________________________________________________"
+      `);
     });
+
     it('should do nothing if called with an index out of range', () => {
       goToStep(0);
       goToStep(-1);
-      goToStep(6);
-      goToStep(100);
+      goToStep(TOTAL_EXPECTED_STEPS + 1);
       goToStep('index');
       expect(console.log).toHaveBeenCalledTimes(0);
     });

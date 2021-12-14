@@ -19,7 +19,7 @@ const installTemplate = require('../src/utils/install-template');
 const installModule = require('../src/utils/install-module');
 const getBaseOptions = require('../src/utils/get-base-options');
 const walkTemplate = require('../src/utils/walk-template');
-const initializeGitRepo = require('../src/utils/initialize-git-repo');
+const { initializeGitRepo, createInitialCommit } = require('../src/utils/git');
 
 const generateFromTemplate = require('../src/generate-from-template');
 
@@ -31,7 +31,10 @@ jest.mock('../src/utils/install-template', () => jest.fn());
 jest.mock('../src/utils/install-module', () => jest.fn());
 jest.mock('../src/utils/get-base-options', () => jest.fn(() => 'baseOptionsMock'));
 jest.mock('../src/utils/walk-template', () => jest.fn());
-jest.mock('../src/utils/initialize-git-repo', () => jest.fn());
+jest.mock('../src/utils/git', () => ({
+  initializeGitRepo: jest.fn(),
+  createInitialCommit: jest.fn(),
+}));
 
 // We need to require a package that is not installed, as its provided at runtime
 // There is no way to jest mock a package that is not installed.
@@ -60,40 +63,43 @@ describe('generateFromTemplate', () => {
     jest.spyOn(Store.prototype, 'get').mockImplementation(getMock);
     jest.spyOn(Store.prototype, 'set').mockImplementation(setMock);
   });
-  it('should call the generatorBanner, and all 5 steps', async () => {
+  it('should call the generatorBanner, and all 6 steps', async () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
-    expect(log.goToStep).toHaveBeenCalledTimes(5);
+    expect(log.goToStep).toHaveBeenCalledTimes(6);
     expect(log.goToStep).toHaveBeenNthCalledWith(1, 1);
     expect(log.goToStep).toHaveBeenNthCalledWith(2, 2, undefined);
     expect(log.goToStep).toHaveBeenNthCalledWith(3, 3, undefined);
     expect(log.goToStep).toHaveBeenNthCalledWith(4, 4, undefined);
     expect(log.goToStep).toHaveBeenNthCalledWith(5, 5, undefined);
+    expect(log.goToStep).toHaveBeenNthCalledWith(6, 6, undefined);
   });
 
-  it('should call the generatorBanner, and all 5 steps if the template provides a banner', async () => {
+  it('should call the generatorBanner, and all 6 steps if the template provides a banner', async () => {
     templatePackage.getTemplateBanner = jest.fn(() => 'TemplateBannerMock');
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
-    expect(log.goToStep).toHaveBeenCalledTimes(5);
+    expect(log.goToStep).toHaveBeenCalledTimes(6);
     expect(log.goToStep).toHaveBeenNthCalledWith(1, 1);
     expect(log.goToStep).toHaveBeenNthCalledWith(2, 2, 'TemplateBannerMock');
     expect(log.goToStep).toHaveBeenNthCalledWith(3, 3, 'TemplateBannerMock');
     expect(log.goToStep).toHaveBeenNthCalledWith(4, 4, 'TemplateBannerMock');
     expect(log.goToStep).toHaveBeenNthCalledWith(5, 5, 'TemplateBannerMock');
+    expect(log.goToStep).toHaveBeenNthCalledWith(6, 6, 'TemplateBannerMock');
   });
 
-  it('should call the generatorBanner, and all 5 steps if the template provides a banner that is mallformed', async () => {
+  it('should call the generatorBanner, and all 6 steps if the template provides a banner that is mallformed', async () => {
     // the banner is a function instead of a string
     templatePackage.getTemplateBanner = jest.fn(() => () => {});
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
-    expect(log.goToStep).toHaveBeenCalledTimes(5);
+    expect(log.goToStep).toHaveBeenCalledTimes(6);
     expect(log.goToStep).toHaveBeenNthCalledWith(1, 1);
     expect(log.goToStep).toHaveBeenNthCalledWith(2, 2, undefined);
     expect(log.goToStep).toHaveBeenNthCalledWith(3, 3, undefined);
     expect(log.goToStep).toHaveBeenNthCalledWith(4, 4, undefined);
     expect(log.goToStep).toHaveBeenNthCalledWith(5, 5, undefined);
+    expect(log.goToStep).toHaveBeenNthCalledWith(6, 6, undefined);
   });
 
   // Step 1
@@ -152,6 +158,14 @@ describe('generateFromTemplate', () => {
   });
 
   // Step 4
+  it('should initialize the git repo', async () => {
+    await generateFromTemplate({ templateName: 'ejs@1.0.0' });
+
+    expect(initializeGitRepo).toHaveBeenCalledTimes(1);
+    expect(initializeGitRepo).toHaveBeenNthCalledWith(1, './projectNameMock');
+  });
+
+  // Step 5
   it('should install the module', async () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
@@ -159,12 +173,12 @@ describe('generateFromTemplate', () => {
     expect(installModule).toHaveBeenNthCalledWith(1, './projectNameMock');
   });
 
-  // Step 5
-  it('should initialize the git repo', async () => {
+  // Step 6
+  it('creates initial commit', async () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
-    expect(initializeGitRepo).toHaveBeenCalledTimes(1);
-    expect(initializeGitRepo).toHaveBeenNthCalledWith(1, './projectNameMock', { });
+    expect(createInitialCommit).toHaveBeenCalledTimes(1);
+    expect(createInitialCommit).toHaveBeenNthCalledWith(1, './projectNameMock', { });
   });
 
   it('should print the post generation message if it exists', async () => {
