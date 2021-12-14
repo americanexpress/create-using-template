@@ -1,3 +1,10 @@
+## [1.5.1](https://github.com/americanexpress/create-using-template/compare/v1.5.0...v1.5.1) (2021-12-14)
+
+
+### Bug Fixes
+
+* **git:** init git before deps install ([#19](https://github.com/americanexpress/create-using-template/issues/19)) ([f3fa178](https://github.com/americanexpress/create-using-template/commit/f3fa1785aeb0cd59634041cbf04bfcc8c7a1b11c))
+
 # [1.5.0](https://github.com/americanexpress/create-using-template/compare/v1.4.0...v1.5.0) (2021-10-12)
 
 
