@@ -15,15 +15,14 @@
 const fs = require('fs');
 const path = require('path');
 const { copyFile, renderAndWriteTemplateFile } = require('./fileRenderers');
-const {
-  isDirectory, shouldIgnorePath,
-} = require('./directory');
+const { isDirectory, shouldIgnorePath } = require('./directory');
 
 const walkTemplate = (
   templateRootPath, outputRootPath, templateOptions
 ) => {
   fs.readdirSync(templateRootPath).forEach((fileName) => {
     const filePath = path.join(templateRootPath, fileName);
+
     if (isDirectory(filePath)) {
       // Strip out the path where the user calls the generator so its not
       // considered when ignoring folders
@@ -42,6 +41,7 @@ const walkTemplate = (
     if (templateOptions.ignoredFileNames.indexOf(fileName) > -1) {
       return;
     }
+
     if (path.extname(fileName) === '.ejs') {
       renderAndWriteTemplateFile(
         filePath, outputRootPath, templateOptions
