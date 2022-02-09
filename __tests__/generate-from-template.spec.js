@@ -14,6 +14,7 @@
 
 const { getTemplateOptions } = require('ejs'); // see the comment above the ejs mock as to why 'ejs' is our 'template' for this tests
 const { Store } = require('data-store');
+const path = require('path');
 const log = require('../src/utils/log');
 const installTemplate = require('../src/utils/install-template');
 const installModule = require('../src/utils/install-module');
@@ -22,6 +23,7 @@ const walkTemplate = require('../src/utils/walk-template');
 const { initializeGitRepo, createInitialCommit } = require('../src/utils/git');
 
 const generateFromTemplate = require('../src/generate-from-template');
+const renameFolders = require('../src/utils/renameFolders');
 
 jest.mock('prompts', () => 'promptsMock');
 jest.mock('../src/utils/log', () => ({
@@ -31,6 +33,7 @@ jest.mock('../src/utils/install-template', () => jest.fn());
 jest.mock('../src/utils/install-module', () => jest.fn());
 jest.mock('../src/utils/get-base-options', () => jest.fn(() => 'baseOptionsMock'));
 jest.mock('../src/utils/walk-template', () => jest.fn());
+jest.mock('../src/utils/renamefolders', () => jest.fn());
 jest.mock('../src/utils/git', () => ({
   initializeGitRepo: jest.fn(),
   createInitialCommit: jest.fn(),
@@ -46,6 +49,7 @@ jest.mock('ejs', () => ({
     templateValues: { projectName: 'projectNameMock' },
     dynamicFileNames: 'dynamicFileNamesMock',
     ignoredFileNames: 'ignoredFileNamesMock',
+    dynamicFolderNames: { dynamicFolderName: 'dynamicFolderNamesRename' },
     ignoredDirectories: [],
   })),
   getTemplatePaths: jest.fn(() => ['path1Mock', 'path2Mock']),
@@ -154,6 +158,9 @@ describe('generateFromTemplate', () => {
       dynamicFileNames: 'dynamicFileNamesMock',
       ignoredFileNames: 'ignoredFileNamesMock',
       ignoredDirectories: [],
+    });
+    expect(renameFolders).toHaveBeenNthCalledWith(1, path.resolve('./projectNameMock'), {
+      dynamicFolderNames: { dynamicFolderName: 'dynamicFolderNamesRename' },
     });
   });
 

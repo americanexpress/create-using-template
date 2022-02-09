@@ -17,11 +17,14 @@ const {
   ensureDirectoryPathExists,
   isDirectory,
   shouldIgnorePath,
+  renameDirectory,
+  getDynamicFolderName,
 } = require('../../src/utils/directory');
 
 jest.mock('fs', () => ({
   existsSync: jest.fn(() => true),
   mkdirSync: jest.fn(() => true),
+  renameSync: jest.fn(() => true),
   lstatSync: jest.fn(() => ({
     isDirectory: jest.fn(() => 'isDirectoryMock'),
   })),
@@ -54,6 +57,13 @@ describe('directory utils', () => {
       expect(fs.lstatSync).toHaveBeenNthCalledWith(1, 'pathMock');
     });
   });
+  describe('renameDirectory', () => {
+    it('should rename the folder as per the parameters', () => {
+      renameDirectory('pathMockold', 'pathMockNew');
+      expect(fs.renameSync).toHaveBeenCalledTimes(1);
+      expect(fs.renameSync).toHaveBeenNthCalledWith(1, 'pathMockold', 'pathMockNew');
+    });
+  });
   describe('shouldIgnorePath', () => {
     it('should return true if the path contains an ignored folder', () => {
       expect(shouldIgnorePath('test/path/one/two/three', ['one'])).toBeTruthy();
@@ -63,6 +73,18 @@ describe('directory utils', () => {
     });
     it('should return false if the path contains a partial match', () => {
       expect(shouldIgnorePath('test/path/one/two/three', ['t'])).toBeFalsy();
+    });
+  });
+  describe('getDynamicFolderName', () => {
+    it('should look up the passed name in the dynamic folder names dictionary, and return from there', () => {
+      const templateOptionsMock = {
+        dynamicFolderNames: {
+          dynamicFolder: 'dynamicFolderRename',
+        },
+      };
+
+      expect(getDynamicFolderName('dynamicFolder', templateOptionsMock)).toBe('dynamicFolderRename');
+      expect(getDynamicFolderName('unknownFileNameMock', templateOptionsMock)).toBe('unknownFileNameMock');
     });
   });
 });

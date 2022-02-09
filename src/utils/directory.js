@@ -15,6 +15,17 @@
 const fs = require('fs');
 const path = require('path');
 
+const getDynamicFolderName = (folderNameTemplate, templateOptions) => {
+  if (folderNameTemplate in templateOptions.dynamicFolderNames) {
+    return templateOptions.dynamicFolderNames[folderNameTemplate];
+  }
+  return folderNameTemplate;
+};
+
+const renameDirectory = (oldDirectoryPath, newDirectoryPath) => {
+  fs.renameSync(oldDirectoryPath, newDirectoryPath);
+};
+
 const ensureDirectoryPathExists = (pathToFolder) => {
   if (fs.existsSync(pathToFolder) === false) {
     // TODO: better folder permissions?
@@ -32,4 +43,6 @@ module.exports = {
   ensureDirectoryPathExists,
   isDirectory,
   shouldIgnorePath,
+  renameDirectory,
+  getDynamicFolderName,
 };
