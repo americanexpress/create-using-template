@@ -1,3 +1,10 @@
+# [1.6.0](https://github.com/americanexpress/create-using-template/compare/v1.5.1...v1.6.0) (2022-02-16)
+
+
+### Features
+
+* **dynamic-directory:** added dynamic directory feature ([#21](https://github.com/americanexpress/create-using-template/issues/21)) ([3924a95](https://github.com/americanexpress/create-using-template/commit/3924a95b50e02618efefa978b138c97f06db1bdd))
+
 ## [1.5.1](https://github.com/americanexpress/create-using-template/compare/v1.5.0...v1.5.1) (2021-12-14)
 
 
