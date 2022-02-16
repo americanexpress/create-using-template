@@ -15,6 +15,14 @@
 const fs = require('fs');
 const path = require('path');
 
+const getDynamicDirectoryName = (templateDirectoryName, templateOptions) => {
+  // To get dynamic directory names from the template
+  if (templateDirectoryName in templateOptions.dynamicDirectoryNames) {
+    return templateOptions.dynamicDirectoryNames[templateDirectoryName];
+  }
+  return templateDirectoryName;
+};
+
 const ensureDirectoryPathExists = (pathToFolder) => {
   if (fs.existsSync(pathToFolder) === false) {
     // TODO: better folder permissions?
@@ -32,4 +40,5 @@ module.exports = {
   ensureDirectoryPathExists,
   isDirectory,
   shouldIgnorePath,
+  getDynamicDirectoryName,
 };

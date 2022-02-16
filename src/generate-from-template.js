@@ -14,11 +14,13 @@
 
 const prompts = require('prompts');
 const kleur = require('kleur');
+const path = require('path');
 const log = require('./utils/log');
 const installTemplate = require('./utils/install-template');
 const installModule = require('./utils/install-module');
 const getBaseOptions = require('./utils/get-base-options');
 const walkTemplate = require('./utils/walk-template');
+const renameDirectories = require('./utils/renameDirectories');
 const { initializeGitRepo, createInitialCommit } = require('./utils/git');
 const getPackageName = require('./utils/get-package-name');
 const getPackageVersion = require('./utils/get-package-version');
@@ -52,6 +54,7 @@ const generateFromTemplate = async ({ templateName }) => {
     templateValues,
     generatorOptions = {},
     dynamicFileNames = [],
+    dynamicDirectoryNames = [],
     ignoredFileNames = [],
     ignoredDirectories = [],
   } = await templatePackage.getTemplateOptions(baseData, prompts, storedValues);
@@ -73,6 +76,9 @@ const generateFromTemplate = async ({ templateName }) => {
       templateValues,
     }
   ));
+  if (Object.keys(dynamicDirectoryNames).length > 0) {
+    renameDirectories(path.resolve(`./${templateValues.projectName}`), { dynamicDirectoryNames });
+  }
 
   // Initialize git before installing deps. This allows git hooks to be setup
   // as part of install

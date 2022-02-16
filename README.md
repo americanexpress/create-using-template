@@ -139,7 +139,19 @@ const dynamicFileNames = {
   'RootComponent.jsx': `${baseData.projectName}.jsx`,
 };
 ```
-Note that the key doesn't contain the .ejs suffix, as this will always be removed by the generator
+Note that the key doesn't contain the .ejs suffix, as this will always be removed by the generator.
+
+##### `dynamicDirectoryNames` object<string, string>, optional
+When the generator has created a user project, it will check this object for a key matching the folder name it is to use. If the key is present, it will instead use the value against that key as the folder name.
+
+For example, if you have a file in your template called `marketLocale` that you wanted to dynamically rewrite to `en-AU` you would return the following object:
+```jsx
+const dynamicDirectoryNames = {
+  'marketLocale': `en-AU`,
+};
+```
+Note that the folder name you provide should be the name itself, do not provide the path of the folder like `src/locale`, provide only name 'locale' along with the value you want it to be renamed with.
+example - locale: 'en-US', also do not provide the folder names with spaces or folder names with capitals.
 
 ##### `ignoredFileNames` array<string>, optional
 When the generator is ready to read a file from your template, it will first check this array for a string matching the fileName it is to use. If the key is a string, it will entirely skip this file.
