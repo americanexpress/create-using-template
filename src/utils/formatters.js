@@ -18,7 +18,6 @@ const defaultPrettierConfig = {
   semi: true,
   parser: 'babel',
   singleQuote: true,
-  printWidth: 1000, // prettier wraps code in ways that can fail linting
 };
 
 const formatJSX = (string, filePath) => {
