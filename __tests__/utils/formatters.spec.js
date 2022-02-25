@@ -34,7 +34,7 @@ describe('formatters', () => {
         1,
         'inputStringMock',
         {
-          semi: true, parser: 'babel', singleQuote: true, printWidth: 1000,
+          semi: true, parser: 'babel', singleQuote: true,
         }
       );
     });
