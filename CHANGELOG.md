@@ -1,3 +1,10 @@
+## [1.6.1](https://github.com/americanexpress/create-using-template/compare/v1.6.0...v1.6.1) (2022-02-28)
+
+
+### Bug Fixes
+
+* **lint-error:** fix for max len lint errors ([#26](https://github.com/americanexpress/create-using-template/issues/26)) ([477f88e](https://github.com/americanexpress/create-using-template/commit/477f88e054abfafa2ac19e3599f4eab87ce96054))
+
 # [1.6.0](https://github.com/americanexpress/create-using-template/compare/v1.5.1...v1.6.0) (2022-02-16)
 
 
