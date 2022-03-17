@@ -26,7 +26,7 @@ const getPackageName = require('./utils/get-package-name');
 const getPackageVersion = require('./utils/get-package-version');
 const { getStoredValues, setStoreValues } = require('./utils/storage');
 
-const noop = () => false;
+const noop = () => ({});
 const defaultLifecycleMethods = {
   preGenerate: noop,
   postGenerate: noop,
@@ -78,7 +78,8 @@ const generateFromTemplate = async ({ templateName }) => {
   const templateDirPaths = templatePackage.getTemplatePaths();
   // Generate Module
   log.goToStep(3, templateBanner);
-  lifecycle.preGenerate();
+  const { skip: skipGenerate } = { ...lifecycle.preGenerate() };
+  if (skipGenerate) console.warn('Cannot skip generation. Ignoring.');
   templateDirPaths.forEach((templateRootPath) => walkTemplate(
     templateRootPath,
     `./${templateValues.projectName}`,
@@ -97,21 +98,29 @@ const generateFromTemplate = async ({ templateName }) => {
   // Initialize git before installing deps. This allows git hooks to be setup
   // as part of install
   log.goToStep(4, templateBanner);
-  const skipGitInit = lifecycle.preGitInit();
-  if (!skipGitInit) await initializeGitRepo(`./${templateValues.projectName}`);
-  lifecycle.postGitInit();
+  const { skip: skipGitInit } = { ...lifecycle.preGitInit() };
+  if (!skipGitInit) {
+    await initializeGitRepo(`./${templateValues.projectName}`);
+    lifecycle.postGitInit();
+  }
 
   // Install and build the module
   log.goToStep(5, templateBanner);
-  const skipInstall = lifecycle.preInstall();
-  if (!skipInstall) await installModule(`./${templateValues.projectName}`);
-  lifecycle.postInstall();
+  const { skip: skipInstall } = { ...lifecycle.preInstall() };
+  if (!skipInstall) {
+    await installModule(`./${templateValues.projectName}`);
+    lifecycle.postInstall();
+  }
 
   // Create the first commit
-  log.goToStep(6, templateBanner);
-  const skipCommit = lifecycle.preCommit();
-  if (!skipCommit && !skipGitInit) await createInitialCommit(`./${templateValues.projectName}`, generatorOptions);
-  lifecycle.postCommit();
+  if (!skipGitInit) {
+    log.goToStep(6, templateBanner);
+    const { skip: skipCommit } = { ...lifecycle.preCommit() };
+    if (!skipCommit) {
+      await createInitialCommit(`./${templateValues.projectName}`, generatorOptions);
+      lifecycle.postCommit();
+    }
+  }
 
   if (generatorOptions.postGenerationMessage) {
     console.log(generatorOptions.postGenerationMessage);

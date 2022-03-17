@@ -79,6 +79,7 @@ describe('generateFromTemplate', () => {
     templatePackage = require('ejs');
     jest.clearAllMocks();
     jest.spyOn(console, 'log').mockImplementation(() => {});
+    jest.spyOn(console, 'warn').mockImplementation(() => {});
     jest.spyOn(Store.prototype, 'get').mockImplementation(getMock);
     jest.spyOn(Store.prototype, 'set').mockImplementation(setMock);
   });
@@ -181,6 +182,18 @@ describe('generateFromTemplate', () => {
     expect(lifecycleMocks.postGenerate).toHaveBeenCalledTimes(1);
   });
 
+  it('should ignore attempts to skip generation & log a warning', async () => {
+    lifecycleMocks.preGenerate.mockReturnValueOnce({ skip: true });
+
+    await generateFromTemplate({ templateName: 'ejs@1.0.0' });
+
+    expect(console.warn).toHaveBeenCalledTimes(1);
+    expect(console.warn).toHaveBeenCalledWith('Cannot skip generation. Ignoring.');
+    expect(lifecycleMocks.preGenerate).toHaveBeenCalledTimes(1);
+    expect(walkTemplate).toHaveBeenCalledTimes(2);
+    expect(lifecycleMocks.postGenerate).toHaveBeenCalledTimes(1);
+  });
+
   // Step 4
   it('should initialize the git repo', async () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
@@ -192,13 +205,13 @@ describe('generateFromTemplate', () => {
   });
 
   it('should not initialize the git repo if the lifecycle method indicates so', async () => {
-    lifecycleMocks.preGitInit.mockReturnValueOnce(true);
+    lifecycleMocks.preGitInit.mockReturnValueOnce({ skip: true });
 
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
     expect(lifecycleMocks.preGitInit).toHaveBeenCalledTimes(1);
     expect(initializeGitRepo).not.toHaveBeenCalled();
-    expect(lifecycleMocks.postGitInit).toHaveBeenCalledTimes(1);
+    expect(lifecycleMocks.postGitInit).not.toHaveBeenCalled();
   });
 
   // Step 5
@@ -212,13 +225,13 @@ describe('generateFromTemplate', () => {
   });
 
   it('should not install the module if the lifecycle method indicates so', async () => {
-    lifecycleMocks.preInstall.mockReturnValueOnce(true);
+    lifecycleMocks.preInstall.mockReturnValueOnce({ skip: true });
 
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
     expect(lifecycleMocks.preInstall).toHaveBeenCalledTimes(1);
     expect(installModule).not.toHaveBeenCalled();
-    expect(lifecycleMocks.postInstall).toHaveBeenCalledTimes(1);
+    expect(lifecycleMocks.postInstall).not.toHaveBeenCalled();
   });
 
   // Step 6
@@ -232,13 +245,23 @@ describe('generateFromTemplate', () => {
   });
 
   it('does not create initial commit if the lifecycle method indicates so', async () => {
-    lifecycleMocks.preCommit.mockReturnValueOnce(true);
+    lifecycleMocks.preCommit.mockReturnValueOnce({ skip: true });
 
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
     expect(lifecycleMocks.preCommit).toHaveBeenCalledTimes(1);
     expect(createInitialCommit).not.toHaveBeenCalled();
-    expect(lifecycleMocks.postCommit).toHaveBeenCalledTimes(1);
+    expect(lifecycleMocks.postCommit).not.toHaveBeenCalled();
+  });
+
+  it('does not create initial commit if git init was skipped', async () => {
+    lifecycleMocks.preGitInit.mockReturnValueOnce({ skip: true });
+
+    await generateFromTemplate({ templateName: 'ejs@1.0.0' });
+
+    expect(lifecycleMocks.preCommit).not.toHaveBeenCalled();
+    expect(createInitialCommit).not.toHaveBeenCalled();
+    expect(lifecycleMocks.postCommit).not.toHaveBeenCalled();
   });
 
   it('should print the post generation message if it exists', async () => {
