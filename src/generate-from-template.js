@@ -26,7 +26,7 @@ const getPackageName = require('./utils/get-package-name');
 const getPackageVersion = require('./utils/get-package-version');
 const { getStoredValues, setStoreValues } = require('./utils/storage');
 
-const noop = () => 0;
+const noop = () => false;
 const defaultLifecycleMethods = {
   preGenerate: noop,
   postGenerate: noop,

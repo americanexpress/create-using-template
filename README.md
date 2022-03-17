@@ -132,7 +132,7 @@ These values allow you to configure the generator.
 
 ##### `lifecycle` object<function>, optional
 
-These functions will run at specific stages of the generation lifecycle<!-- .slide: data-fullscreen -->
+These functions will run at specific stages of the generation lifecycle.
 
 * `preGenerate`: runs before the module is generated
 * `postGenerate`: runs after the module is generated
