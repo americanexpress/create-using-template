@@ -48,7 +48,7 @@ A template is any npm package whose default export follows the below API.
 module.exports = {
   getTemplatePaths,
   getTemplateOptions,
-  getTempalateBanner,
+  getTemplateBanner,
 };
 ```
 
@@ -130,6 +130,19 @@ These values allow you to configure the generator.
 * `initialCommitOptions`: Array of additional git options to be passed to the initial commit.
 * `storeResponses`: If this is set to `true`, create-using-template will store any responses for your template for future template generations.
 
+##### `lifecycle` object<function>, optional
+
+These functions will run at specific stages of the generation lifecycle<!-- .slide: data-fullscreen -->
+
+* `preGenerate`: runs before the module is generated
+* `postGenerate`: runs after the module is generated
+* `preGitInit`: runs before initializing the git repo, return true to skip git init
+* `postGitInit`: runs after initializing the git repo
+* `preInstall`: runs before installing the module, return true to skip installing
+* `postInstall`: runs after install
+* `preCommit`: runs before creating the initial commit, return true to skip committing
+* `postCommit`: runs after creating the initial commit
+
 ##### `dynamicFileNames` object<string, string>, optional
 When the generator is ready to write a file to the users project, it will first check this object for a key matching the fileName it is to use. If the key is present, it will instead use the value against that key as the file name.
 
@@ -187,7 +200,7 @@ If this function is not exported, no string will be rendered
 
 ## 🏆 Contributing
 
-We welcome Your interest in the American Express Open Source Community on Github. Any Contributor to
+We welcome Your interest in the American Express Open Source Community on GitHub. Any Contributor to
 any Open Source Project managed by the American Express Open Source Community must accept and sign
 an Agreement indicating agreement to the terms below. Except for the rights granted in this
 Agreement to American Express and to recipients of software distributed by American Express, You

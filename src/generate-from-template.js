@@ -26,6 +26,18 @@ const getPackageName = require('./utils/get-package-name');
 const getPackageVersion = require('./utils/get-package-version');
 const { getStoredValues, setStoreValues } = require('./utils/storage');
 
+const noop = () => 0;
+const defaultLifecycleMethods = {
+  preGenerate: noop,
+  postGenerate: noop,
+  preGitInit: noop,
+  postGitInit: noop,
+  preInstall: noop,
+  postInstall: noop,
+  preCommit: noop,
+  postCommit: noop,
+};
+
 const generateFromTemplate = async ({ templateName }) => {
   // Load the template
   log.goToStep(1);
@@ -57,15 +69,16 @@ const generateFromTemplate = async ({ templateName }) => {
     dynamicDirectoryNames = [],
     ignoredFileNames = [],
     ignoredDirectories = [],
+    lifecycle: configuredLifecycleMethods = {},
   } = await templatePackage.getTemplateOptions(baseData, prompts, storedValues);
+  const lifecycle = { ...defaultLifecycleMethods, ...configuredLifecycleMethods };
   if (generatorOptions.storeResponses) {
     setStoreValues(templatePackageName, templateVersion, templateValues);
   }
   const templateDirPaths = templatePackage.getTemplatePaths();
-
   // Generate Module
   log.goToStep(3, templateBanner);
-
+  lifecycle.preGenerate();
   templateDirPaths.forEach((templateRootPath) => walkTemplate(
     templateRootPath,
     `./${templateValues.projectName}`,
@@ -79,19 +92,26 @@ const generateFromTemplate = async ({ templateName }) => {
   if (Object.keys(dynamicDirectoryNames).length > 0) {
     renameDirectories(path.resolve(`./${templateValues.projectName}`), { dynamicDirectoryNames });
   }
+  lifecycle.postGenerate();
 
   // Initialize git before installing deps. This allows git hooks to be setup
   // as part of install
   log.goToStep(4, templateBanner);
-  await initializeGitRepo(`./${templateValues.projectName}`);
+  const skipGitInit = lifecycle.preGitInit();
+  if (!skipGitInit) await initializeGitRepo(`./${templateValues.projectName}`);
+  lifecycle.postGitInit();
 
   // Install and build the module
   log.goToStep(5, templateBanner);
-  await installModule(`./${templateValues.projectName}`);
+  const skipInstall = lifecycle.preInstall();
+  if (!skipInstall) await installModule(`./${templateValues.projectName}`);
+  lifecycle.postInstall();
 
   // Create the first commit
   log.goToStep(6, templateBanner);
-  await createInitialCommit(`./${templateValues.projectName}`, generatorOptions);
+  const skipCommit = lifecycle.preCommit();
+  if (!skipCommit && !skipGitInit) await createInitialCommit(`./${templateValues.projectName}`, generatorOptions);
+  lifecycle.postCommit();
 
   if (generatorOptions.postGenerationMessage) {
     console.log(generatorOptions.postGenerationMessage);
