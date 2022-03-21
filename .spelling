@@ -4,6 +4,8 @@
 # one word per line, to define a file override use ' - filename'
 # where filename is relative to this configuration file
 
+lifecycle
+repo
  - CODE_OF_CONDUCT.md
 Github
 neuro
