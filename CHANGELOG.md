@@ -1,3 +1,10 @@
+# [1.7.0](https://github.com/americanexpress/create-using-template/compare/v1.6.1...v1.7.0) (2022-03-21)
+
+
+### Features
+
+* **getTemplateOptions:** add lifecycle methods ([#29](https://github.com/americanexpress/create-using-template/issues/29)) ([741e33a](https://github.com/americanexpress/create-using-template/commit/741e33a468ae6656f22fc966c2e14498445809ff))
+
 ## [1.6.1](https://github.com/americanexpress/create-using-template/compare/v1.6.0...v1.6.1) (2022-02-28)
 
 
