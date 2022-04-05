@@ -1,3 +1,10 @@
+## [1.7.1](https://github.com/americanexpress/create-using-template/compare/v1.7.0...v1.7.1) (2022-04-05)
+
+
+### Bug Fixes
+
+* **labeler:** fix globing ([97ec119](https://github.com/americanexpress/create-using-template/commit/97ec1194e9e0a99e4d00546541e44ecc1989584d))
+
 # [1.7.0](https://github.com/americanexpress/create-using-template/compare/v1.6.1...v1.7.0) (2022-03-21)
 
 
