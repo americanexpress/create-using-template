@@ -78,7 +78,7 @@ const generateFromTemplate = async ({ templateName }) => {
   const templateDirPaths = templatePackage.getTemplatePaths();
   // Generate Module
   log.goToStep(3, templateBanner);
-  const { skip: skipGenerate } = { ...lifecycle.preGenerate() };
+  const { skip: skipGenerate } = { ...await lifecycle.preGenerate() };
   if (skipGenerate) console.warn('Cannot skip generation. Ignoring.');
   templateDirPaths.forEach((templateRootPath) => walkTemplate(
     templateRootPath,
@@ -93,32 +93,32 @@ const generateFromTemplate = async ({ templateName }) => {
   if (Object.keys(dynamicDirectoryNames).length > 0) {
     renameDirectories(path.resolve(`./${templateValues.projectName}`), { dynamicDirectoryNames });
   }
-  lifecycle.postGenerate();
+  await lifecycle.postGenerate();
 
   // Initialize git before installing deps. This allows git hooks to be setup
   // as part of install
   log.goToStep(4, templateBanner);
-  const { skip: skipGitInit } = { ...lifecycle.preGitInit() };
+  const { skip: skipGitInit } = { ...await lifecycle.preGitInit() };
   if (!skipGitInit) {
     await initializeGitRepo(`./${templateValues.projectName}`);
-    lifecycle.postGitInit();
+    await lifecycle.postGitInit();
   }
 
   // Install and build the module
   log.goToStep(5, templateBanner);
-  const { skip: skipInstall } = { ...lifecycle.preInstall() };
+  const { skip: skipInstall } = { ...await lifecycle.preInstall() };
   if (!skipInstall) {
     await installModule(`./${templateValues.projectName}`);
-    lifecycle.postInstall();
+    await lifecycle.postInstall();
   }
 
   // Create the first commit
   if (!skipGitInit) {
     log.goToStep(6, templateBanner);
-    const { skip: skipCommit } = { ...lifecycle.preCommit() };
+    const { skip: skipCommit } = { ...await lifecycle.preCommit() };
     if (!skipCommit) {
       await createInitialCommit(`./${templateValues.projectName}`, generatorOptions);
-      lifecycle.postCommit();
+      await lifecycle.postCommit();
     }
   }
 

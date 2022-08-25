@@ -5,6 +5,7 @@
 # where filename is relative to this configuration file
 
 lifecycle
+async
 repo
  - CODE_OF_CONDUCT.md
 Github
