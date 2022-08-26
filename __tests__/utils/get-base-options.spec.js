@@ -25,6 +25,9 @@ describe('getBaseOptions', () => {
     getBaseOptions();
     expect(prompts).toHaveBeenCalledTimes(1);
     // snapshot params as its a large array that will grow over time.
+    // test prompts validation
+    expect(prompts.mock.calls[0][0][0].validate('testProjectName')).toBe(true);
+    expect(prompts.mock.calls[0][0][0].validate('test Project Name')).toBe('Please enter a project name without spaces or special characters excluding hiphen and underscore');
     expect(prompts.mock.calls[0]).toMatchSnapshot();
   });
 });
