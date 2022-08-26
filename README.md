@@ -132,7 +132,7 @@ These values allow you to configure the generator.
 
 ##### `lifecycle` object<function>, optional
 
-These functions will run at specific stages of the generation lifecycle. `pre` functions can return `{ skip: true }` to skip that lifecycle stage. The generation stage cannot be skipped. If a lifecycle stage is skipped, its `post` function will not be called.
+These async functions will run at specific stages of the generation lifecycle. `pre` functions can return `{ skip: true }` to skip that lifecycle stage. The generation stage cannot be skipped. If a lifecycle stage is skipped, its `post` function will not be called.
 
 * `preGenerate`: runs before the module is generated. Generation cannot be skipped.
 * `postGenerate`: runs after the module is generated.

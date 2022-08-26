@@ -183,7 +183,7 @@ describe('generateFromTemplate', () => {
   });
 
   it('should ignore attempts to skip generation & log a warning', async () => {
-    lifecycleMocks.preGenerate.mockReturnValueOnce({ skip: true });
+    lifecycleMocks.preGenerate.mockReturnValueOnce(Promise.resolve({ skip: true }));
 
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
@@ -205,7 +205,7 @@ describe('generateFromTemplate', () => {
   });
 
   it('should not initialize the git repo if the lifecycle method indicates so', async () => {
-    lifecycleMocks.preGitInit.mockReturnValueOnce({ skip: true });
+    lifecycleMocks.preGitInit.mockReturnValueOnce(Promise.resolve({ skip: true }));
 
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
@@ -225,7 +225,7 @@ describe('generateFromTemplate', () => {
   });
 
   it('should not install the module if the lifecycle method indicates so', async () => {
-    lifecycleMocks.preInstall.mockReturnValueOnce({ skip: true });
+    lifecycleMocks.preInstall.mockReturnValueOnce(Promise.resolve({ skip: true }));
 
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
@@ -245,7 +245,7 @@ describe('generateFromTemplate', () => {
   });
 
   it('does not create initial commit if the lifecycle method indicates so', async () => {
-    lifecycleMocks.preCommit.mockReturnValueOnce({ skip: true });
+    lifecycleMocks.preCommit.mockReturnValueOnce(Promise.resolve({ skip: true }));
 
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
@@ -255,7 +255,7 @@ describe('generateFromTemplate', () => {
   });
 
   it('does not create initial commit if git init was skipped', async () => {
-    lifecycleMocks.preGitInit.mockReturnValueOnce({ skip: true });
+    lifecycleMocks.preGitInit.mockReturnValueOnce(Promise.resolve({ skip: true }));
 
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
