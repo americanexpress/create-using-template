@@ -1,3 +1,10 @@
+# [1.8.0](https://github.com/americanexpress/create-using-template/compare/v1.7.1...v1.8.0) (2022-08-26)
+
+
+### Features
+
+* **lifecycles:** allow async lifecycle functions ([#31](https://github.com/americanexpress/create-using-template/issues/31)) ([804e3e8](https://github.com/americanexpress/create-using-template/commit/804e3e8bfd17beec209308ab8af6a1365d26d474))
+
 ## [1.7.1](https://github.com/americanexpress/create-using-template/compare/v1.7.0...v1.7.1) (2022-04-05)
 
 
