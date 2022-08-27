@@ -14,7 +14,7 @@
 
 const prompts = require('prompts');
 
-const expression = /[^A-Z_a-z-]/g;
+const expression = /[^A-Za-z-]+/ig;
 
 const getBaseOptions = () => prompts([
   {
@@ -22,7 +22,8 @@ const getBaseOptions = () => prompts([
     name: 'projectName',
     message: 'Enter your project\'s name. This will also be used as the directory name for the project:',
     initial: '',
-    validate: (projectName) => (expression.test(projectName) ? 'Please enter a project name without spaces or special characters excluding hiphen and underscore' : true),
+    validate: (projectName) => (expression.test(projectName) ? 'Please enter a project name without spaces or special characters excluding hyphen.' : true),
+    format: (val) => val.replace(expression, ''),
   },
 ]);
 

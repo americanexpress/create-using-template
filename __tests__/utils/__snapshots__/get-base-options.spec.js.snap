@@ -4,6 +4,7 @@ exports[`getBaseOptions should call prompts with the correct set of base options
 Array [
   Array [
     Object {
+      "format": [Function],
       "initial": "",
       "message": "Enter your project's name. This will also be used as the directory name for the project:",
       "name": "projectName",
