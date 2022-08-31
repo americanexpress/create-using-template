@@ -27,6 +27,7 @@ describe('getBaseOptions', () => {
     // snapshot params as its a large array that will grow over time.
     // test prompts validation
     expect(prompts.mock.calls[0][0][0].validate('testProjectName')).toBe(true);
+    expect(prompts.mock.calls[0][0][0].format('testProjectName')).toBe('testProjectName');
     expect(prompts.mock.calls[0]).toMatchSnapshot();
   });
   it('should call prompts with the correct set of options when regex is passed', () => {
@@ -36,7 +37,8 @@ describe('getBaseOptions', () => {
     // snapshot params as its a large array that will grow over time.
     // test prompts validation
     expect(prompts.mock.calls[0][0][0].validate('test Project Name')).toBe('Invalid project name format, please make corrections.');
-    expect(prompts.mock.calls[0][0][0].format('test Project Name')).toBe("testProjectName");
+    expect(prompts.mock.calls[0][0][0].validate('testProjectName')).toBe(true);
+    expect(prompts.mock.calls[0][0][0].format('test Project Name')).toBe('testProjectName');
     expect(prompts.mock.calls[0]).toMatchSnapshot();
   });
 });

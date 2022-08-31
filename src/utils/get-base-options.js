@@ -20,10 +20,9 @@ const getBaseOptions = (regExpression = '') => prompts([
     name: 'projectName',
     message: 'Enter your project\'s name. This will also be used as the directory name for the project:',
     initial: '',
-    validate: (regExpression.constructor === RegExp) ? ((projectName) => (regExpression.test(projectName) ? 'Invalid project name format, please make corrections.' : true)) : (projectName) => (true),
-    format: (regExpression.constructor === RegExp) ? ((val) => val.replace(regExpression, '')) : (val) => (val),
+    validate: regExpression instanceof RegExp ? (projectName) => (regExpression.test(projectName) ? 'Invalid project name format, please make corrections.' : true) : () => true,
+    format: regExpression instanceof RegExp ? (val) => val.replace(regExpression, '') : (val) => val,
   },
 ]);
-
 
 module.exports = getBaseOptions;
