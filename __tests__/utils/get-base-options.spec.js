@@ -27,7 +27,15 @@ describe('getBaseOptions', () => {
     // snapshot params as its a large array that will grow over time.
     // test prompts validation
     expect(prompts.mock.calls[0][0][0].validate('testProjectName')).toBe(true);
-    expect(prompts.mock.calls[0][0][0].validate('test Project Name')).toBe('Please enter a project name without spaces or special characters excluding hyphen.');
+    expect(prompts.mock.calls[0]).toMatchSnapshot();
+  });
+  it('should call prompts with the correct set of options when regex is passed', () => {
+    const testRegex = /[^a-z-]+/gi;
+    getBaseOptions(testRegex);
+    expect(prompts).toHaveBeenCalledTimes(1);
+    // snapshot params as its a large array that will grow over time.
+    // test prompts validation
+    expect(prompts.mock.calls[0][0][0].validate('test Project Name')).toBe('Invalid project name format, please make corrections.');
     expect(prompts.mock.calls[0][0][0].format('test Project Name')).toBe("testProjectName");
     expect(prompts.mock.calls[0]).toMatchSnapshot();
   });

@@ -40,6 +40,7 @@ const defaultLifecycleMethods = {
 
 const generateFromTemplate = async ({ templateName }) => {
   // Load the template
+  console.log(programOpts)
   log.goToStep(1);
   await installTemplate(templateName);
 
@@ -57,11 +58,16 @@ const generateFromTemplate = async ({ templateName }) => {
     }
   }
 
+  let regExpression;
+  if(typeof templatePackage.expression.constructor === RegExp) {
+    regExpression  = templatePackage.expression;
+  }
+
   // Gather parameters
   log.goToStep(2, templateBanner);
   const templateVersion = getPackageVersion(templateName);
   const storedValues = getStoredValues(templatePackageName, templateVersion);
-  const baseData = await getBaseOptions();
+  const baseData = await getBaseOptions(regExpression);
   const {
     templateValues,
     generatorOptions = {},
