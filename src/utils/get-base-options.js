@@ -14,14 +14,12 @@
 
 const prompts = require('prompts');
 
-const getBaseOptions = (regExpression = '') => prompts([
+const getBaseOptions = () => prompts([
   {
     type: 'text',
     name: 'projectName',
     message: 'Enter your project\'s name. This will also be used as the directory name for the project:',
     initial: '',
-    validate: regExpression instanceof RegExp ? (projectName) => (regExpression.test(projectName) ? 'Invalid project name format, please make corrections.' : true) : () => true,
-    format: regExpression instanceof RegExp ? (val) => val.replace(regExpression, '') : (val) => val,
   },
 ]);
 

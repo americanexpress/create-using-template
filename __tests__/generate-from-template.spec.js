@@ -77,6 +77,7 @@ describe('generateFromTemplate', () => {
   beforeEach(() => {
     // eslint-disable-next-line global-require -- we need access to a fresh import for every test
     templatePackage = require('ejs');
+    templatePackage.templateFlags = { noBaseData: false };
     jest.clearAllMocks();
     jest.spyOn(console, 'log').mockImplementation(() => { });
     jest.spyOn(console, 'warn').mockImplementation(() => { });
@@ -135,7 +136,7 @@ describe('generateFromTemplate', () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
     expect(getBaseOptions).toHaveBeenCalledTimes(1);
-    expect(getBaseOptions).toHaveBeenCalledWith(undefined);
+    expect(getBaseOptions).toHaveBeenNthCalledWith(1);
 
     expect(templatePackage.getTemplateOptions).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock', undefined);
@@ -146,17 +147,23 @@ describe('generateFromTemplate', () => {
 
   it('should take defaults for the non-required keys in getTemplateOptions', async () => {
     templatePackage.getTemplateOptions.mockImplementationOnce(() => ({ templateValues: { projectName: 'projectNameMock' } }));
-    templatePackage.expression = /[^a-z-]+/gi;
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
     expect(getBaseOptions).toHaveBeenCalledTimes(1);
-    expect(getBaseOptions).toHaveBeenCalledWith(templatePackage.expression);
+    expect(getBaseOptions).toHaveBeenNthCalledWith(1);
 
     expect(templatePackage.getTemplateOptions).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock', undefined);
 
     expect(templatePackage.getTemplatePaths).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplatePaths).toHaveBeenNthCalledWith(1);
+  });
+
+  it('should skip baseOptions if supplied with noBaseData template flag', async () => {
+    templatePackage.templateFlags = { noBaseData: true };
+    await generateFromTemplate({ templateName: 'ejs@1.0.0' });
+    expect(getBaseOptions).toHaveBeenCalledTimes(0);
+    // expect(console.warn).toHaveBeenCalledTimes(1)
   });
 
   // Step 3

@@ -18,13 +18,13 @@ const path = require('path');
 const log = require('./utils/log');
 const installTemplate = require('./utils/install-template');
 const installModule = require('./utils/install-module');
-const getBaseOptions = require('./utils/get-base-options');
 const walkTemplate = require('./utils/walk-template');
 const renameDirectories = require('./utils/renameDirectories');
 const { initializeGitRepo, createInitialCommit } = require('./utils/git');
 const getPackageName = require('./utils/get-package-name');
 const getPackageVersion = require('./utils/get-package-version');
 const { getStoredValues, setStoreValues } = require('./utils/storage');
+const handleFlags = require('./utils/handle-template-flags');
 
 const noop = () => ({});
 const defaultLifecycleMethods = {
@@ -57,13 +57,14 @@ const generateFromTemplate = async ({ templateName }) => {
     }
   }
 
-  const regExpression = templatePackage.expression;
-
   // Gather parameters
   log.goToStep(2, templateBanner);
   const templateVersion = getPackageVersion(templateName);
   const storedValues = getStoredValues(templatePackageName, templateVersion);
-  const baseData = await getBaseOptions(regExpression);
+
+  const flags = templatePackage.templateFlags;
+  const baseData = await handleFlags(flags);
+
   const {
     templateValues,
     generatorOptions = {},
