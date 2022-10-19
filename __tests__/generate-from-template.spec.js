@@ -139,7 +139,7 @@ describe('generateFromTemplate', () => {
     expect(getBaseOptions).toHaveBeenNthCalledWith(1);
 
     expect(templatePackage.getTemplateOptions).toHaveBeenCalledTimes(1);
-    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock', undefined);
+    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'promptsMock', undefined, 'baseOptionsMock');
 
     expect(templatePackage.getTemplatePaths).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplatePaths).toHaveBeenNthCalledWith(1);
@@ -153,7 +153,7 @@ describe('generateFromTemplate', () => {
     expect(getBaseOptions).toHaveBeenNthCalledWith(1);
 
     expect(templatePackage.getTemplateOptions).toHaveBeenCalledTimes(1);
-    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock', undefined);
+    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'promptsMock', undefined, 'baseOptionsMock');
 
     expect(templatePackage.getTemplatePaths).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplatePaths).toHaveBeenNthCalledWith(1);

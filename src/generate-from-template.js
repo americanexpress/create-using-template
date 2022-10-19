@@ -62,8 +62,7 @@ const generateFromTemplate = async ({ templateName }) => {
   const templateVersion = getPackageVersion(templateName);
   const storedValues = getStoredValues(templatePackageName, templateVersion);
 
-  const flags = templatePackage.templateFlags;
-  const baseData = await handleFlags(flags);
+  const baseData = await handleFlags(templatePackage.templateFlags);
 
   const {
     templateValues,
@@ -73,7 +72,7 @@ const generateFromTemplate = async ({ templateName }) => {
     ignoredFileNames = [],
     ignoredDirectories = [],
     lifecycle: configuredLifecycleMethods = {},
-  } = await templatePackage.getTemplateOptions(baseData, prompts, storedValues);
+  } = await templatePackage.getTemplateOptions(prompts, storedValues, baseData);
   const lifecycle = { ...defaultLifecycleMethods, ...configuredLifecycleMethods };
   if (generatorOptions.storeResponses) {
     setStoreValues(templatePackageName, templateVersion, templateValues);

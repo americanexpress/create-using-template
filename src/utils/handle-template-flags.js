@@ -5,7 +5,7 @@ const handleFlags = async (flags) => {
     return getBaseOptions();
   }
   console.warn('get base options has been disabled, make sure to get a project name in your template through prompts.');
-  return '';
+  return Promise.resolve();
 };
 
 module.exports = handleFlags;
