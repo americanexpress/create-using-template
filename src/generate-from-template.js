@@ -12,7 +12,6 @@
  * under the License.
  */
 
-const prompts = require('prompts');
 const kleur = require('kleur');
 const path = require('path');
 const log = require('./utils/log');
@@ -24,7 +23,7 @@ const { initializeGitRepo, createInitialCommit } = require('./utils/git');
 const getPackageName = require('./utils/get-package-name');
 const getPackageVersion = require('./utils/get-package-version');
 const { getStoredValues, setStoreValues } = require('./utils/storage');
-const handleFlags = require('./utils/handle-template-flags');
+const getTemplateOptionsWithFlags = require('./utils/getTemplateOptionsCaller');
 
 const noop = () => ({});
 const defaultLifecycleMethods = {
@@ -62,8 +61,7 @@ const generateFromTemplate = async ({ templateName }) => {
   const templateVersion = getPackageVersion(templateName);
   const storedValues = getStoredValues(templatePackageName, templateVersion);
 
-  const baseData = await handleFlags(templatePackage.templateFlags);
-
+  /* eslint-disable max-len -- need to pass template package properties */
   const {
     templateValues,
     generatorOptions = {},
@@ -72,7 +70,9 @@ const generateFromTemplate = async ({ templateName }) => {
     ignoredFileNames = [],
     ignoredDirectories = [],
     lifecycle: configuredLifecycleMethods = {},
-  } = await templatePackage.getTemplateOptions(prompts, storedValues, baseData);
+  } = await getTemplateOptionsWithFlags(templatePackage.getTemplateOptions, templatePackage.templateFlags, storedValues);
+  /* eslint-enable max-len -- re-enable */
+
   const lifecycle = { ...defaultLifecycleMethods, ...configuredLifecycleMethods };
   if (generatorOptions.storeResponses) {
     setStoreValues(templatePackageName, templateVersion, templateValues);

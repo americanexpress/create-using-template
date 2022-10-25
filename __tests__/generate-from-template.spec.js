@@ -139,7 +139,7 @@ describe('generateFromTemplate', () => {
     expect(getBaseOptions).toHaveBeenNthCalledWith(1);
 
     expect(templatePackage.getTemplateOptions).toHaveBeenCalledTimes(1);
-    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'promptsMock', undefined, 'baseOptionsMock');
+    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock', undefined);
 
     expect(templatePackage.getTemplatePaths).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplatePaths).toHaveBeenNthCalledWith(1);
@@ -153,17 +153,26 @@ describe('generateFromTemplate', () => {
     expect(getBaseOptions).toHaveBeenNthCalledWith(1);
 
     expect(templatePackage.getTemplateOptions).toHaveBeenCalledTimes(1);
-    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'promptsMock', undefined, 'baseOptionsMock');
+    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock', undefined);
 
     expect(templatePackage.getTemplatePaths).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplatePaths).toHaveBeenNthCalledWith(1);
   });
+  it('should call getTemplateOptions without baseOptions parameter if supplied with noBaseData template flag', async () => {
+    templatePackage.getTemplateOptions.mockImplementationOnce(() => ({ templateValues: { projectName: 'projectNameMock' } }));
+    templatePackage.templateFlags = { noBaseData: true };
+    await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
+    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'promptsMock', undefined);
+
+    expect(templatePackage.getTemplatePaths).toHaveBeenCalledTimes(1);
+    expect(templatePackage.getTemplatePaths).toHaveBeenNthCalledWith(1);
+  });
   it('should skip baseOptions if supplied with noBaseData template flag', async () => {
     templatePackage.templateFlags = { noBaseData: true };
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
     expect(getBaseOptions).toHaveBeenCalledTimes(0);
-    // expect(console.warn).toHaveBeenCalledTimes(1)
+    expect(console.warn).toHaveBeenCalledTimes(1);
   });
 
   // Step 3
