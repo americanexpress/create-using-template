@@ -71,7 +71,7 @@ Directory structures will be copied exactly, and files will be placed in the sam
 It is possible to define dynamic file names, and ignore files, based upon user input (see `getTemplateOptions` below)
 
 ### `getTemplateOptions`
-`async (prompts, storedValues, baseData) => ({templateValues[, generatorOptions, dynamicFileNames, ignoredFileNames]})`
+`async (baseData, prompts, storedValues) => ({templateValues[, generatorOptions, dynamicFileNames, ignoredFileNames]})`
 
 getTemplateOptions will be called to allow your template to configure its dynamic values.
 
