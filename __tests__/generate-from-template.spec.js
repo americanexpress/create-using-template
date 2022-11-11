@@ -74,10 +74,10 @@ describe('generateFromTemplate', () => {
   let templatePackage;
   const getMock = jest.fn();
   const setMock = jest.fn();
+  
   beforeEach(() => {
     // eslint-disable-next-line global-require -- we need access to a fresh import for every test
     templatePackage = require('ejs');
-    templatePackage.templateFlags = { noBaseData: false };
     jest.clearAllMocks();
     jest.spyOn(console, 'log').mockImplementation(() => { });
     jest.spyOn(console, 'warn').mockImplementation(() => { });
@@ -134,7 +134,6 @@ describe('generateFromTemplate', () => {
   // Step 2
   it('should get the base options, template options, and template paths', async () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
-
     expect(getBaseOptions).toHaveBeenCalledTimes(1);
     expect(getBaseOptions).toHaveBeenNthCalledWith(1);
 
@@ -148,10 +147,9 @@ describe('generateFromTemplate', () => {
   it('should take defaults for the non-required keys in getTemplateOptions', async () => {
     templatePackage.getTemplateOptions.mockImplementationOnce(() => ({ templateValues: { projectName: 'projectNameMock' } }));
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
-
+    
     expect(getBaseOptions).toHaveBeenCalledTimes(1);
     expect(getBaseOptions).toHaveBeenNthCalledWith(1);
-
     expect(templatePackage.getTemplateOptions).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock', undefined);
 
@@ -162,9 +160,7 @@ describe('generateFromTemplate', () => {
     templatePackage.getTemplateOptions.mockImplementationOnce(() => ({ templateValues: { projectName: 'projectNameMock' } }));
     templatePackage.templateFlags = { noBaseData: true };
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
-
     expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'promptsMock', undefined);
-
     expect(templatePackage.getTemplatePaths).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplatePaths).toHaveBeenNthCalledWith(1);
   });
@@ -172,7 +168,6 @@ describe('generateFromTemplate', () => {
     templatePackage.templateFlags = { noBaseData: true };
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
     expect(getBaseOptions).toHaveBeenCalledTimes(0);
-    expect(console.warn).toHaveBeenCalledTimes(1);
   });
 
   // Step 3
@@ -204,7 +199,7 @@ describe('generateFromTemplate', () => {
 
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
-    expect(console.warn).toHaveBeenCalledTimes(1);
+    expect(console.warn).toHaveBeenCalledTimes(2);
     expect(console.warn).toHaveBeenCalledWith('Cannot skip generation. Ignoring.');
     expect(lifecycleMocks.preGenerate).toHaveBeenCalledTimes(1);
     expect(walkTemplate).toHaveBeenCalledTimes(2);

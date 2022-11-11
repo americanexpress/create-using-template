@@ -28,11 +28,4 @@ describe('getBaseOptions', () => {
     // test prompts validation
     expect(prompts.mock.calls[0]).toMatchSnapshot();
   });
-  it('should call prompts with the correct set of options when regex is passed', () => {
-    getBaseOptions();
-    expect(prompts).toHaveBeenCalledTimes(1);
-    // snapshot params as its a large array that will grow over time.
-    // test prompts validation
-    expect(prompts.mock.calls[0]).toMatchSnapshot();
-  });
 });
