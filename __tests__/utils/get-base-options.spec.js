@@ -25,6 +25,7 @@ describe('getBaseOptions', () => {
     getBaseOptions();
     expect(prompts).toHaveBeenCalledTimes(1);
     // snapshot params as its a large array that will grow over time.
+    // test prompts validation
     expect(prompts.mock.calls[0]).toMatchSnapshot();
   });
 });

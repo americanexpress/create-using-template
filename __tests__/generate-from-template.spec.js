@@ -74,12 +74,13 @@ describe('generateFromTemplate', () => {
   let templatePackage;
   const getMock = jest.fn();
   const setMock = jest.fn();
+
   beforeEach(() => {
     // eslint-disable-next-line global-require -- we need access to a fresh import for every test
     templatePackage = require('ejs');
     jest.clearAllMocks();
-    jest.spyOn(console, 'log').mockImplementation(() => {});
-    jest.spyOn(console, 'warn').mockImplementation(() => {});
+    jest.spyOn(console, 'log').mockImplementation(() => { });
+    jest.spyOn(console, 'warn').mockImplementation(() => { });
     jest.spyOn(Store.prototype, 'get').mockImplementation(getMock);
     jest.spyOn(Store.prototype, 'set').mockImplementation(setMock);
   });
@@ -110,7 +111,7 @@ describe('generateFromTemplate', () => {
 
   it('should call the generatorBanner, and all 6 steps if the template provides a banner that is mallformed', async () => {
     // the banner is a function instead of a string
-    templatePackage.getTemplateBanner = jest.fn(() => () => {});
+    templatePackage.getTemplateBanner = jest.fn(() => () => { });
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
     expect(log.goToStep).toHaveBeenCalledTimes(6);
@@ -133,7 +134,6 @@ describe('generateFromTemplate', () => {
   // Step 2
   it('should get the base options, template options, and template paths', async () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
-
     expect(getBaseOptions).toHaveBeenCalledTimes(1);
     expect(getBaseOptions).toHaveBeenNthCalledWith(1);
 
@@ -150,12 +150,24 @@ describe('generateFromTemplate', () => {
 
     expect(getBaseOptions).toHaveBeenCalledTimes(1);
     expect(getBaseOptions).toHaveBeenNthCalledWith(1);
-
     expect(templatePackage.getTemplateOptions).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock', undefined);
 
     expect(templatePackage.getTemplatePaths).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplatePaths).toHaveBeenNthCalledWith(1);
+  });
+  it('should call getTemplateOptions without baseOptions parameter if supplied with noBaseData template flag', async () => {
+    templatePackage.getTemplateOptions.mockImplementationOnce(() => ({ templateValues: { projectName: 'projectNameMock' } }));
+    templatePackage.templateFlags = { noBaseData: true };
+    await generateFromTemplate({ templateName: 'ejs@1.0.0' });
+    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'promptsMock', undefined);
+    expect(templatePackage.getTemplatePaths).toHaveBeenCalledTimes(1);
+    expect(templatePackage.getTemplatePaths).toHaveBeenNthCalledWith(1);
+  });
+  it('should skip baseOptions if supplied with noBaseData template flag', async () => {
+    templatePackage.templateFlags = { noBaseData: true };
+    await generateFromTemplate({ templateName: 'ejs@1.0.0' });
+    expect(getBaseOptions).toHaveBeenCalledTimes(0);
   });
 
   // Step 3
@@ -240,7 +252,7 @@ describe('generateFromTemplate', () => {
 
     expect(lifecycleMocks.preCommit).toHaveBeenCalledTimes(1);
     expect(createInitialCommit).toHaveBeenCalledTimes(1);
-    expect(createInitialCommit).toHaveBeenNthCalledWith(1, './projectNameMock', { });
+    expect(createInitialCommit).toHaveBeenNthCalledWith(1, './projectNameMock', {});
     expect(lifecycleMocks.postCommit).toHaveBeenCalledTimes(1);
   });
 

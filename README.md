@@ -119,6 +119,21 @@ let templateValues = {
     ]),
   };
 ```
+### `templateFlags`
+template flags is an object that contains flags that you can pass from the template to to disable or enable specific interaction.
+
+currently the only flag available to be set is `noBaseData`. If set this ignores the collection of the value `projectName` allowing you to retrieve that information through the prompts package in your template itself.
+
+```js
+const templateFlags = { noBaseData: true }
+module.exports = {
+  getTemplateOptions,
+  getTemplatePaths,
+  getTemplateBanner,
+  templateFlags
+};
+```
+if `noBaseData` is set, `baseData` is no longer needed as a parameter when calling `getTemplateOptions` nor as a value in `templateValues`.
 
 ##### `generatorOptions` object, optional
 
