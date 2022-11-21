@@ -212,7 +212,6 @@ The [kleur package](https://www.npmjs.com/package/kleur) package is provided so 
 
 If this function is not exported, no string will be rendered
 
-
 ## 🏆 Contributing
 
 We welcome Your interest in the American Express Open Source Community on GitHub. Any Contributor to
