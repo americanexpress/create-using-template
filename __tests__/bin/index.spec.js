@@ -1,6 +1,13 @@
 const generateFromTemplate = require('../../src/generate-from-template');
 
 jest.mock('../../src/generate-from-template', () => jest.fn());
+jest.mock('../../src/utils/create-build-logger', () => () => ({
+  addError: jest.fn(),
+  addStep: jest.fn(),
+  addTemplateDetails: jest.fn(),
+  init: jest.fn(),
+  moveBuildLogToProject: jest.fn(),
+}));
 
 describe('bin', () => {
   beforeEach(() => {
@@ -16,6 +23,13 @@ describe('bin', () => {
     expect(generateFromTemplate).toHaveBeenNthCalledWith(1, {
       templateName: 'templateNameMock',
       options: { projectName: 'mockProjectName' },
+      buildLogger: {
+        addError: expect.any(Function),
+        addStep: expect.any(Function),
+        addTemplateDetails: expect.any(Function),
+        init: expect.any(Function),
+        moveBuildLogToProject: expect.any(Function),
+      },
     });
   });
   it('should catch and log exceptions thrown during generation', () => {
@@ -29,6 +43,16 @@ describe('bin', () => {
       require('../../bin');
     });
     expect(generateFromTemplate).toHaveBeenCalledTimes(1);
-    expect(generateFromTemplate).toHaveBeenNthCalledWith(1, { templateName: 'templateNameMock', options: {} });
+    expect(generateFromTemplate).toHaveBeenNthCalledWith(1, {
+      templateName: 'templateNameMock',
+      buildLogger: {
+        addError: expect.any(Function),
+        addStep: expect.any(Function),
+        addTemplateDetails: expect.any(Function),
+        init: expect.any(Function),
+        moveBuildLogToProject: expect.any(Function),
+      },
+      options: {},
+    });
   });
 });

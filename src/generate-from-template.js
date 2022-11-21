@@ -37,9 +37,11 @@ const defaultLifecycleMethods = {
   postCommit: noop,
 };
 
-const generateFromTemplate = async ({ templateName, options = {} }) => {
+const generateFromTemplate = async ({ templateName, buildLogger, options = {} }) => {
+  await buildLogger.init(templateName);
   // Load the template
   log.goToStep(1);
+  await buildLogger.addStep(1, 'started');
   await installTemplate(templateName);
 
   const templatePackageName = getPackageName(templateName);
@@ -55,9 +57,11 @@ const generateFromTemplate = async ({ templateName, options = {} }) => {
       templateBanner = templateBannerResponse;
     }
   }
+  await buildLogger.addStep(1, 'complete');
 
   // Gather parameters
   log.goToStep(2, templateBanner);
+  await buildLogger.addStep(2, 'started');
   const templateVersion = getPackageVersion(templateName);
   const storedValues = getStoredValues(templatePackageName, templateVersion);
 
@@ -76,13 +80,18 @@ const generateFromTemplate = async ({ templateName, options = {} }) => {
     options,
   });
 
+  await buildLogger.addTemplateDetails({ templateVersion, templateValues });
+
   const lifecycle = { ...defaultLifecycleMethods, ...configuredLifecycleMethods };
   if (generatorOptions.storeResponses) {
     setStoreValues(templatePackageName, templateVersion, templateValues);
   }
   const templateDirPaths = templatePackage.getTemplatePaths();
+  await buildLogger.addStep(2, 'complete');
+
   // Generate Module
   log.goToStep(3, templateBanner);
+  await buildLogger.addStep(3, 'started');
   const { skip: skipGenerate } = { ...await lifecycle.preGenerate() };
   if (skipGenerate) console.warn('Cannot skip generation. Ignoring.');
   templateDirPaths.forEach((templateRootPath) => walkTemplate(
@@ -99,32 +108,48 @@ const generateFromTemplate = async ({ templateName, options = {} }) => {
     renameDirectories(path.resolve(`./${templateValues.projectName}`), { dynamicDirectoryNames });
   }
   await lifecycle.postGenerate();
+  await buildLogger.moveBuildLogToProject(templateValues.projectName);
+  await buildLogger.addStep(3, 'complete');
 
   // Initialize git before installing deps. This allows git hooks to be setup
   // as part of install
   log.goToStep(4, templateBanner);
+  await buildLogger.addStep(4, 'started');
   const { skip: skipGitInit } = { ...await lifecycle.preGitInit() };
   if (!skipGitInit) {
     await initializeGitRepo(`./${templateValues.projectName}`);
     await lifecycle.postGitInit();
+    await buildLogger.addStep(4, 'complete');
+  } else {
+    await buildLogger.addStep(4, 'skipped');
   }
 
   // Install and build the module
   log.goToStep(5, templateBanner);
+  await buildLogger.addStep(5, 'started');
   const { skip: skipInstall } = { ...await lifecycle.preInstall() };
   if (!skipInstall) {
     await installModule(`./${templateValues.projectName}`);
     await lifecycle.postInstall();
+    await buildLogger.addStep(5, 'complete');
+  } else {
+    await buildLogger.addStep(5, 'skipped');
   }
 
   // Create the first commit
   if (!skipGitInit) {
+    await buildLogger.addStep(6, 'started');
     log.goToStep(6, templateBanner);
     const { skip: skipCommit } = { ...await lifecycle.preCommit() };
     if (!skipCommit) {
       await createInitialCommit(`./${templateValues.projectName}`, generatorOptions);
       await lifecycle.postCommit();
+      await buildLogger.addStep(6, 'complete');
+    } else {
+      await buildLogger.addStep(6, 'skipped');
     }
+  } else {
+    await buildLogger.addStep(6, 'skipped');
   }
 
   if (generatorOptions.postGenerationMessage) {
