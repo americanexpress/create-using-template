@@ -109,7 +109,7 @@ Stored responses are not enabled by default. You must set the `storeResponses` f
 Options passed in the CLI will be passed through here as an object.
 
 ```bash
-npm init using-template my-template --projectName my-project
+npm init using-template my-template -- --projectName my-project
 ```
 
 Will result in:
