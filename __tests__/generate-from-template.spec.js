@@ -133,12 +133,12 @@ describe('generateFromTemplate', () => {
 
   // Step 2
   it('should get the base options, template options, and template paths', async () => {
-    await generateFromTemplate({ templateName: 'ejs@1.0.0' });
+    await generateFromTemplate({ templateName: 'ejs@1.0.0', options: 'mockOptions' });
     expect(getBaseOptions).toHaveBeenCalledTimes(1);
-    expect(getBaseOptions).toHaveBeenNthCalledWith(1);
+    expect(getBaseOptions).toHaveBeenNthCalledWith(1, 'mockOptions');
 
     expect(templatePackage.getTemplateOptions).toHaveBeenCalledTimes(1);
-    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock', undefined);
+    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock', undefined, 'mockOptions');
 
     expect(templatePackage.getTemplatePaths).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplatePaths).toHaveBeenNthCalledWith(1);
@@ -149,9 +149,9 @@ describe('generateFromTemplate', () => {
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
 
     expect(getBaseOptions).toHaveBeenCalledTimes(1);
-    expect(getBaseOptions).toHaveBeenNthCalledWith(1);
+    expect(getBaseOptions).toHaveBeenNthCalledWith(1, {});
     expect(templatePackage.getTemplateOptions).toHaveBeenCalledTimes(1);
-    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock', undefined);
+    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'baseOptionsMock', 'promptsMock', undefined, {});
 
     expect(templatePackage.getTemplatePaths).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplatePaths).toHaveBeenNthCalledWith(1);
@@ -160,7 +160,7 @@ describe('generateFromTemplate', () => {
     templatePackage.getTemplateOptions.mockImplementationOnce(() => ({ templateValues: { projectName: 'projectNameMock' } }));
     templatePackage.templateFlags = { noBaseData: true };
     await generateFromTemplate({ templateName: 'ejs@1.0.0' });
-    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'promptsMock', undefined);
+    expect(templatePackage.getTemplateOptions).toHaveBeenNthCalledWith(1, 'promptsMock', undefined, {});
     expect(templatePackage.getTemplatePaths).toHaveBeenCalledTimes(1);
     expect(templatePackage.getTemplatePaths).toHaveBeenNthCalledWith(1);
   });

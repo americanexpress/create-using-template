@@ -1,17 +1,16 @@
 const prompts = require('prompts');
 const handleFlags = require('./handle-template-flags');
 
-const getTemplateOptionsWithFlags = async (getTemplateOptions, flags, storedValues) => {
-  /* eslint-disable no-param-reassign -- it's possible that flags is undefined */
-  if (flags === undefined || flags.noBaseData === undefined) {
-    flags = { noBaseData: false };
-  }
-  /* eslint-enable no-param-reassign -- re-enable */
-
-  const baseData = await handleFlags(flags);
+const getTemplateOptionsWithFlags = async ({
+  getTemplateOptions,
+  flags = { noBaseData: false },
+  storedValues,
+  options,
+}) => {
+  const baseData = await handleFlags(flags, options);
   if (flags.noBaseData === true) {
-    return getTemplateOptions(prompts, storedValues);
+    return getTemplateOptions(prompts, storedValues, options);
   }
-  return getTemplateOptions(baseData, prompts, storedValues);
+  return getTemplateOptions(baseData, prompts, storedValues, options);
 };
 module.exports = getTemplateOptionsWithFlags;

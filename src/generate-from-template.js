@@ -37,7 +37,7 @@ const defaultLifecycleMethods = {
   postCommit: noop,
 };
 
-const generateFromTemplate = async ({ templateName }) => {
+const generateFromTemplate = async ({ templateName, options = {} }) => {
   // Load the template
   log.goToStep(1);
   await installTemplate(templateName);
@@ -61,7 +61,6 @@ const generateFromTemplate = async ({ templateName }) => {
   const templateVersion = getPackageVersion(templateName);
   const storedValues = getStoredValues(templatePackageName, templateVersion);
 
-  /* eslint-disable max-len -- need to pass template package properties */
   const {
     templateValues,
     generatorOptions = {},
@@ -70,8 +69,12 @@ const generateFromTemplate = async ({ templateName }) => {
     ignoredFileNames = [],
     ignoredDirectories = [],
     lifecycle: configuredLifecycleMethods = {},
-  } = await getTemplateOptionsWithFlags(templatePackage.getTemplateOptions, templatePackage.templateFlags, storedValues);
-  /* eslint-enable max-len -- re-enable */
+  } = await getTemplateOptionsWithFlags({
+    getTemplateOptions: templatePackage.getTemplateOptions,
+    flags: templatePackage.templateFlags,
+    storedValues,
+    options,
+  });
 
   const lifecycle = { ...defaultLifecycleMethods, ...configuredLifecycleMethods };
   if (generatorOptions.storeResponses) {

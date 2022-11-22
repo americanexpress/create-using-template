@@ -14,13 +14,19 @@
 
 const prompts = require('prompts');
 
-const getBaseOptions = () => prompts([
-  {
-    type: 'text',
-    name: 'projectName',
-    message: 'Enter your project\'s name. This will also be used as the directory name for the project:',
-    initial: '',
-  },
-]);
+const getBaseOptions = async (options = {}) => {
+  const baseOptions = await prompts([
+    {
+      type: options.projectName ? null : 'text',
+      name: 'projectName',
+      message: 'Enter your project\'s name. This will also be used as the directory name for the project:',
+      initial: '',
+    },
+  ]);
+  return {
+    projectName: options.projectName,
+    ...baseOptions,
+  };
+};
 
 module.exports = getBaseOptions;
