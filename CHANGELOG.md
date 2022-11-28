@@ -1,3 +1,10 @@
+# [1.9.0](https://github.com/americanexpress/create-using-template/compare/v1.8.0...v1.9.0) (2022-11-28)
+
+
+### Features
+
+* **generateFromTemplate:** pass CLI options forward to template ([#39](https://github.com/americanexpress/create-using-template/issues/39)) ([e0385b2](https://github.com/americanexpress/create-using-template/commit/e0385b258372a89c87cda13f90bfab72854ee7d3))
+
 # [1.8.0](https://github.com/americanexpress/create-using-template/compare/v1.7.1...v1.8.0) (2022-08-26)
 
 
