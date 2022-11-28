@@ -12,20 +12,18 @@
  * under the License.
  */
 
-const { promises: fs } = require('fs');
+const fs = require('fs');
 const createBuildLogger = require('../../src/utils/create-build-logger');
 
 jest.mock('../../package.json', () => ({ version: '0.x.x' }));
+
+jest.spyOn(process, 'on').mockImplementation(() => {});
 
 jest.mock('fs', () => {
   const actualFs = jest.requireActual('fs');
   return {
     ...actualFs,
-    promises: {
-      ...actualFs.promises,
-      writeFile: jest.fn(),
-      rename: jest.fn(),
-    },
+    writeFileSync: jest.fn(),
   };
 });
 
@@ -47,16 +45,19 @@ Object.defineProperty(process, 'version', { value: 'v18.x.x' });
 describe('create-build-logger', () => {
   Date.now.mockReturnValue(1669069580729);
   let buildLogger;
+  let writeLog;
 
   beforeEach(() => {
     jest.clearAllMocks();
     buildLogger = createBuildLogger();
+    [[, writeLog]] = process.on.mock.calls;
   });
 
   it('should initialize with engines and template name', async () => {
-    await buildLogger.init('mock-template');
-    expect(fs.writeFile).toHaveBeenCalledTimes(1);
-    expect(JSON.parse(fs.writeFile.mock.calls[0][1])).toMatchInlineSnapshot(`
+    buildLogger.init('mock-template');
+    await writeLog();
+    expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
+    expect(JSON.parse(fs.writeFileSync.mock.calls[0][1])).toMatchInlineSnapshot(`
       Object {
         "engines": Object {
           "create-using-template": "v0.x.x",
@@ -72,12 +73,13 @@ describe('create-build-logger', () => {
   });
 
   it('should add template version and values to the build log', async () => {
-    await buildLogger.addTemplateDetails({
+    buildLogger.addTemplateDetails({
       templateVersion: '0.0.0',
       templateValues: { test: 'value' },
     });
-    expect(fs.writeFile).toHaveBeenCalledTimes(1);
-    expect(JSON.parse(fs.writeFile.mock.calls[0][1])).toMatchInlineSnapshot(`
+    await writeLog();
+    expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
+    expect(JSON.parse(fs.writeFileSync.mock.calls[0][1])).toMatchInlineSnapshot(`
       Object {
         "engines": Object {
           "create-using-template": "v0.x.x",
@@ -96,9 +98,10 @@ describe('create-build-logger', () => {
   });
 
   it('should add step details to the build log', async () => {
-    await buildLogger.addStep(1, 'complete');
-    expect(fs.writeFile).toHaveBeenCalledTimes(1);
-    expect(JSON.parse(fs.writeFile.mock.calls[0][1])).toMatchInlineSnapshot(`
+    buildLogger.addStep(1, 'complete');
+    await writeLog();
+    expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
+    expect(JSON.parse(fs.writeFileSync.mock.calls[0][1])).toMatchInlineSnapshot(`
       Object {
         "engines": Object {
           "create-using-template": "v0.x.x",
@@ -118,9 +121,10 @@ describe('create-build-logger', () => {
   it('should add error details to the build log', async () => {
     const error = new Error('test error');
     error.stack = 'mock stack';
-    await buildLogger.addError(error);
-    expect(fs.writeFile).toHaveBeenCalledTimes(1);
-    expect(JSON.parse(fs.writeFile.mock.calls[0][1])).toMatchInlineSnapshot(`
+    buildLogger.addError(error);
+    await writeLog();
+    expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
+    expect(JSON.parse(fs.writeFileSync.mock.calls[0][1])).toMatchInlineSnapshot(`
       Object {
         "engines": Object {
           "create-using-template": "v0.x.x",
@@ -138,20 +142,14 @@ describe('create-build-logger', () => {
 
   it('should move the build log into the project', async () => {
     await buildLogger.init();
+    await writeLog();
     await buildLogger.moveBuildLogToProject('my-project');
-    await buildLogger.addStep(1, 'complete');
-    expect(fs.rename).toHaveBeenCalledTimes(1);
-    expect(fs.rename.mock.calls[0]).toMatchInlineSnapshot(`
-      Array [
-        "./.tmp-cut-build-log-1669069580729.json",
-        "my-project/.cut-build-log.json",
-      ]
-    `);
-    expect(fs.writeFile).toHaveBeenCalledTimes(2);
-    expect(fs.writeFile.mock.calls[0][0]).toMatchInlineSnapshot(
+    await writeLog();
+    expect(fs.writeFileSync).toHaveBeenCalledTimes(2);
+    expect(fs.writeFileSync.mock.calls[0][0]).toMatchInlineSnapshot(
       '"./.tmp-cut-build-log-1669069580729.json"'
     );
-    expect(fs.writeFile.mock.calls[1][0]).toMatchInlineSnapshot(
+    expect(fs.writeFileSync.mock.calls[1][0]).toMatchInlineSnapshot(
       '"my-project/.cut-build-log.json"'
     );
   });

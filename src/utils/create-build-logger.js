@@ -12,7 +12,7 @@
  * under the License.
  */
 
-const { promises: fs } = require('fs');
+const fs = require('fs');
 const { execSync } = require('child_process');
 const path = require('path');
 const pack = require('../../package.json');
@@ -28,36 +28,35 @@ const createBuildLogger = () => {
   };
 
   let buildLogPath = path.resolve(`./.tmp-cut-build-log-${Date.now()}.json`);
-  const writeBuildLog = async () => fs.writeFile(buildLogPath, JSON.stringify(buildLog, null, 2));
 
-  const init = async (templateName) => {
+  const init = (templateName) => {
     buildLog.template = { name: templateName };
-    return writeBuildLog();
   };
 
-  const addTemplateDetails = async ({ templateVersion, templateValues }) => {
-    buildLog.template = { ...buildLog.template, version: `v${templateVersion}`, values: templateValues };
-    return writeBuildLog();
+  const addTemplateDetails = ({ templateVersion, templateValues }) => {
+    buildLog.template = {
+      ...buildLog.template,
+      version: `v${templateVersion}`,
+      values: templateValues,
+    };
   };
 
-  const moveBuildLogToProject = async (projectName) => {
-    const oldPath = buildLogPath;
+  const moveBuildLogToProject = (projectName) => {
     buildLogPath = path.join(path.resolve(`./${projectName}`), '.cut-build-log.json');
-    return fs.rename(oldPath, buildLogPath);
   };
 
-  const addStep = async (number, status) => {
+  const addStep = (number, status) => {
     buildLog.steps[number.toString()] = { status, timestamp: Date.now() };
-    return writeBuildLog();
   };
 
-  const addError = async (error) => {
+  const addError = (error) => {
     buildLog.error = {
       message: error.toString(),
       stack: error.stack,
     };
-    return writeBuildLog();
   };
+
+  process.on('exit', () => fs.writeFileSync(buildLogPath, JSON.stringify(buildLog, null, 2)));
 
   return {
     addError,
