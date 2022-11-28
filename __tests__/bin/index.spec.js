@@ -7,13 +7,16 @@ describe('bin', () => {
     jest.clearAllMocks();
   });
   it('should bootstrap the generation process by passing the cli parameters to generateFromTemplate', () => {
-    process.argv = ['node', 'create-using-template', 'templateNameMock'];
+    process.argv = ['node', 'create-using-template', 'templateNameMock', '--projectName', 'mockProjectName'];
     jest.isolateModules(() => {
       // eslint-disable-next-line global-require -- we are testing `import time` code
       require('../../bin');
     });
     expect(generateFromTemplate).toHaveBeenCalledTimes(1);
-    expect(generateFromTemplate).toHaveBeenNthCalledWith(1, { templateName: 'templateNameMock' });
+    expect(generateFromTemplate).toHaveBeenNthCalledWith(1, {
+      templateName: 'templateNameMock',
+      options: { projectName: 'mockProjectName' },
+    });
   });
   it('should catch and log exceptions thrown during generation', () => {
     process.argv = ['node', 'create-using-template', 'templateNameMock'];
@@ -26,6 +29,6 @@ describe('bin', () => {
       require('../../bin');
     });
     expect(generateFromTemplate).toHaveBeenCalledTimes(1);
-    expect(generateFromTemplate).toHaveBeenNthCalledWith(1, { templateName: 'templateNameMock' });
+    expect(generateFromTemplate).toHaveBeenNthCalledWith(1, { templateName: 'templateNameMock', options: {} });
   });
 });

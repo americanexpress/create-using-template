@@ -26,6 +26,7 @@ Want to get paid for your contributions to `one-app`?
 <br />
 
 ## ✨ Features
+
 * Rapidly generate project repositories from simple templates.
 * Simple command line interface. Compatible with `npm init`.
 * Leverages npm packages as templates for distribution and management.
@@ -53,9 +54,11 @@ module.exports = {
 ```
 
 ### `getTemplatePaths`
+
 `() => ([...'path'])`
 
 #### return
+
 getTemplatePaths should return an array of paths to your templates.
 
 Each template will be processed left to right, with latter templates overwriting files written by earlier ones.
@@ -71,37 +74,75 @@ Directory structures will be copied exactly, and files will be placed in the sam
 It is possible to define dynamic file names, and ignore files, based upon user input (see `getTemplateOptions` below)
 
 ### `getTemplateOptions`
-`async (baseData, prompts, storedValues) => ({templateValues[, generatorOptions, dynamicFileNames, ignoredFileNames]})`
+
+`async (baseData, prompts, storedValues, options) => ({templateValues[, generatorOptions, dynamicFileNames, ignoredFileNames]})`
 
 getTemplateOptions will be called to allow your template to configure its dynamic values.
 
 #### Parameters
+
 getTemplateOptions will be passed 2 parameters
 
 ##### `baseData`
+
 baseData is an object containing the values received from the base prompts.
 
 At this time the only piece of base data is `projectName`
 
 ##### `prompts`
+
 prompts is a reference to the `prompts` library. Your template should call this to prompt the user for any dynamic values you need.
 
 You should merge baseData with the result of the prompts your template needs, and return this under the `templateValues` key
 
 ##### `storedValues`
+
 `storedValues` is an object containing responses that were stored with a previous generation of your template.
 Your template can use these values to prepopulate prompts for your users, or even skip the prompts all together.
 
 create-using-template will automatically store responses in the `~/.create-using-template/` directory. The stored responses will be saved for each major version of your template. So if your template has v1.0.0 and v2.0.0, responses will be stored separately for each. This only applies for major versions. Any minor or patch versions will still share the stored responses.
 
-
 Stored responses are not enabled by default. You must set the `storeResponses` field in `generatorOptions` to `true` in order to store responses.
 
+##### `options`
+
+Options passed in the CLI will be passed through here as an object.
+
+```bash
+npm init using-template my-template -- --projectName my-project
+```
+
+Will result in:
+
+```js
+{
+  projectName: 'my-project'
+}
+```
+
+These can be used to skip prompts. CUT does this with `projectName` like so:
+
+```js
+const baseOptions = await prompts([
+  {
+    type: options.projectName ? null : 'text',
+    name: 'projectName',
+    message: 'Enter your project\'s name. This will also be used as the directory name for the project:',
+    initial: '',
+  },
+]);
+return {
+  projectName: options.projectName,
+  ...baseOptions,
+};
+```
 
 #### return
+
 getTemplateOptions should return an object. `templateValues` is the only required key.
 
 ##### `templateValues` object, required
+
 The combination of baseData and the result from your call to `prompts`. This is the object that will be passed to your EJS template files, so you must make sure that all the keys you expect are present in this object
 
 for example, if you wished to ask the user if they want to include an eslint config, you would return the following object:
@@ -119,7 +160,9 @@ let templateValues = {
     ]),
   };
 ```
-### `templateFlags`
+
+##### `templateFlags`
+
 template flags is an object that contains flags that you can pass from the template to to disable or enable specific interaction.
 
 currently the only flag available to be set is `noBaseData`. If set this ignores the collection of the value `projectName` allowing you to retrieve that information through the prompts package in your template itself.
@@ -133,6 +176,7 @@ module.exports = {
   templateFlags
 };
 ```
+
 if `noBaseData` is set, `baseData` is no longer needed as a parameter when calling `getTemplateOptions` nor as a value in `templateValues`.
 
 ##### `generatorOptions` object, optional
@@ -159,32 +203,40 @@ These async functions will run at specific stages of the generation lifecycle. `
 * `postCommit`: runs after creating the initial commit.
 
 ##### `dynamicFileNames` object<string, string>, optional
+
 When the generator is ready to write a file to the users project, it will first check this object for a key matching the fileName it is to use. If the key is present, it will instead use the value against that key as the file name.
 
 For example, if you have a file in your template called `RootComponent.jsx.ejs` that you wanted to dynamically rewrite to `{baseData.projectName}.jsx` you would return the following object:
+
 ```jsx
 const dynamicFileNames = {
   'RootComponent.jsx': `${baseData.projectName}.jsx`,
 };
 ```
+
 Note that the key doesn't contain the .ejs suffix, as this will always be removed by the generator.
 
 ##### `dynamicDirectoryNames` object<string, string>, optional
+
 When the generator has created a user project, it will check this object for a key matching the folder name it is to use. If the key is present, it will instead use the value against that key as the folder name.
 
 For example, if you have a file in your template called `marketLocale` that you wanted to dynamically rewrite to `en-AU` you would return the following object:
+
 ```jsx
 const dynamicDirectoryNames = {
   'marketLocale': `en-AU`,
 };
 ```
+
 Note that the folder name you provide should be the name itself, do not provide the path of the folder like `src/locale`, provide only name 'locale' along with the value you want it to be renamed with.
 example - locale: 'en-US', also do not provide the folder names with spaces or folder names with capitals.
 
 ##### `ignoredFileNames` array<string>, optional
+
 When the generator is ready to read a file from your template, it will first check this array for a string matching the fileName it is to use. If the key is a string, it will entirely skip this file.
 
 For example, if you have a file in your template called `.eslintrc.json.ejs` that you only want to write if the user has asked for eslint you would return
+
 ```jsx
 const ignoredFileNames = [];
 
@@ -192,18 +244,23 @@ if (templateValues.eslint !== 'y') {
   ignoredFiles.push('.eslintrc.json.ejs');
 }
 ```
+
 Note that the string does contain the .ejs suffix, since the ignore applies when reading the file, the string should exactly match the name of the file in your template.
 
 ##### `ignoredDirectories`
+
 When the generator goes through your template, it will ignore any directories provided in this array. You should just list the name of the directory, not the preceding path.
 
 Example:
+
 ```javascript
 ignoredDirectories: ['Test', 'Welcome']
 ```
+
 The above will ignore everything within the `Test` and `Welcome` directories located within the paths provided by your `getTemplatePaths` function.
 
 ### `getTemplateBanner` optional
+
 `(kleur) => (<string>)`
 
 The string returned from this function will be output as part of the banner the template outputs. It can be a multi line string, and generally should not exceed 80 characters wide.
@@ -211,7 +268,6 @@ The string returned from this function will be output as part of the banner the 
 The [kleur package](https://www.npmjs.com/package/kleur) package is provided so that the template can output a colorful banner.
 
 If this function is not exported, no string will be rendered
-
 
 ## 🏆 Contributing
 

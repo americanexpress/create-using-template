@@ -14,28 +14,16 @@
  * under the License.
  */
 
-const { Command } = require('commander');
-const packageJson = require('../package.json');
+const yargs = require('yargs');
+const { hideBin } = require('yargs/helpers');
+
 const generateFromTemplate = require('../src/generate-from-template');
 
-let templateName;
-
-const program = new Command();
-program
-  .version(packageJson.version)
-  .description(packageJson.description)
-  .arguments('[templateName]')
-  .action((name) => {
-    templateName = name;
-  })
-  .allowUnknownOption()
-  .parse();
-
 const run = async () => {
-  const programOpts = program.opts();
+  const { $0, _: [templateName], ...options } = yargs(hideBin(process.argv)).argv;
   await generateFromTemplate({
     templateName,
-    ...programOpts,
+    options,
   });
 };
 

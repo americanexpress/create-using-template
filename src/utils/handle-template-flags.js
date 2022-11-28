@@ -1,8 +1,8 @@
 const getBaseOptions = require('./get-base-options');
 
-const handleFlags = async (flags) => {
-  if (flags.noBaseData === false) {
-    return getBaseOptions();
+const handleFlags = async (flags, options) => {
+  if (flags.noBaseData !== true) {
+    return getBaseOptions(options);
   }
   return Promise.resolve();
 };
