@@ -1,3 +1,10 @@
+# [1.10.0](https://github.com/americanexpress/create-using-template/compare/v1.9.0...v1.10.0) (2022-11-29)
+
+
+### Features
+
+* **generate-from-template:** write build log file for debugging ([#38](https://github.com/americanexpress/create-using-template/issues/38)) ([9fe98dc](https://github.com/americanexpress/create-using-template/commit/9fe98dca533c2e971e6a20f673c09253c880b9dd))
+
 # [1.9.0](https://github.com/americanexpress/create-using-template/compare/v1.8.0...v1.9.0) (2022-11-28)
 
 
