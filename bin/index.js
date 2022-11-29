@@ -18,17 +18,22 @@ const yargs = require('yargs');
 const { hideBin } = require('yargs/helpers');
 
 const generateFromTemplate = require('../src/generate-from-template');
+const createBuildLogger = require('../src/utils/create-build-logger');
+
+const buildLogger = createBuildLogger();
 
 const run = async () => {
   const { $0, _: [templateName], ...options } = yargs(hideBin(process.argv)).argv;
   await generateFromTemplate({
     templateName,
+    buildLogger,
     options,
   });
 };
 
-run().catch((err) => {
+run().catch(async (err) => {
   console.error('Failed to create module:', err.message);
   console.error(err);
+  await buildLogger.addError(err);
   process.exit(1);
 });
