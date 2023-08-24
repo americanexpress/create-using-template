@@ -30,7 +30,7 @@ jest.mock('../src/utils/log', () => ({
   goToStep: jest.fn(),
 }));
 jest.mock('../src/utils/install-template', () => jest.fn());
-jest.mock('../src/utils/install-module', () => jest.fn());
+jest.mock('../src/utils/install-module', () => jest.fn(() => Promise.resolve()));
 jest.mock('../src/utils/get-base-options', () => jest.fn(() => 'baseOptionsMock'));
 jest.mock('../src/utils/walk-template', () => jest.fn());
 jest.mock('../src/utils/renameDirectories', () => jest.fn());

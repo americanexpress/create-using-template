@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 American Express Travel Related Services Company, Inc.
+ * Copyright 2023 American Express Travel Related Services Company, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -14,10 +14,10 @@
 
 const runCommand = require('./run-command');
 
-const runNpmInstall = async (workingDirectory, additionalArgs = []) => {
+const runNpmCleanInstall = async (workingDirectory, additionalArgs = []) => {
   const command = 'npm';
   const args = [
-    'install',
+    'ci',
     '--no-audit',
     '--loglevel=error',
     '--no-fund',
@@ -27,4 +27,4 @@ const runNpmInstall = async (workingDirectory, additionalArgs = []) => {
   await runCommand(command, args, workingDirectory);
 };
 
-module.exports = runNpmInstall;
+module.exports = runNpmCleanInstall;
