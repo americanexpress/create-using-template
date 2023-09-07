@@ -11,8 +11,8 @@
  * or implied. See the License for the specific language governing permissions and limitations
  * under the License.
  */
-const path = require('node:path');
-const fs = require('node:fs/promises');
+const path = require('path');
+const { promises: fs } = require('fs');
 
 const runNpmInstall = require('./run-npm-install');
 const runNpmCleanInstall = require('./run-npm-ci');

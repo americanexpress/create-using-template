@@ -12,7 +12,7 @@
  * under the License.
  */
 
-const fs = require('node:fs/promises');
+const { promises: fs } = require('fs');
 
 const runNpmInstall = require('../../src/utils/run-npm-install');
 const runNpmCleanInstall = require('../../src/utils/run-npm-ci');
