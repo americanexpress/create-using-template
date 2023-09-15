@@ -1,3 +1,15 @@
+# [1.11.0](https://github.com/americanexpress/create-using-template/compare/v1.10.0...v1.11.0) (2023-09-15)
+
+
+### Bug Fixes
+
+* **generate-from-template:** correct typo in comment ([#41](https://github.com/americanexpress/create-using-template/issues/41)) ([a4cb3fa](https://github.com/americanexpress/create-using-template/commit/a4cb3fa554239f5fa3e2918ca8dce044fcc6a723))
+
+
+### Features
+
+* **install:** clean install when the template provides a lock file ([#43](https://github.com/americanexpress/create-using-template/issues/43)) ([77b14d3](https://github.com/americanexpress/create-using-template/commit/77b14d32aae366a49b0551df2bc7f80d06eab235))
+
 # [1.10.0](https://github.com/americanexpress/create-using-template/compare/v1.9.0...v1.10.0) (2022-11-29)
 
 
