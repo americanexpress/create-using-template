@@ -1,5 +1,5 @@
 /*
- * Copyright 2021 American Express Travel Related Services Company, Inc.
+ * Copyright 2023 American Express Travel Related Services Company, Inc.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
@@ -12,17 +12,17 @@
  * under the License.
  */
 
-const runNpmInstall = require('../../src/utils/run-npm-install');
+const runNpmCleanInstall = require('../../src/utils/run-npm-ci');
 const runCommand = require('../../src/utils/run-command');
 
 jest.mock('../../src/utils/run-command', () => jest.fn());
 
-describe('runNpmInstall', () => {
+describe('runNpmCleanInstall', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
   it('should call runCommand with the proper parameters', async () => {
-    await runNpmInstall('workingDirectoryMock', ['additionArg1', 'additionArg2']);
+    await runNpmCleanInstall('workingDirectoryMock', ['additionArg1', 'additionArg2']);
 
     expect(runCommand).toHaveBeenCalledTimes(1);
     expect(runCommand).toHaveBeenNthCalledWith(

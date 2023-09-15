@@ -11,9 +11,24 @@
  * or implied. See the License for the specific language governing permissions and limitations
  * under the License.
  */
+const path = require('path');
+const { promises: fs } = require('fs');
 
 const runNpmInstall = require('./run-npm-install');
+const runNpmCleanInstall = require('./run-npm-ci');
 
-const installModule = (moduleWorkingDirectory) => runNpmInstall(moduleWorkingDirectory, ['--prefer-offline']);
+const installModule = async (moduleWorkingDirectory) => {
+  // if the template provided a lock file we can use the faster and deterministic clean install
+  // if not we can install based on current registry entries
+  let runInstall;
+  try {
+    await fs.stat(path.join(moduleWorkingDirectory, 'package-lock.json'));
+    runInstall = runNpmCleanInstall;
+  } catch (error) {
+    runInstall = runNpmInstall;
+  }
+
+  return runInstall(moduleWorkingDirectory, ['--prefer-offline']);
+};
 
 module.exports = installModule;
