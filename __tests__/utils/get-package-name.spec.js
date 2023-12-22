@@ -12,11 +12,13 @@
  * under the License.
  */
 
+const path = require('path');
 const getPackageName = require('../../src/utils/get-package-name');
 
 jest.mock('fs', () => ({
   readFileSync: () => ({
     dependencies: {
+      anotherDepName: '1.0.0',
       templateDepName: 'file:../some/path/my-template.tgz',
     },
   }),
@@ -41,7 +43,12 @@ describe('getPackageName', () => {
     expect(getPackageName('@somescope/my-template')).toEqual('@somescope/my-template');
   });
 
-  it('retrieves name from installed package', () => {
+  it('retrieves name from installed package on relative path', () => {
     expect(getPackageName('../some/path/my-template.tgz')).toEqual('templateDepName');
+  });
+
+  it('retrieves name from installed package on absolute path', () => {
+    const resolvedAbsolutePath = path.resolve(__dirname, '../..', '../some/path/my-template.tgz');
+    expect(getPackageName(resolvedAbsolutePath)).toEqual('templateDepName');
   });
 });

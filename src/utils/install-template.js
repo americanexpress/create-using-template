@@ -16,17 +16,13 @@ const path = require('path');
 const fs = require('fs');
 const runNpmInstall = require('./run-npm-install');
 
-const resolveRelativeTarball = (templateName) => {
-  // matches if a relative path to tarball
-  if (templateName.match(/^\..+\.(tgz|tar(\.gz){0,1})$/)) {
-    const templatePath = path.resolve(templateName);
-    return fs.existsSync(templatePath) ? templatePath : templateName;
-  }
-  return templateName;
+const resolveLocalTarball = (templateName) => {
+  const templatePath = path.resolve(templateName);
+  return fs.existsSync(templatePath) ? templatePath : templateName;
 };
 
 const installTemplate = (templateName) => runNpmInstall(__dirname, [
-  resolveRelativeTarball(templateName),
+  resolveLocalTarball(templateName),
   '--ignore-scripts',
   '--save',
   '--save-exact',
