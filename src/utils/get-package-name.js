@@ -17,10 +17,17 @@ const path = require('path');
 
 // This only works if tarball has been installed
 const getPackageName = (templateName) => {
-  if (templateName.match(/^\..+\.(tgz|tar(\.gz){0,1})$/)) {
+  if (templateName.match(/.+\.(tgz|tar(\.gz){0,1})$/)) {
+    const templatePath = path.resolve(templateName);
     const { dependencies } = JSON.parse(fs.readFileSync(path.resolve(__dirname, '../../package.json')));
     return Object.entries(dependencies)
-      .find(([, version]) => version.match(templateName))[0];
+      .find(([, version]) => {
+        if (version.startsWith('file:')) {
+          const dependencyPath = path.resolve(__dirname, '../../', version.slice(5));
+          return dependencyPath === templatePath;
+        }
+        return false;
+      })[0];
   }
   return templateName.charAt(0) + templateName.slice(1).split('@')[0];
 };
