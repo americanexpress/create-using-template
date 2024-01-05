@@ -1,3 +1,10 @@
+## [1.11.1](https://github.com/americanexpress/create-using-template/compare/v1.11.0...v1.11.1) (2024-01-05)
+
+
+### Bug Fixes
+
+* **get-package-name:** resolve paths properly before matching ([#45](https://github.com/americanexpress/create-using-template/issues/45)) ([28aefa6](https://github.com/americanexpress/create-using-template/commit/28aefa6bcfc6b10b7b0aa9dbc045bb53e7f6b319))
+
 # [1.11.0](https://github.com/americanexpress/create-using-template/compare/v1.10.0...v1.11.0) (2023-09-15)
 
 
