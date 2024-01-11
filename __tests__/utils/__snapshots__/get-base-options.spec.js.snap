@@ -1,14 +1,18 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`getBaseOptions should call prompts with the correct set of base options 1`] = `
-Array [
-  Array [
-    Object {
+[
+  [
+    {
       "initial": "",
       "message": "Enter your project's name. This will also be used as the directory name for the project:",
       "name": "projectName",
       "type": "text",
+      "validate": [Function],
     },
   ],
+  {
+    "onCancel": [Function],
+  },
 ]
 `;
