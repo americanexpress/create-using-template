@@ -1,4 +1,4 @@
-const prompts = require('prompts');
+const { prompts } = require('./prompts');
 const handleFlags = require('./handle-template-flags');
 
 const getTemplateOptionsWithFlags = async ({
@@ -13,4 +13,5 @@ const getTemplateOptionsWithFlags = async ({
   }
   return getTemplateOptions(baseData, prompts, storedValues, options);
 };
+
 module.exports = getTemplateOptionsWithFlags;
