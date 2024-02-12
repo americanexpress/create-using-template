@@ -35,7 +35,7 @@ const run = async () => {
 
 run().catch(async (err) => {
   if (hasTheUserAborted()) {
-    console.log('Bye, bye!');
+    console.log('Template generation aborted');
   } else {
     console.error('Failed to create module:', err.message);
     console.error(err);
