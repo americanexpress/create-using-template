@@ -21,7 +21,7 @@ const controller = new AbortController();
 const prompts = (questions, opts = {}) => promptsLib(questions, {
   ...opts,
   onCancel: () => {
-    // Note: we need a signal because 'prompts' exists for us and listening to SIGINT does not work
+    // Note: we need a signal because 'prompts' exits for us and listening to SIGINT does not work
     controller.abort('user aborted');
   },
 });
