@@ -19,11 +19,13 @@ const { hideBin } = require('yargs/helpers');
 
 const generateFromTemplate = require('../src/generate-from-template');
 const createBuildLogger = require('../src/utils/create-build-logger');
+const { hasTheUserAborted } = require('../src/utils/prompts');
 
 const buildLogger = createBuildLogger();
 
 const run = async () => {
   const { $0, _: [templateName], ...options } = yargs(hideBin(process.argv)).argv;
+
   await generateFromTemplate({
     templateName,
     buildLogger,
@@ -32,8 +34,13 @@ const run = async () => {
 };
 
 run().catch(async (err) => {
-  console.error('Failed to create module:', err.message);
-  console.error(err);
-  await buildLogger.addError(err);
+  if (hasTheUserAborted()) {
+    console.log('Template generation aborted');
+  } else {
+    console.error('Failed to create module:', err.message);
+    console.error(err);
+    await buildLogger.addError(err);
+  }
+
   process.exit(1);
 });

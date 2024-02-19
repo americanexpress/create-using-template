@@ -58,18 +58,18 @@ describe('create-build-logger', () => {
     await writeLog();
     expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
     expect(JSON.parse(fs.writeFileSync.mock.calls[0][1])).toMatchInlineSnapshot(`
-      Object {
-        "engines": Object {
-          "create-using-template": "v0.x.x",
-          "node": "v18.x.x",
-          "npm": "v8.x.x",
-        },
-        "steps": Object {},
-        "template": Object {
-          "name": "mock-template",
-        },
-      }
-    `);
+{
+  "engines": {
+    "create-using-template": "v0.x.x",
+    "node": "v18.x.x",
+    "npm": "v8.x.x",
+  },
+  "steps": {},
+  "template": {
+    "name": "mock-template",
+  },
+}
+`);
   });
 
   it('should add template version and values to the build log', async () => {
@@ -80,21 +80,21 @@ describe('create-build-logger', () => {
     await writeLog();
     expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
     expect(JSON.parse(fs.writeFileSync.mock.calls[0][1])).toMatchInlineSnapshot(`
-      Object {
-        "engines": Object {
-          "create-using-template": "v0.x.x",
-          "node": "v18.x.x",
-          "npm": "v8.x.x",
-        },
-        "steps": Object {},
-        "template": Object {
-          "values": Object {
-            "test": "value",
-          },
-          "version": "v0.0.0",
-        },
-      }
-    `);
+{
+  "engines": {
+    "create-using-template": "v0.x.x",
+    "node": "v18.x.x",
+    "npm": "v8.x.x",
+  },
+  "steps": {},
+  "template": {
+    "values": {
+      "test": "value",
+    },
+    "version": "v0.0.0",
+  },
+}
+`);
   });
 
   it('should add step details to the build log', async () => {
@@ -102,20 +102,20 @@ describe('create-build-logger', () => {
     await writeLog();
     expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
     expect(JSON.parse(fs.writeFileSync.mock.calls[0][1])).toMatchInlineSnapshot(`
-      Object {
-        "engines": Object {
-          "create-using-template": "v0.x.x",
-          "node": "v18.x.x",
-          "npm": "v8.x.x",
-        },
-        "steps": Object {
-          "1": Object {
-            "status": "complete",
-            "timestamp": 1669069580729,
-          },
-        },
-      }
-    `);
+{
+  "engines": {
+    "create-using-template": "v0.x.x",
+    "node": "v18.x.x",
+    "npm": "v8.x.x",
+  },
+  "steps": {
+    "1": {
+      "status": "complete",
+      "timestamp": 1669069580729,
+    },
+  },
+}
+`);
   });
 
   it('should add error details to the build log', async () => {
@@ -125,19 +125,19 @@ describe('create-build-logger', () => {
     await writeLog();
     expect(fs.writeFileSync).toHaveBeenCalledTimes(1);
     expect(JSON.parse(fs.writeFileSync.mock.calls[0][1])).toMatchInlineSnapshot(`
-      Object {
-        "engines": Object {
-          "create-using-template": "v0.x.x",
-          "node": "v18.x.x",
-          "npm": "v8.x.x",
-        },
-        "error": Object {
-          "message": "Error: test error",
-          "stack": "mock stack",
-        },
-        "steps": Object {},
-      }
-    `);
+{
+  "engines": {
+    "create-using-template": "v0.x.x",
+    "node": "v18.x.x",
+    "npm": "v8.x.x",
+  },
+  "error": {
+    "message": "Error: test error",
+    "stack": "mock stack",
+  },
+  "steps": {},
+}
+`);
   });
 
   it('should move the build log into the project', async () => {

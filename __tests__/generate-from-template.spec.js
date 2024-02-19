@@ -25,7 +25,9 @@ const { initializeGitRepo, createInitialCommit } = require('../src/utils/git');
 const generateFromTemplate = require('../src/generate-from-template');
 const renameDirectories = require('../src/utils/renameDirectories');
 
-jest.mock('prompts', () => 'promptsMock');
+jest.mock('../src/utils/prompts', () => ({
+  prompts: 'promptsMock',
+}));
 jest.mock('../src/utils/log', () => ({
   goToStep: jest.fn(),
 }));

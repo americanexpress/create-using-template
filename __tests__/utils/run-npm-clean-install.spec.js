@@ -21,6 +21,7 @@ describe('runNpmCleanInstall', () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
+
   it('should call runCommand with the proper parameters', async () => {
     await runNpmCleanInstall('workingDirectoryMock', ['additionArg1', 'additionArg2']);
 
@@ -29,12 +30,29 @@ describe('runNpmCleanInstall', () => {
       1,
       'npm',
       [
-        'install',
+        'ci',
         '--no-audit',
         '--loglevel=error',
         '--no-fund',
         'additionArg1',
         'additionArg2',
+      ],
+      'workingDirectoryMock'
+    );
+  });
+
+  it('additional args are optional', async () => {
+    await runNpmCleanInstall('workingDirectoryMock');
+
+    expect(runCommand).toHaveBeenCalledTimes(1);
+    expect(runCommand).toHaveBeenNthCalledWith(
+      1,
+      'npm',
+      [
+        'ci',
+        '--no-audit',
+        '--loglevel=error',
+        '--no-fund',
       ],
       'workingDirectoryMock'
     );

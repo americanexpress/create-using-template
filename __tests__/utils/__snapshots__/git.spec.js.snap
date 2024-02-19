@@ -1,27 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
 exports[`createInitialCommit commits a message and a branch from the special template values 1`] = `
-Array [
-  Array [
+[
+  [
     "git",
-    Array [
+    [
       "add",
       ".",
     ],
     "repoPathMock",
   ],
-  Array [
+  [
     "git",
-    Array [
+    [
       "commit",
       "-minitialCommitMessageMock",
       "--quiet",
     ],
     "repoPathMock",
   ],
-  Array [
+  [
     "git",
-    Array [
+    [
       "branch",
       "-m",
       "defaultBranchNameMock",
@@ -32,27 +32,27 @@ Array [
 `;
 
 exports[`createInitialCommit commits a message on the main branch 1`] = `
-Array [
-  Array [
+[
+  [
     "git",
-    Array [
+    [
       "add",
       ".",
     ],
     "repoPathMock",
   ],
-  Array [
+  [
     "git",
-    Array [
+    [
       "commit",
       "-mfeat(generation): initial commit",
       "--quiet",
     ],
     "repoPathMock",
   ],
-  Array [
+  [
     "git",
-    Array [
+    [
       "branch",
       "-m",
       "main",
@@ -63,18 +63,18 @@ Array [
 `;
 
 exports[`createInitialCommit includes initialCommitOptions 1`] = `
-Array [
-  Array [
+[
+  [
     "git",
-    Array [
+    [
       "add",
       ".",
     ],
     "repoPathMock",
   ],
-  Array [
+  [
     "git",
-    Array [
+    [
       "commit",
       "-mfeat(generation): initial commit",
       "--quiet",
@@ -82,9 +82,9 @@ Array [
     ],
     "repoPathMock",
   ],
-  Array [
+  [
     "git",
-    Array [
+    [
       "branch",
       "-m",
       "defaultBranchNameMock",
