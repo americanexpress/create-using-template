@@ -101,6 +101,6 @@ describe('bin', () => {
     await waitToResolve();
 
     expect(generateFromTemplate).toHaveBeenCalledTimes(1);
-    expect(console.log).toHaveBeenCalledWith('Bye, bye!');
+    expect(console.log).toHaveBeenCalledWith('Template generation aborted');
   });
 });
