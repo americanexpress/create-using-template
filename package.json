@@ -3,7 +3,7 @@
   "version": "1.11.1",
   "description": "A simple project generator",
   "contributors": [
-    "One App <oneamex.careers@aexp.com>"
+    "One App Team <oneamex.careers@aexp.com>"
   ],
   "bin": {
     "create-using-template": "bin/index.js"

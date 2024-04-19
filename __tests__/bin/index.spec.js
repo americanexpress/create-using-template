@@ -56,7 +56,10 @@ describe('bin', () => {
 
   it('should catch and log exceptions thrown during generation', async () => {
     process.argv = ['node', 'create-using-template', 'templateNameMock'];
-    generateFromTemplate.mockImplementationOnce(() => new Promise((_, reject) => { reject(new Error('ErrorMock')); }));
+    const errorMock = new Error('ErrorMock');
+    generateFromTemplate.mockImplementationOnce(() => new Promise((_, reject) => {
+      reject(errorMock);
+    }));
     jest.spyOn(console, 'error').mockImplementationOnce(() => { }).mockImplementationOnce(() => { });
     jest.spyOn(process, 'exit').mockImplementationOnce(() => { });
 
@@ -80,6 +83,8 @@ describe('bin', () => {
       options: {},
     });
     expect(console.error).toHaveBeenCalledTimes(2);
+    expect(console.error).toHaveBeenCalledWith('Failed to create module:', 'ErrorMock');
+    expect(console.error).toHaveBeenCalledWith(errorMock);
   });
 
   it('logs "bye bye" when user aborts / exists process', async () => {
