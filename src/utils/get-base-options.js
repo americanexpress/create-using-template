@@ -12,7 +12,7 @@
  * under the License.
  */
 
-const prompts = require('prompts');
+const { prompts } = require('./prompts');
 
 const getBaseOptions = async (options = {}) => {
   const baseOptions = await prompts([
@@ -21,8 +21,10 @@ const getBaseOptions = async (options = {}) => {
       name: 'projectName',
       message: 'Enter your project\'s name. This will also be used as the directory name for the project:',
       initial: '',
+      validate: (value) => (value || '').length > 0 || 'Please enter your project\'s name',
     },
   ]);
+
   return {
     projectName: options.projectName,
     ...baseOptions,
