@@ -28,7 +28,7 @@ const installModule = async (moduleWorkingDirectory) => {
     runInstall = runNpmInstall;
   }
 
-  return runInstall(moduleWorkingDirectory, ['--prefer-offline']);
+  return runInstall(moduleWorkingDirectory);
 };
 
 module.exports = installModule;
