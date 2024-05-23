@@ -1,3 +1,10 @@
+## [1.11.2](https://github.com/americanexpress/create-using-template/compare/v1.11.1...v1.11.2) (2024-05-23)
+
+
+### Bug Fixes
+
+* **install-module:** use latest versions during dependency installation ([#48](https://github.com/americanexpress/create-using-template/issues/48)) ([0d88e76](https://github.com/americanexpress/create-using-template/commit/0d88e76a98466f45c562357c9119eb161c4bc940))
+
 ## [1.11.1](https://github.com/americanexpress/create-using-template/compare/v1.11.0...v1.11.1) (2024-01-05)
 
 
