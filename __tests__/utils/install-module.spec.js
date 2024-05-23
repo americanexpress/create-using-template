@@ -39,7 +39,7 @@ describe('installModule', () => {
     )));
     await expect(installModule('workingDirectoryMock')).resolves.toBe('npmInstallResponseMock');
     expect(runNpmInstall).toHaveBeenCalledTimes(1);
-    expect(runNpmInstall).toHaveBeenNthCalledWith(1, 'workingDirectoryMock', ['--prefer-offline']);
+    expect(runNpmInstall).toHaveBeenNthCalledWith(1, 'workingDirectoryMock');
   });
   it('should runNpmCleanInstall with the correct parameters when there is a lock file', async () => {
     expect.assertions(3);
@@ -50,6 +50,6 @@ describe('installModule', () => {
     }));
     await expect(installModule('workingDirectoryMock')).resolves.toBe('npmCleanInstallResponseMock');
     expect(runNpmCleanInstall).toHaveBeenCalledTimes(1);
-    expect(runNpmCleanInstall).toHaveBeenNthCalledWith(1, 'workingDirectoryMock', ['--prefer-offline']);
+    expect(runNpmCleanInstall).toHaveBeenNthCalledWith(1, 'workingDirectoryMock');
   });
 });
