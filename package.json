@@ -9,8 +9,8 @@
     "create-using-template": "bin/index.js"
   },
   "engines": {
-    "node": ">=18.x.x <=20.x.x",
-    "npm": ">=9.x.x <=10.x.x"
+    "node": ">=18.x.x",
+    "npm": ">=9.x.x"
   },
   "scripts": {
     "test": "npm run test:unit",
