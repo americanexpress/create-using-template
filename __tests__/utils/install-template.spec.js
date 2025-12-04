@@ -27,7 +27,7 @@ describe('installTemplate', () => {
   it('should runNpmInstall with the correct parameters', () => {
     expect(installTemplate('templateNameMock')).toBe('npmInstallResponseMock');
     expect(runNpmInstall).toHaveBeenCalledTimes(1);
-    expect(runNpmInstall).toHaveBeenNthCalledWith(1, path.resolve(`${__dirname}/../../src/utils/`), ['templateNameMock', '--ignore-scripts', '--save', '--save-exact']);
+    expect(runNpmInstall).toHaveBeenNthCalledWith(1, path.resolve(`${__dirname}/../../src/utils/`), ['templateNameMock', '--ignore-scripts', '--save', '--save-exact', '--engine-strict']);
   });
 
   describe('when provided local tarball', () => {
@@ -35,14 +35,14 @@ describe('installTemplate', () => {
       fs.existsSync.mockReturnValueOnce(true);
       expect(installTemplate('./templateName.tgz')).toBe('npmInstallResponseMock');
       expect(runNpmInstall).toHaveBeenCalledTimes(1);
-      expect(runNpmInstall).toHaveBeenCalledWith(path.resolve(`${__dirname}/../../src/utils/`), [path.resolve('./templateName.tgz'), '--ignore-scripts', '--save', '--save-exact']);
+      expect(runNpmInstall).toHaveBeenCalledWith(path.resolve(`${__dirname}/../../src/utils/`), [path.resolve('./templateName.tgz'), '--ignore-scripts', '--save', '--save-exact', '--engine-strict']);
     });
 
     it('uses given name when does not exists', () => {
       fs.existsSync.mockReturnValueOnce(false);
       expect(installTemplate('./templateName.tgz')).toBe('npmInstallResponseMock');
       expect(runNpmInstall).toHaveBeenCalledTimes(1);
-      expect(runNpmInstall).toHaveBeenNthCalledWith(1, path.resolve(`${__dirname}/../../src/utils/`), ['./templateName.tgz', '--ignore-scripts', '--save', '--save-exact']);
+      expect(runNpmInstall).toHaveBeenNthCalledWith(1, path.resolve(`${__dirname}/../../src/utils/`), ['./templateName.tgz', '--ignore-scripts', '--save', '--save-exact', '--engine-strict']);
     });
   });
 });
