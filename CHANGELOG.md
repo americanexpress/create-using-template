@@ -1,3 +1,10 @@
+# [1.12.0](https://github.com/americanexpress/create-using-template/compare/v1.11.2...v1.12.0) (2025-12-04)
+
+
+### Features
+
+* enforce strict engines for template ([#49](https://github.com/americanexpress/create-using-template/issues/49)) ([cfb4628](https://github.com/americanexpress/create-using-template/commit/cfb46280453abfb3e90497f739b0999b4fb50dfe))
+
 ## [1.11.2](https://github.com/americanexpress/create-using-template/compare/v1.11.1...v1.11.2) (2024-05-23)
 
 
