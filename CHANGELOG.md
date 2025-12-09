@@ -1,3 +1,15 @@
+## [1.12.1](https://github.com/americanexpress/create-using-template/compare/v1.12.0...v1.12.1) (2025-12-09)
+
+
+### Bug Fixes
+
+* add missing semantic-release dependency ([#53](https://github.com/americanexpress/create-using-template/issues/53)) ([69a4e3f](https://github.com/americanexpress/create-using-template/commit/69a4e3f7f212ee504eb6f75e77fcec4f7851fa9b))
+
+
+### Reverts
+
+* Revert "feat: enforce strict engines for template ([#49](https://github.com/americanexpress/create-using-template/issues/49))" ([#52](https://github.com/americanexpress/create-using-template/issues/52)) ([c08d704](https://github.com/americanexpress/create-using-template/commit/c08d704687f7469bee65ee688dde0078adc17d0c))
+
 # [1.12.0](https://github.com/americanexpress/create-using-template/compare/v1.11.2...v1.12.0) (2025-12-04)
 
 
