@@ -16,12 +16,28 @@ const spawn = require('cross-spawn');
 
 const runCommand = (command, args = [], workingDirectory = './') => new Promise((resolve, reject) => {
   const subProcess = spawn(command, args, { stdio: 'inherit', cwd: workingDirectory });
+  const forwardSigintToChild = () => {
+    subProcess.kill('SIGINT');
+  };
+
+  const cleanup = () => {
+    process.removeListener('SIGINT', forwardSigintToChild);
+  };
+
+  process.on('SIGINT', forwardSigintToChild);
+
   subProcess.on('close', (code) => {
+    cleanup();
     if (code !== 0) {
       reject(new Error(`Failed to execute: ${command} ${args.join(' ')}`));
       return;
     }
     resolve();
+  });
+
+  subProcess.on('error', (err) => {
+    cleanup();
+    reject(err);
   });
 });
 
