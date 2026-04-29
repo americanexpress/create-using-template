@@ -1,3 +1,10 @@
+## [1.12.2](https://github.com/americanexpress/create-using-template/compare/v1.12.1...v1.12.2) (2026-04-29)
+
+
+### Bug Fixes
+
+* not sending SIGINT to npm install subprocess ([#56](https://github.com/americanexpress/create-using-template/issues/56)) ([3a6e00d](https://github.com/americanexpress/create-using-template/commit/3a6e00d6f0187734cebe255ce5277d9af9db0e62))
+
 ## [1.12.1](https://github.com/americanexpress/create-using-template/compare/v1.12.0...v1.12.1) (2025-12-09)
 
 
