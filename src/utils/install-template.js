@@ -26,6 +26,7 @@ const installTemplate = (templateName) => runNpmInstall(__dirname, [
   '--ignore-scripts',
   '--save',
   '--save-exact',
+  '--omit=dev',
 ]);
 
 module.exports = installTemplate;
