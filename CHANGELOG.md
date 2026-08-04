@@ -1,3 +1,10 @@
+## [1.12.3](https://github.com/americanexpress/create-using-template/compare/v1.12.2...v1.12.3) (2026-08-04)
+
+
+### Bug Fixes
+
+* skip npm dev install ([#58](https://github.com/americanexpress/create-using-template/issues/58)) ([5fe5728](https://github.com/americanexpress/create-using-template/commit/5fe5728dcdc28f6b8df83ee07c17c7a143a3fd6e))
+
 ## [1.12.2](https://github.com/americanexpress/create-using-template/compare/v1.12.1...v1.12.2) (2026-04-29)
 
 
